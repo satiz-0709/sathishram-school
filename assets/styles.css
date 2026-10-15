@@ -22,7 +22,8 @@ body {
     var(--bg);
   color: var(--ink);
   font-family: "DM Sans", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 button, input { font: inherit; }
@@ -218,7 +219,7 @@ button { cursor: pointer; }
 .audio-install-link,.audio-retry-button { color: #266e64; font: inherit; text-decoration: underline; }
 .audio-retry-button { padding: 0; border: 0; background: transparent; cursor: pointer; }
 h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk",sans-serif; letter-spacing: -1.2px; }
-.lesson-subtitle { margin: 8px 0 0; color: #8991a2; font-size: 12px; }
+.lesson-subtitle { margin: 8px 0 0; color: #8991a2; font-size: 13px; }
 .complete-button { flex: none; display: flex; min-height: 34px; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid #e6e5f1; border-radius: 7px; background: #fff; color: #626b80; font-size: 10px; font-weight: 600; transition: .2s; }
 .complete-button .complete-check { display:grid; place-items:center; width:15px; height:15px; border:1px solid #ccd0dd; border-radius:50%; }
 .complete-button.done .complete-check { border-color:#54b998; background:#54b998; }
@@ -237,10 +238,10 @@ h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk"
 .section-title { display: flex; align-items: center; gap: 10px; }
 .section-icon { display: grid; flex: none; place-items: center; width: 28px; height: 28px; border-radius: 8px; font-size: 14px; }
 .theory-icon { background: #f1efff; color: #7161e2; }.visual-icon { background: #eff9f8; color: #42a797; }.code-icon { background: #fff5e9; color: #db9c47; font: 700 10px var(--mono); }
-.section-title h2,.practice-card h2 { margin: 0; font: 700 13px "Space Grotesk",sans-serif; }.section-title p { margin: 3px 0 0; color: #9aa1b0; font-size: 10px; }
-.theory-copy { margin: 16px 0 13px; color: #677085; font-size: 12px; line-height: 1.8; }
+.section-title h2,.practice-card h2 { margin: 0; font: 700 13px "Space Grotesk",sans-serif; }.section-title p { margin: 3px 0 0; color: #9aa1b0; font-size: 11px; }
+.theory-copy { margin: 16px 0 13px; color: #677085; font-size: 14px; line-height: 1.75; }
 .callout { display: flex; align-items: flex-start; gap: 9px; padding: 10px 12px; border-left: 2px solid #9586ef; border-radius: 0 6px 6px 0; background: #f8f7ff; }
-.callout-icon { color: #8675e9; font-size: 14px; }.callout p { margin: 0; color: #77758f; font-size: 10px; line-height: 1.7; }
+.callout-icon { color: #8675e9; font-size: 14px; }.callout p { margin: 0; color: #77758f; font-size: 12px; line-height: 1.65; }
 .visual-card { margin-top: 14px; padding: 17px 20px 12px; overflow: hidden; }
 .visual-header,.code-header,.section-header { display: flex; justify-content: space-between; align-items: center; gap:10px; }
 .compact .section-icon { width: 27px; height: 27px; }
@@ -592,28 +593,28 @@ h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk"
 .account-symbol .ui-icon { width:23px;height:23px; }
 .account-eyebrow { margin:0 0 4px;color:var(--purple-dark);font:600 9px var(--mono);letter-spacing:1px; }
 .account-heading h1 { margin:0;color:var(--ink);font:700 24px "Space Grotesk",sans-serif;letter-spacing:-.8px; }
-.account-heading > div > p:last-child { margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.6; }
+.account-heading > div > p:last-child { margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.6; }
 .account-view h2 { margin:0 0 15px;color:var(--ink);font:700 17px "Space Grotesk",sans-serif; }
-.account-help { margin:0 0 14px;color:var(--muted);font-size:11px;line-height:1.6; }
+.account-help { margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.6; }
 .account-form { display:grid;gap:13px; }
-.account-form label { display:grid;gap:6px;color:var(--muted);font-size:10px;font-weight:700; }
-.account-form input { width:100%;min-height:42px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-alt);color:var(--ink);font:12px "DM Sans",sans-serif; }
+.account-form label { display:grid;gap:6px;color:var(--muted);font-size:12px;font-weight:700; }
+.account-form input { width:100%;min-height:42px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-alt);color:var(--ink);font:14px "DM Sans",sans-serif; }
 .account-form input:focus { outline:3px solid color-mix(in srgb,var(--purple) 20%,transparent);border-color:var(--purple); }
-.account-primary,.account-secondary { display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:1px solid var(--purple);border-radius:10px;background:var(--purple);color:#fff;font-size:11px;font-weight:700; }
+.account-primary,.account-secondary { display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:1px solid var(--purple);border-radius:10px;background:var(--purple);color:#fff;font-size:12px;font-weight:700; }
 .account-primary:hover { background:var(--purple-dark); }
 .account-secondary { border-color:var(--line);background:var(--surface);color:var(--purple-dark); }
 .account-secondary:hover { border-color:var(--purple);background:var(--purple-pale); }
 .account-actions { display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:15px; }
 .account-text-button { padding:2px 0;border:0;background:transparent;color:var(--purple-dark);font-size:10px;font-weight:700;text-decoration:underline;text-underline-offset:3px; }
-.account-notice,.account-message { padding:10px 12px;border-radius:10px;background:var(--purple-pale);color:var(--purple-dark);font-size:11px;line-height:1.5; }
+.account-notice,.account-message { padding:10px 12px;border-radius:10px;background:var(--purple-pale);color:var(--purple-dark);font-size:12px;line-height:1.5; }
 .account-notice:empty,.account-message:empty { display:none; }
 .account-message[data-state="error"] { background:#fff0f0;color:#a43636; }
 .account-profile-heading { display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px; }
 .account-profile-heading h2 { margin:0; }
-.account-profile-heading p,.account-security p { margin:5px 0 0;color:var(--muted);font-size:10px; }
+.account-profile-heading p,.account-security p { margin:5px 0 0;color:var(--muted);font-size:12px; }
 .account-form-inline { grid-template-columns:minmax(0,1fr) auto;align-items:end;padding:12px 0;border-top:1px solid var(--line); }
 .account-security { display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:15px 0 0;border-top:1px solid var(--line); }
-.account-security h3 { display:flex;align-items:center;gap:7px;margin:0;color:var(--ink);font-size:12px; }
+.account-security h3 { display:flex;align-items:center;gap:7px;margin:0;color:var(--ink);font-size:13px; }
 .account-security h3 .ui-icon { width:16px;height:16px;color:var(--purple); }
 .mfa-setup { grid-column:1/-1; }
 .mfa-setup > img { display:block;width:190px;height:190px;margin:10px 0;border:1px solid var(--line);border-radius:12px; }
