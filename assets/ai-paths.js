@@ -127,11 +127,13 @@
     course.lessons.forEach((lesson, index) => {
       const moduleName = lesson.module || "Lessons";
       if (!groups.has(moduleName)) {
-        const group = el("section", "path-module-group");
+        const group = el("section", "path-module-group collapsed");
         const heading = el("button", "path-module-title", moduleName);
-        heading.type = "button"; heading.setAttribute("aria-expanded", "true");
+        heading.type = "button"; heading.setAttribute("aria-expanded", "false");
         heading.addEventListener("click", () => {
           const collapsed = group.classList.toggle("collapsed"); heading.setAttribute("aria-expanded", String(!collapsed));
+          const allExpanded = [...nav.querySelectorAll(".path-module-group")].every((item) => !item.classList.contains("collapsed"));
+          $("path-expand-curriculum").textContent = allExpanded ? "Collapse all" : "Expand all";
         });
         group.append(heading); groups.set(moduleName, group);
       }
@@ -298,10 +300,13 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   $("path-expand-curriculum").addEventListener("click", () => {
-    $("path-lesson-list").querySelectorAll(".path-module-group").forEach((group) => {
-      group.classList.remove("collapsed");
-      group.querySelector(".path-module-title")?.setAttribute("aria-expanded", "true");
+    const groups = [...$("path-lesson-list").querySelectorAll(".path-module-group")];
+    const expand = groups.some((group) => group.classList.contains("collapsed"));
+    groups.forEach((group) => {
+      group.classList.toggle("collapsed", !expand);
+      group.querySelector(".path-module-title")?.setAttribute("aria-expanded", String(expand));
     });
+    $("path-expand-curriculum").textContent = expand ? "Collapse all" : "Expand all";
   });
   function resourceHeader(title, description, searchable = false) {
     const root = $("path-resource-view"); root.replaceChildren(); const header = el("header", "path-resource-header"); header.append(el("span", "path-eyebrow", `${course.title.toUpperCase()} · STUDY RESOURCES`), el("h1", "", title), el("p", "", description));

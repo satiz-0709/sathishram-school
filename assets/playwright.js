@@ -170,6 +170,7 @@ function renderCurriculum(filter = "") {
     toggle.setAttribute("aria-expanded", String(expanded));
     toggle.addEventListener("click", () => {
       window.curriculumAccordionsExpanded = null;
+      byId("expand-curriculum").textContent = "Expand all";
       section.classList.toggle("closed");
       toggle.setAttribute("aria-expanded", String(!section.classList.contains("closed")));
     });
@@ -193,6 +194,7 @@ function renderCurriculum(filter = "") {
       subgroupToggle.innerHTML = `<span>${escapeHtml(name)}</span><small>${groupLessons.length}</small><span class="subgroup-chevron">⌄</span>`;
       subgroupToggle.addEventListener("click", () => {
         window.curriculumAccordionsExpanded = null;
+        byId("expand-curriculum").textContent = "Expand all";
         subgroup.classList.toggle("closed");
         subgroupToggle.setAttribute("aria-expanded", String(!subgroup.classList.contains("closed")));
       });
@@ -707,7 +709,8 @@ byId("code-next-button").addEventListener("click", () => {
 });
 byId("search").addEventListener("input", (event) => renderCurriculum(event.target.value.trim()));
 byId("expand-curriculum").addEventListener("click", () => {
-  window.curriculumAccordionsExpanded = true;
+  window.curriculumAccordionsExpanded = window.curriculumAccordionsExpanded !== true;
+  byId("expand-curriculum").textContent = window.curriculumAccordionsExpanded ? "Collapse all" : "Expand all";
   renderCurriculum(byId("search").value.trim());
 });
 document.querySelectorAll(".study-tab").forEach((tab) => tab.addEventListener("click", () => setView(tab.dataset.view)));
@@ -779,6 +782,5 @@ window.lessonSectionProgress = window.createLessonSectionProgress({
 window.lessonNarrator = setupLessonAudio(() => allLessons[state.index], true);
 renderLesson();
 renderCheatSheet();
-
 
 
