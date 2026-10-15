@@ -1,74 +1,59 @@
 (() => {
-  const sampleModules = new Set(["python", "playwright", "django", "fastapi"]);
+  const freeLessonCount = 4;
   const config = window.SATHISHRAM_SUPABASE;
-  const hasSupabaseConfig = Boolean(window.supabase && config?.url && config?.anonKey);
-  const client = hasSupabaseConfig ? window.supabase.createClient(config.url, config.anonKey) : null;
   const accountPath = location.pathname.includes("/tutorial/") ? "../account.html" : "account.html";
+  const client = window.supabase && config?.url && config?.anonKey
+    ? window.supabase.createClient(config.url, config.anonKey)
+    : null;
+  let currentUser = null;
 
-  const getModuleSlug = () => {
-    if (location.pathname.endsWith("/python.html")) return "python";
-    if (location.pathname.endsWith("/playwright.html")) return "playwright";
-    if (location.pathname.endsWith("/ai-paths.html")) {
-      return new URLSearchParams(location.search).get("course") || "ai-evaluation";
-    }
-    return null;
-  };
+  const sessionReady = client
+    ? client.auth.getSession().then(({ data, error }) => {
+      if (error) throw error;
+      currentUser = data.session?.user || null;
+      return currentUser;
+    }).catch((error) => {
+      console.error("Unable to verify the current account session.", error);
+      return null;
+    })
+    : Promise.resolve(null);
 
-  const loginUrl = (returnTo = `${location.pathname}${location.search}${location.hash}`) => {
+  const makeLoginUrl = (lessonIndex) => {
+    const returnTo = `${location.pathname}${location.search}#lesson=${lessonIndex + 1}`;
     const url = new URL(accountPath, location.href);
     url.searchParams.set("returnTo", returnTo);
     url.searchParams.set("reason", "members");
     return url.href;
   };
 
-  const lockModuleCard = (card) => {
-    card.classList.add("course-choice-locked");
-    card.setAttribute("aria-label", `${card.querySelector("h1")?.textContent || "Course"} — sign in to unlock`);
-    const badge = document.createElement("span");
-    badge.className = "course-lock-badge";
-    badge.innerHTML = '<span data-icon="lock"></span> Sign in to unlock';
-    card.append(badge);
-    const destination = new URL(card.href);
-    const returnTo = `${destination.pathname}${destination.search}${destination.hash}`;
-    card.addEventListener("click", (event) => {
-      event.preventDefault();
-      location.assign(loginUrl(returnTo));
-    });
-    card.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        location.assign(loginUrl(returnTo));
-      }
-    });
+  const askForSignIn = (lessonIndex) => {
+    location.assign(makeLoginUrl(lessonIndex));
+    return false;
   };
 
-  const protectCoursePage = async (user) => {
-    const moduleSlug = getModuleSlug();
-    if (!moduleSlug || user || sampleModules.has(moduleSlug)) return;
-    if (!sampleModules.has(moduleSlug) || !user) location.replace(loginUrl());
+  const requireLesson = async (lessonIndex, onAllowed) => {
+    const user = await sessionReady;
+    if (!user && lessonIndex >= freeLessonCount) return askForSignIn(lessonIndex);
+    onAllowed?.();
+    return true;
   };
 
-  const applyAccess = async (user) => {
-    const moduleCards = document.querySelectorAll(".course-choice[data-module]");
-    if (!user) moduleCards.forEach((card) => {
-      if (!sampleModules.has(card.dataset.module)) lockModuleCard(card);
-    });
-    document.documentElement.dataset.access = user ? "member" : "guest";
-    await protectCoursePage(user);
+  const startLesson = async (savedIndex, onAllowed) => {
+    const fragment = new URLSearchParams(location.hash.slice(1)).get("lesson");
+    const requestedIndex = fragment === null ? savedIndex : Number(fragment) - 1;
+    const lessonIndex = Number.isInteger(requestedIndex) && requestedIndex >= 0
+      ? requestedIndex
+      : 0;
+    return requireLesson(lessonIndex, () => onAllowed(lessonIndex));
   };
 
-  if (!client) {
-    void applyAccess(null);
-    return;
-  }
+  const requireMember = async () => {
+    const user = await sessionReady;
+    if (user) return true;
+    const fragment = new URLSearchParams(location.hash.slice(1));
+    const lesson = Number(fragment.get("lesson"));
+    return askForSignIn(Number.isInteger(lesson) && lesson > 0 ? lesson - 1 : 0);
+  };
 
-  client.auth.getSession()
-    .then(({ data, error }) => {
-      if (error) throw error;
-      return applyAccess(data.session?.user || null);
-    })
-    .catch((error) => {
-      console.error("Unable to verify the current account session.", error);
-      void applyAccess(null);
-    });
+  window.schoolCourseAccess = { requireLesson, startLesson, requireMember };
 })();

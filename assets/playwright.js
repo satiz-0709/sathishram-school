@@ -3,6 +3,8 @@ const progressKey = "sathishram-playwright-progress";
 const legacyCompletedKey = "sathishram-playwright-completed";
 const savedLessonTitle = localStorage.getItem(progressKey);
 const savedLessonIndex = allLessons.findIndex((lesson) => lesson.title === savedLessonTitle);
+const requestedLesson = new URLSearchParams(location.hash.slice(1)).get("lesson");
+const requestedLessonIndex = requestedLesson === null ? -1 : Number(requestedLesson) - 1;
 const previousLessonOrder = allLessons.filter((lesson) =>
   !["Tooltip & text extraction", "Alerts, confirms & prompt dialogs"].includes(lesson.title)
 );
@@ -26,7 +28,7 @@ try {
   console.warn("Saved Playwright variable names could not be read.", error);
 }
 const state = {
-  index: savedLessonIndex >= 0 ? savedLessonIndex : 0,
+  index: requestedLessonIndex >= 0 ? requestedLessonIndex : savedLessonIndex >= 0 ? savedLessonIndex : 0,
   completed: new Set(savedCompleted),
   variableNames: savedVariableNames,
   quizAnswered: false,
@@ -205,11 +207,11 @@ function renderCurriculum(filter = "") {
         item.className = `lesson-link${index === state.index ? " active" : ""}${state.completed.has(index) ? " completed" : ""}`;
         item.innerHTML = `<span class="lesson-check" aria-hidden="true"></span><span>${escapeHtml(lesson.title)}</span>`;
         item.setAttribute("aria-current", index === state.index ? "page" : "false");
-        item.addEventListener("click", () => {
+        item.addEventListener("click", () => window.schoolCourseAccess.requireLesson(index, () => {
           state.index = index;
           renderLesson();
           closeMobileMenu();
-        });
+        }));
         subgroupLessons.appendChild(item);
       });
       subgroup.append(subgroupToggle, subgroupLessons);
@@ -651,9 +653,12 @@ function renderLesson() {
 }
 
 function moveLesson(offset) {
-  state.index = Math.max(0, Math.min(allLessons.length - 1, state.index + offset));
-  renderLesson();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  const nextIndex = Math.max(0, Math.min(allLessons.length - 1, state.index + offset));
+  return window.schoolCourseAccess.requireLesson(nextIndex, () => {
+    state.index = nextIndex;
+    renderLesson();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 }
 
 function showToast(message) {
@@ -713,7 +718,10 @@ byId("expand-curriculum").addEventListener("click", () => {
   byId("expand-curriculum").textContent = window.curriculumAccordionsExpanded ? "Collapse all" : "Expand all";
   renderCurriculum(byId("search").value.trim());
 });
-document.querySelectorAll(".study-tab").forEach((tab) => tab.addEventListener("click", () => setView(tab.dataset.view)));
+document.querySelectorAll(".study-tab").forEach((tab) => tab.addEventListener("click", () => {
+  if (tab.dataset.view === "learn") setView(tab.dataset.view);
+  else void window.schoolCourseAccess.requireMember().then((allowed) => { if (allowed) setView(tab.dataset.view); });
+}));
 byId("cheat-search").addEventListener("input", (event) => renderCheatSheet(event.target.value.trim()));
 byId("question-search").addEventListener("input", renderInterviewQuestions);
 byId("question-category").addEventListener("change", renderInterviewQuestions);
@@ -780,6 +788,8 @@ window.lessonSectionProgress = window.createLessonSectionProgress({
   onChange: () => renderLesson()
 });
 window.lessonNarrator = setupLessonAudio(() => allLessons[state.index], true);
-renderLesson();
 renderCheatSheet();
-
+void window.schoolCourseAccess.startLesson(state.index, (index) => {
+  state.index = Math.min(index, allLessons.length - 1);
+  renderLesson();
+});

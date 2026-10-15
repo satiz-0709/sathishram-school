@@ -58,7 +58,7 @@ drop policy if exists "Anyone can read sample lessons" on public.lesson_content;
 create policy "Anyone can read sample lessons"
   on public.lesson_content for select
   to anon, authenticated
-  using (is_sample and module_slug in ('python', 'playwright', 'django', 'fastapi'));
+  using (is_sample);
 
 drop policy if exists "Signed-in users can read full lessons" on public.lesson_content;
 create policy "Signed-in users can read full lessons"

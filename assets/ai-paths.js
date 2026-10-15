@@ -15,7 +15,9 @@
   let completed = readCompleted();
   let sectionProgress = readSectionProgress();
   const allSectionsExpanded = true;
-  let currentIndex = Math.min(Math.max(parseInt(localStorage.getItem(lessonKey) || "0", 10) || 0, 0), course.lessons.length - 1);
+  const requestedLesson = new URLSearchParams(location.hash.slice(1)).get("lesson");
+  const requestedLessonIndex = requestedLesson === null ? -1 : Number(requestedLesson) - 1;
+  let currentIndex = Math.min(Math.max(requestedLessonIndex >= 0 ? requestedLessonIndex : parseInt(localStorage.getItem(lessonKey) || "0", 10) || 0, 0), course.lessons.length - 1);
   let currentView = "lesson";
   let mockOrder = [];
   let mockIndex = 0;
@@ -163,7 +165,7 @@
       const icon = el("span", "path-tab-icon"); icon.innerHTML = schoolIcon(icons[id]);
       button.append(icon, el("span", "path-tab-label", label));
       if (id === "interview" || id === "examples") button.append(el("b", "", String(course.lessons.length)));
-      button.addEventListener("click", () => showView(id)); return button;
+      button.addEventListener("click", () => { void showView(id); }); return button;
     }));
   }
   function renderProgress() {
@@ -233,7 +235,7 @@
     });
     paint(0); controls.append(run, status); wrap.append(caption, visual.element, controls); return wrap;
   }
-  function showLesson(index) {
+  function renderLesson(index) {
     if (window.lessonNarrator) window.lessonNarrator.stop();
     currentIndex = index; localStorage.setItem(lessonKey, String(index)); const lesson = course.lessons[index];
     $("path-category").textContent = lesson.module || course.category;
@@ -283,12 +285,16 @@
     if (completed.includes(index) && !sectionProgress[index]) { sectionProgress[index] = Object.fromEntries(partIds.map((part) => [part, true])); saveSectionProgress(); }
     $("path-prev").disabled = index === 0; $("path-next").disabled = index === course.lessons.length - 1; renderProgress();
   }
+  function showLesson(index) {
+    void window.schoolCourseAccess.requireLesson(index, () => renderLesson(index));
+  }
   async function copyText(value, button) {
     try { await navigator.clipboard.writeText(value); button.textContent = "Copied ✓"; }
     catch { button.textContent = "Select code to copy"; }
     setTimeout(() => { if (button.isConnected) button.textContent = "Copy code"; }, 1500);
   }
-  function showView(view) {
+  async function showView(view) {
+    if (view !== "lesson" && !(await window.schoolCourseAccess.requireMember())) return;
     currentView = view; document.body.dataset.printView = view;
     $("path-resource-accordion").open = view !== "lesson";
     $("path-lesson-view").hidden = view !== "lesson"; $("path-resource-view").hidden = view === "lesson";
@@ -613,5 +619,5 @@
     $("path-search").value = ""; $("path-search").dispatchEvent(new Event("input")); showLesson(0); showView("lesson");
   });
   window.lessonNarrator = setupLessonAudio(() => course.lessons[currentIndex], false);
-  setPalette(localStorage.getItem(paletteKey) || "evergreen"); setTheme(localStorage.getItem(themeKey) || "light"); renderShell(); showLesson(currentIndex); showView("lesson");
+  setPalette(localStorage.getItem(paletteKey) || "evergreen"); setTheme(localStorage.getItem(themeKey) || "light"); renderShell(); showLesson(currentIndex); void showView("lesson");
 })();

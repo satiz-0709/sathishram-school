@@ -9,8 +9,10 @@
 
 The account screen is intentionally disabled until the project URL and public key are configured.
 
-The client-side course gate permits visitors to browse Python, Playwright, Django, and FastAPI, and sends signed-out visitors who select other courses to the account screen. Signing in returns them to the selected course. This is a navigation/UX gate only, not secure content protection.
+The client-side course gate permits signed-out visitors to read the first four lessons in every course. Selecting lesson five or later, or opening course study resources, sends them to the account screen. Signing in returns them to the requested lesson. This is a navigation/UX gate only, not secure content protection.
+
+When lesson data is migrated into `lesson_content`, set `is_sample` to `true` only for the first four lessons of each course. The anonymous RLS policy permits those marked rows; authenticated users can read all course rows.
 
 ## Important content-protection status
 
-The SQL schema allows anonymous sample rows only for Python, Playwright, Django, and FastAPI. Signed-in users can read all rows. Existing lesson pages and data scripts are still shipped as public GitHub Pages assets, and the current lesson renderers still read those local files. Therefore, the schema and sign-in screen do **not** yet make existing full-course content private. Do not treat the current deployment as an access-control boundary. A separate content migration and renderer change must move member-only lesson data out of the public `tutorial/` and `assets/` files and load it from the RLS-protected table before protected access can be enabled.
+Signed-in users can read all rows. Existing lesson pages and data scripts are still shipped as public GitHub Pages assets, and the current lesson renderers still read those local files. Therefore, the schema and sign-in screen do **not** yet make existing full-course content private. Do not treat the current deployment as an access-control boundary. A separate content migration and renderer change must move member-only lesson data out of the public `tutorial/` and `assets/` files and load it from the RLS-protected table before protected access can be enabled.
