@@ -1419,3 +1419,32 @@ html[data-theme] body :is(.primary-action,.flow-play-button,.execution-controls 
 @media(prefers-reduced-motion:reduce) {
   :is(.primary-action,.flow-play-button,.execution-controls .code-run-button,.theme-toggle,.theme-panel) { animation:none;transition:none; }
 }
+
+/* Keep instructional text inside simulations readable at their compact scale. */
+.process-simulation .process-heading strong { font-size:10px; }
+.process-simulation .process-heading span { font-size:11px; }
+.process-simulation .process-source small { font-size:9px; }
+.process-simulation .process-source code { font-size:10px; }
+.process-simulation .process-station strong { font-size:9px; }
+.process-simulation .process-station small { font-size:8px; }
+.process-simulation .process-detail-head { font-size:12px; }
+.process-simulation .process-active-title { font-size:10px; }
+.process-simulation .process-memory-box small { font-size:8px; }
+.process-simulation .process-memory-box strong { font-size:10px; }
+.process-simulation .process-explanation { font-size:12px; }
+.process-simulation .process-timeline .simulation-step { font-size:10px; }
+.process-simulation .pw-browser-top { font-size:10px; }
+.process-simulation .pw-address { font-size:9px; }
+.process-simulation .pw-lock { font-size:9px; }
+.process-simulation .pw-address small { font-size:8px; }
+.process-simulation .pw-page-nav { font-size:9px; }
+.process-simulation .pw-page-nav strong { font-size:10px; }
+.process-simulation .pw-page-card h3 { font-size:12px; }
+.process-simulation .pw-page-card p { font-size:9px; }
+.process-simulation .pw-page-input,.process-simulation .pw-page-action { font-size:9px; }
+.process-simulation .pw-page-status { font-size:9px; }
+.process-simulation .pw-api-node strong { font-size:9px; }
+.process-simulation .pw-api-node code { font-size:8px; }
+.process-simulation .pw-api-request { font-size:9px; }
+.process-simulation .pw-api-request small { font-size:8px; }
+.process-simulation .pw-api-result { font-size:9px; }
