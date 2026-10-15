@@ -14,7 +14,7 @@
   const body = document.body;
   let completed = readCompleted();
   let sectionProgress = readSectionProgress();
-  let allSectionsExpanded = true;
+  const allSectionsExpanded = true;
   let currentIndex = Math.min(Math.max(parseInt(localStorage.getItem(lessonKey) || "0", 10) || 0, 0), course.lessons.length - 1);
   let currentView = "lesson";
   let mockOrder = [];
@@ -68,23 +68,6 @@
       const label = button.querySelector(".complete-label");
       if (label) label.textContent = done ? "Completed · Undo" : "Mark complete";
     });
-  }
-  function setAllExpanded(expanded) {
-    allSectionsExpanded = expanded;
-    document.querySelectorAll("#path-lesson-content details, #path-resource-view details, #path-rag-explorer-disclosure").forEach((section) => { section.open = expanded; });
-    const ragExplorer = $("path-rag-explorer");
-    ragExplorer?.querySelectorAll("details").forEach((section) => { section.open = expanded; });
-    document.querySelectorAll(".path-module-group").forEach((group) => {
-      group.classList.toggle("collapsed", !expanded);
-      group.querySelector(".path-module-title")?.setAttribute("aria-expanded", String(expanded));
-    });
-    const button = $("path-expand-all");
-    if (!button) return;
-    button.querySelector("[data-icon]").innerHTML = schoolIcon(expanded ? "collapse" : "expand");
-    button.querySelector("span:last-child").textContent = expanded ? "Collapse all" : "Expand all";
-    button.setAttribute("aria-expanded", String(expanded));
-    button.setAttribute("aria-label", expanded ? "Collapse all sections" : "Expand all sections");
-    button.title = expanded ? "Collapse all sections" : "Expand all sections";
   }
   function setTheme(theme) {
     const dark = theme === "dark";
@@ -305,14 +288,21 @@
   }
   function showView(view) {
     currentView = view; document.body.dataset.printView = view;
+    $("path-resource-accordion").open = view !== "lesson";
     $("path-lesson-view").hidden = view !== "lesson"; $("path-resource-view").hidden = view === "lesson";
-    $("path-curriculum-heading").hidden = view !== "lesson"; $("path-lesson-list").hidden = view !== "lesson";
+    $("path-curriculum-accordion").hidden = view !== "lesson";
     $("path-search").closest(".search-box").hidden = view !== "lesson";
     $("path-study-tabs").querySelectorAll(".path-study-tab").forEach((button) => { const active = button.dataset.view === view; button.classList.toggle("active", active); button.setAttribute("aria-pressed", String(active)); });
     if (view !== "lesson") renderResource(view);
     closeMobileNav();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  $("path-expand-curriculum").addEventListener("click", () => {
+    $("path-lesson-list").querySelectorAll(".path-module-group").forEach((group) => {
+      group.classList.remove("collapsed");
+      group.querySelector(".path-module-title")?.setAttribute("aria-expanded", "true");
+    });
+  });
   function resourceHeader(title, description, searchable = false) {
     const root = $("path-resource-view"); root.replaceChildren(); const header = el("header", "path-resource-header"); header.append(el("span", "path-eyebrow", `${course.title.toUpperCase()} · STUDY RESOURCES`), el("h1", "", title), el("p", "", description));
     const tools = el("div", "path-resource-tools");
@@ -612,7 +602,6 @@
     if (!event.target.closest(".path-settings-control")) { $("path-settings-panel").hidden = true; $("path-settings-toggle").setAttribute("aria-expanded", "false"); }
   });
   document.addEventListener("keydown", (event) => { if (event.key === "Escape") { $("path-settings-panel").hidden = true; $("path-settings-toggle").setAttribute("aria-expanded", "false"); } });
-  $("path-expand-all").addEventListener("click", () => setAllExpanded(!allSectionsExpanded));
   $("path-clear-progress").addEventListener("click", () => {
     if (!window.confirm(`Clear saved ${course.title} lesson progress? This will restart at the first lesson.`)) return;
     completed = []; sectionProgress = {}; localStorage.removeItem(completedKey); localStorage.removeItem(sectionProgressKey); localStorage.removeItem(lessonKey);

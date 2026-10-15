@@ -527,6 +527,7 @@ function renderInterviewPrograms() {
 
 function setView(view) {
   document.body.dataset.printView = view;
+  byId("resource-accordion").open = view !== "learn";
   const labels = { learn: ["Learning path", "Getting started"], cheatsheet: ["Study resources", "Interview cheat sheet"], interview: ["Study resources", "Interview Q&A"], programs: ["Study resources", "Interview programs"], mock: ["Practice", "Mock exam"] };
   state.view = view;
   document.querySelectorAll(".study-tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === view));
@@ -535,8 +536,7 @@ function setView(view) {
   byId("interview-view").hidden = view !== "interview";
   byId("programs-view").hidden = view !== "programs";
   byId("mock-exam-view").hidden = view !== "mock";
-  byId("curriculum-label").hidden = view !== "learn";
-  byId("curriculum").hidden = view !== "learn";
+  byId("curriculum-accordion").hidden = view !== "learn";
   byId("breadcrumb-root").textContent = labels[view][0];
   byId("breadcrumb-topic").textContent = view === "learn" ? allLessons[state.index].chapter : labels[view][1];
   byId("search").closest(".search-box").hidden = view !== "learn";
@@ -624,6 +624,10 @@ document.querySelectorAll(".section-collapse-button").forEach((button) => {
   });
 });
 byId("search").addEventListener("input", (event) => renderCurriculum(event.target.value.trim()));
+byId("expand-curriculum").addEventListener("click", () => {
+  window.curriculumAccordionsExpanded = true;
+  renderCurriculum(byId("search").value.trim());
+});
 document.querySelectorAll(".study-tab").forEach((tab) => tab.addEventListener("click", () => setView(tab.dataset.view)));
 byId("cheat-search").addEventListener("input", (event) => renderCheatSheet(event.target.value.trim()));
 byId("question-search").addEventListener("input", renderInterviewQuestions);
@@ -711,5 +715,3 @@ window.lessonSectionProgress = window.createLessonSectionProgress({
 window.lessonNarrator = setupLessonAudio(() => allLessons[state.index], false);
 renderLesson();
 renderCheatSheet();
-
-

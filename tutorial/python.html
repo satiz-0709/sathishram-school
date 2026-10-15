@@ -28,18 +28,25 @@
           <small id="lesson-count">0 of 37 lessons</small>
         </div>
 
-        <nav class="study-tabs" aria-label="Learning and interview resources">
-          <button class="study-tab active" data-view="learn"><span data-icon="book"></span><span>Learning path</span></button>
-          <button class="study-tab" data-view="cheatsheet"><span data-icon="file"></span><span>Interview cheat sheet</span></button>
-          <button class="study-tab" data-view="interview"><span data-icon="question"></span><span>Interview questions</span><b>100</b></button>
-          <button class="study-tab" data-view="programs"><span data-icon="code"></span><span>Interview programs</span><b id="program-total">36</b></button>
-          <button class="study-tab" data-view="mock"><span data-icon="spark"></span><span>Mock exam</span></button>
-        </nav>
+        <details id="resource-accordion" class="resource-accordion">
+          <summary><span data-icon="layers"></span><span>LEARNING &amp; RESOURCES</span><span class="resource-chevron" aria-hidden="true"></span></summary>
+          <nav class="study-tabs" aria-label="Learning and interview resources">
+            <button class="study-tab active" data-view="learn"><span data-icon="book"></span><span>Learning path</span></button>
+            <button class="study-tab" data-view="cheatsheet"><span data-icon="file"></span><span>Interview cheat sheet</span></button>
+            <button class="study-tab" data-view="interview"><span data-icon="question"></span><span>Interview questions</span><b>100</b></button>
+            <button class="study-tab" data-view="programs"><span data-icon="code"></span><span>Interview programs</span><b id="program-total">36</b></button>
+            <button class="study-tab" data-view="mock"><span data-icon="spark"></span><span>Mock exam</span></button>
+          </nav>
+        </details>
 
-        <div class="nav-label curriculum-heading" id="curriculum-label">
-          <span class="curriculum-title"><span data-icon="layers"></span> CURRICULUM <span class="curriculum-total"><span id="curriculum-count">37</span> lessons</span></span>
-        </div>
-        <nav class="curriculum" id="curriculum" aria-label="Python curriculum"></nav>
+        <details id="curriculum-accordion" class="curriculum-accordion" open>
+          <summary class="nav-label curriculum-heading" id="curriculum-label">
+            <span class="curriculum-title"><span data-icon="layers"></span> CURRICULUM <span class="curriculum-total"><span id="curriculum-count">37</span> lessons</span></span>
+            <span class="curriculum-chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="curriculum-actions"><button id="expand-curriculum" type="button">Expand all</button></div>
+          <nav class="curriculum" id="curriculum" aria-label="Python curriculum"></nav>
+        </details>
         <div class="sidebar-bottom">
           <div class="streak-card"><span class="streak-icon" data-icon="spark"></span><div><strong>Keep the momentum</strong><small>One concept a day adds up.</small></div></div>
           <div class="sidebar-foot"><span class="status-dot"></span><span>Your progress is saved here</span><button class="clear-progress-button" id="clear-progress-button" type="button">Clear progress</button></div>
@@ -50,7 +57,6 @@
         <header class="topbar">
           <button class="menu-button" id="menu-button" aria-label="Open curriculum" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
           <div class="breadcrumb"><span id="breadcrumb-root">Learning path</span><span class="crumb-slash">/</span><strong id="breadcrumb-topic">Getting started</strong></div>
-          <div class="accordion-actions" aria-label="Page section controls"><button class="accordion-toggle-all" id="expand-all-button" type="button" aria-expanded="false"><span data-icon="expand"></span><span>Expand all</span></button></div>
           <div class="topbar-right">
             <label class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="Find a concept..." aria-label="Search lessons" /></label>
             <div class="theme-control">

@@ -34,18 +34,25 @@
           <small>Progress is saved on this device</small>
         </div>
 
-        <nav id="path-study-tabs" class="study-tabs path-study-tabs" aria-label="Learning and interview resources">
-          <button class="study-tab path-study-tab active" type="button" data-view="learn" aria-pressed="true"><span data-icon="book"></span><span>Learning path</span></button>
-          <button class="study-tab path-study-tab" type="button" data-view="cheatsheet" aria-pressed="false"><span data-icon="file"></span><span>Interview cheat sheet</span></button>
-          <button class="study-tab path-study-tab" type="button" data-view="interview" aria-pressed="false"><span data-icon="question"></span><span>Interview questions</span><b>100</b></button>
-          <button class="study-tab path-study-tab" type="button" data-view="mock" aria-pressed="false"><span data-icon="spark"></span><span>Mock exam</span></button>
-          <button class="study-tab path-study-tab" type="button" data-view="programs" aria-pressed="false"><span data-icon="code"></span><span>Interview programs</span><b id="path-program-total">36</b></button>
-        </nav>
+        <details id="path-resource-accordion" class="path-resource-accordion">
+          <summary><span data-icon="layers"></span><span>LEARNING &amp; RESOURCES</span><span class="path-resource-chevron" aria-hidden="true"></span></summary>
+          <nav id="path-study-tabs" class="study-tabs path-study-tabs" aria-label="Learning and interview resources">
+            <button class="study-tab path-study-tab active" type="button" data-view="lesson" aria-pressed="true"><span data-icon="book"></span><span>Learning path</span></button>
+            <button class="study-tab path-study-tab" type="button" data-view="cheatsheet" aria-pressed="false"><span data-icon="file"></span><span>Interview cheat sheet</span></button>
+            <button class="study-tab path-study-tab" type="button" data-view="interview" aria-pressed="false"><span data-icon="question"></span><span>Interview questions</span><b>100</b></button>
+            <button class="study-tab path-study-tab" type="button" data-view="examples" aria-pressed="false"><span data-icon="code"></span><span>Code examples</span></button>
+            <button class="study-tab path-study-tab" type="button" data-view="mock" aria-pressed="false"><span data-icon="spark"></span><span>Mock exam</span></button>
+          </nav>
+        </details>
 
-        <div id="path-curriculum-heading" class="nav-label curriculum-heading">
-          <span class="curriculum-title"><span data-icon="layers"></span> CURRICULUM <span class="curriculum-total"><span id="path-curriculum-count">0</span> lessons</span></span>
-        </div>
-        <nav id="path-lesson-list" class="curriculum path-lesson-list" aria-label="Lessons"></nav>
+        <details id="path-curriculum-accordion" class="path-curriculum-accordion" open>
+          <summary id="path-curriculum-heading" class="nav-label curriculum-heading">
+            <span class="curriculum-title"><span data-icon="layers"></span> CURRICULUM <span class="curriculum-total"><span id="path-curriculum-count">0</span> lessons</span></span>
+            <span class="curriculum-chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="curriculum-actions"><button id="path-expand-curriculum" type="button">Expand all</button></div>
+          <nav id="path-lesson-list" class="curriculum path-lesson-list" aria-label="Lessons"></nav>
+        </details>
 
         <div class="sidebar-bottom path-sidebar-bottom">
           <div class="streak-card"><span class="streak-icon" data-icon="spark"></span><div><strong>Keep the momentum</strong><small>One concept a day adds up.</small></div></div>
@@ -60,9 +67,6 @@
             <a class="breadcrumb-root" href="../index.html">All learning paths</a>
             <span class="crumb-slash">/</span>
             <strong id="path-top-title">AI learning path</strong>
-          </div>
-          <div class="accordion-actions" aria-label="Course controls">
-            <button id="path-expand-all" class="accordion-toggle-all" type="button" aria-expanded="true" aria-label="Collapse all sections" title="Collapse all sections"><span data-icon="collapse"></span><span>Collapse all</span></button>
           </div>
           <div class="topbar-right">
             <label class="search-box path-search"><span data-icon="search"></span><input id="path-search" type="search" placeholder="Find a concept..." aria-label="Search lessons" /></label>

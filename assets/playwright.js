@@ -590,6 +590,7 @@ function closeMobileMenu() {
 
 function setView(view) {
   document.body.dataset.printView = view;
+  byId("resource-accordion").open = view !== "learn";
   const labels = { learn: ["Learning path", allLessons[state.index].chapter], cheatsheet: ["Study resources", "Interview cheat sheet"], interview: ["Study resources", "Interview Q&A"], mock: ["Practice", "Mock exam"] };
   if (view !== "learn") stopFlow();
   state.view = view;
@@ -598,8 +599,7 @@ function setView(view) {
   byId("cheatsheet-view").hidden = view !== "cheatsheet";
   byId("interview-view").hidden = view !== "interview";
   byId("mock-exam-view").hidden = view !== "mock";
-  byId("curriculum-label").hidden = view !== "learn";
-  byId("curriculum").hidden = view !== "learn";
+  byId("curriculum-accordion").hidden = view !== "learn";
   byId("breadcrumb-root").textContent = labels[view][0];
   byId("breadcrumb-topic").textContent = labels[view][1];
   byId("search").closest(".search-box").hidden = view !== "learn";
@@ -706,6 +706,10 @@ byId("code-next-button").addEventListener("click", () => {
   runCodeStep(executionPosition < 0 ? 0 : executionPosition + 1);
 });
 byId("search").addEventListener("input", (event) => renderCurriculum(event.target.value.trim()));
+byId("expand-curriculum").addEventListener("click", () => {
+  window.curriculumAccordionsExpanded = true;
+  renderCurriculum(byId("search").value.trim());
+});
 document.querySelectorAll(".study-tab").forEach((tab) => tab.addEventListener("click", () => setView(tab.dataset.view)));
 byId("cheat-search").addEventListener("input", (event) => renderCheatSheet(event.target.value.trim()));
 byId("question-search").addEventListener("input", renderInterviewQuestions);
@@ -775,8 +779,6 @@ window.lessonSectionProgress = window.createLessonSectionProgress({
 window.lessonNarrator = setupLessonAudio(() => allLessons[state.index], true);
 renderLesson();
 renderCheatSheet();
-
-
 
 
 
