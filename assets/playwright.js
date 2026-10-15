@@ -593,7 +593,7 @@ function closeMobileMenu() {
 function setView(view) {
   document.body.dataset.printView = view;
   byId("resource-accordion").open = view !== "learn";
-  const labels = { learn: ["Learning path", allLessons[state.index].chapter], cheatsheet: ["Study resources", "Interview cheat sheet"], interview: ["Study resources", "Interview Q&A"], mock: ["Practice", "Mock exam"] };
+  const labels = { learn: ["Playwright", allLessons[state.index].chapter], cheatsheet: ["Playwright", "Interview cheat sheet"], interview: ["Playwright", "Interview Q&A"], mock: ["Playwright", "Mock exam"] };
   if (view !== "learn") stopFlow();
   state.view = view;
   document.querySelectorAll(".study-tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === view));
@@ -782,5 +782,4 @@ window.lessonSectionProgress = window.createLessonSectionProgress({
 window.lessonNarrator = setupLessonAudio(() => allLessons[state.index], true);
 renderLesson();
 renderCheatSheet();
-
 

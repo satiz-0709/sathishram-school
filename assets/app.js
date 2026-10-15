@@ -530,7 +530,7 @@ function renderInterviewPrograms() {
 function setView(view) {
   document.body.dataset.printView = view;
   byId("resource-accordion").open = view !== "learn";
-  const labels = { learn: ["Learning path", "Getting started"], cheatsheet: ["Study resources", "Interview cheat sheet"], interview: ["Study resources", "Interview Q&A"], programs: ["Study resources", "Interview programs"], mock: ["Practice", "Mock exam"] };
+  const labels = { learn: ["Python", "Getting started"], cheatsheet: ["Python", "Interview cheat sheet"], interview: ["Python", "Interview Q&A"], programs: ["Python", "Interview programs"], mock: ["Python", "Mock exam"] };
   state.view = view;
   document.querySelectorAll(".study-tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.view === view));
   byId("lesson-view").hidden = view !== "learn";
