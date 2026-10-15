@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f8fc" />
+    <meta name="description" content="Learn Playwright browser automation with Python through visual lessons, examples, a cheat sheet, and interview questions." />
+    <title>Sathishram School — Playwright learning path</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body class="course-playwright">
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="../index.html" aria-label="Sathishram School course selection">
+          <span class="brand-mark" aria-hidden="true"><span>S</span></span>
+          <span class="brand-name">Sathishram <span class="brand-accent">School</span><small>PLAYWRIGHT LEARNING</small></span>
+        </a>
+        <a class="back-link" href="../index.html">← All learning paths</a>
+        <div class="course-label">YOUR LEARNING PATH</div>
+        <div class="course-card">
+          <div class="course-card-top"><span class="course-mark" data-icon="browser"></span><span class="course-level">BEGINNER → PRO</span></div>
+          <strong>Playwright with Python</strong>
+          <div class="progress-row"><div class="progress-track" role="progressbar" aria-label="Playwright course progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="course-progress"></span></div><span id="progress-label">0%</span></div>
+          <small id="lesson-count">0 of 44 lessons</small>
+        </div>
+        <nav class="study-tabs" aria-label="Learning and interview resources">
+          <button class="study-tab active" data-view="learn"><span data-icon="book"></span><span>Learning path</span></button>
+          <button class="study-tab" data-view="cheatsheet"><span data-icon="file"></span><span>Interview cheat sheet</span></button>
+          <button class="study-tab" data-view="interview"><span data-icon="question"></span><span>Interview questions</span><b>100</b></button>
+          <button class="study-tab" data-view="mock"><span data-icon="spark"></span><span>Mock exam</span></button>
+        </nav>
+        <div class="nav-label curriculum-heading" id="curriculum-label">
+          <span class="curriculum-title"><span data-icon="layers"></span> CURRICULUM <span class="curriculum-total"><span id="curriculum-count">44</span> lessons</span></span>
+        </div>
+        <nav class="curriculum" id="curriculum" aria-label="Playwright curriculum"></nav>
+        <div class="sidebar-bottom">
+          <div class="streak-card"><span class="streak-icon" data-icon="spark"></span><div><strong>Keep the momentum</strong><small>One concept a day adds up.</small></div></div>
+          <div class="sidebar-foot"><span class="status-dot"></span><span>Your progress is saved here</span><button class="clear-progress-button" id="clear-progress-button" type="button">Clear progress</button></div>
+        </div>
+      </aside>
+      <main class="main-area">
+        <header class="topbar">
+          <button class="menu-button" id="menu-button" aria-label="Open curriculum" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
+          <div class="breadcrumb"><span id="breadcrumb-root">Learning path</span><span class="crumb-slash">/</span><strong id="breadcrumb-topic">Getting started</strong></div>
+          <div class="accordion-actions" aria-label="Page section controls"><button class="accordion-toggle-all" id="expand-all-button" type="button" aria-expanded="false"><span data-icon="expand"></span><span>Expand all</span></button></div>
+          <div class="topbar-right">
+            <label class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="Find a concept..." aria-label="Search lessons" /></label>
+            <div class="theme-control">
+              <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span data-icon="settings"></span></button>
+              <section class="theme-panel" id="theme-panel" aria-label="Appearance settings" hidden>
+                <strong>Appearance</strong><p>Choose a color style and display mode.</p>
+                <span class="theme-group-label">DISPLAY MODE</span>
+                <button class="mode-toggle" id="mode-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="mode-light-icon" data-icon="sun"></span><span class="mode-dark-icon" data-icon="moon"></span><span class="mode-toggle-label">Light mode</span><i aria-hidden="true"></i></button>
+                <span class="theme-group-label">COLOR STYLE</span>
+                <div class="theme-options" role="group" aria-label="Color themes">
+                  <button type="button" data-theme-choice="evergreen" aria-pressed="false"><i></i>Evergreen</button>
+                  <button type="button" data-theme-choice="ocean" aria-pressed="false"><i></i>Ocean</button>
+                  <button type="button" data-theme-choice="violet" aria-pressed="false"><i></i>Violet</button>
+                  <button type="button" data-theme-choice="sunset" aria-pressed="false"><i></i>Sunset</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </header>
+        <div class="page-content">
+          <div id="lesson-view">
+            <section class="lesson-heading">
+              <div class="eyebrow"><span class="eyebrow-dot"></span><span id="lesson-category">GETTING STARTED</span><span class="eyebrow-divider">·</span><span id="lesson-duration">5 MIN READ</span></div>
+              <div class="heading-row">
+                <div><h1 id="lesson-title">What is Playwright?</h1><p class="lesson-subtitle" id="lesson-summary"></p></div>
+                <div class="lesson-actions"><label class="audio-language-picker"><span>Audio language</span><select id="audio-language" aria-label="Choose narration language"><option value="en">English</option><option value="ta">Tamil</option></select></label><button class="audio-button" id="audio-button" type="button"><span data-icon="volume"></span><span>Teach this lesson</span></button><button class="complete-button" id="complete-button"><span class="complete-check" aria-hidden="true"></span><span class="complete-label">Mark complete</span></button><span class="audio-status" id="audio-status" role="status" aria-live="polite"></span></div>
+              </div>
+            </section>
+            <div class="lesson-layout">
+              <article class="lesson-main">
+                <section class="concept-card"><div class="section-header"><div class="section-title"><span class="section-icon theory-icon" data-icon="idea"></span><div><h2>The idea</h2><p>Understand it before you automate it.</p></div></div><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="description-content" aria-label="Collapse The idea" title="Collapse The idea"><span class="section-chevron" aria-hidden="true"></span></button></div><div class="section-content" id="description-content"><p class="theory-copy" id="lesson-theory"></p><div class="callout"><span class="callout-icon" data-icon="spark"></span><p id="lesson-analogy"></p></div></div></section>
+                <section class="visual-card">
+                  <div class="visual-header">
+                    <div class="section-title compact"><span class="section-icon visual-icon" data-icon="visual"></span><div><h2>See it in motion</h2><p>Watch the test interact with a simulated browser.</p></div></div>
+                    <div class="visual-actions"><span class="visual-badge">INTERACTIVE SIMULATION</span><button class="flow-play-button" id="flow-play-button" type="button"><span data-icon="arrow"></span><span>Run simulation</span></button><button class="flow-stop-button" id="flow-stop-button" type="button" hidden><span>Stop simulation</span></button><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="visual-content" aria-label="Collapse See it in motion" title="Collapse See it in motion"><span class="section-chevron" aria-hidden="true"></span></button></div>
+                  </div>
+                  <div class="section-content" id="visual-content"><div class="visual-workspace" id="visual-workspace">
+                    <div class="visual-flow-content">
+                      <div class="visual-stage" id="visual-stage" aria-label="Animated visualization of the selected Playwright concept"></div>
+                      <div class="flow-readout" aria-live="polite"><span class="flow-readout-icon" data-icon="code"></span><div><small id="flow-step">Ready to simulate</small><code id="flow-value">Choose a step to inspect the test.</code><small class="flow-insight-label">Why this matters: <span id="flow-insight" class="flow-insight-text">The explanation for the current step appears here.</span></small><small class="flow-note">Illustrative simulation; Python code and network requests are not executed.</small></div></div>
+                      <div class="visual-caption"><span class="caption-dot"></span><span id="visual-caption"></span></div>
+                    </div>
+                  </div></div>
+                </section>
+                <section class="code-card">
+                  <div class="code-header"><div class="section-title compact"><span class="section-icon code-icon" data-icon="code"></span><div><h2>Try the code</h2><p>Run the teaching walkthrough to highlight each line and update the browser preview.</p></div></div><div class="code-header-actions"><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="code-content" aria-label="Collapse Try the code" title="Collapse Try the code"><span class="section-chevron" aria-hidden="true"></span></button><button class="copy-button" id="copy-button"><span data-icon="copy"></span><span>Copy</span></button></div></div>
+                  <div class="code-content" id="code-content"><div class="execution-layout">
+                    <div class="code-execution">
+                      <div class="variable-name-controls" id="variable-name-controls" aria-label="Rename example variables" hidden></div>
+                      <div class="execution-controls" aria-label="Code walkthrough controls">
+                        <button type="button" id="code-run-button" class="code-run-button"><span class="control-icon play-icon" aria-hidden="true"></span><span class="button-label">Run</span></button>
+                        <button type="button" id="code-pause-button" disabled><span class="control-icon pause-icon" aria-hidden="true"></span><span>Pause</span></button>
+                        <button type="button" id="code-previous-button" disabled><span class="control-icon left-icon" aria-hidden="true"></span><span>Previous</span></button>
+                        <button type="button" id="code-next-button" disabled><span>Next</span><span class="control-icon right-icon" aria-hidden="true"></span></button>
+                        <span id="code-execution-status" role="status" aria-live="polite">Ready ? walkthrough is simulated; Python is not executed.</span>
+                      </div>
+                      <div class="code-window"><div class="code-window-top"><div class="window-dots"><i></i><i></i><i></i></div><span>test_example.py</span><span class="python-chip">PYTHON</span></div><pre id="lesson-code-scroll"><code id="lesson-code"></code></pre><div class="output-bar"><span class="output-label"><span class="output-chevron" aria-hidden="true"></span> WHAT HAPPENS</span><span id="lesson-output"></span></div></div>
+                    </div>
+                    <aside class="playwright-browser-demo" id="playwright-browser-demo" aria-label="Visual demo browser" hidden>
+                      <div class="demo-window-top"><span class="window-dots"><i></i><i></i><i></i></span><strong>Browser preview · simulated</strong><button type="button" id="close-demo-button" aria-label="Close demo browser"><span class="control-icon close-icon" aria-hidden="true"></span></button></div>
+                      <div class="demo-address"><span>↗</span><code id="demo-address">tutorial/demo.html</code><a id="demo-open-link" target="_blank" rel="noopener">Open</a></div>
+                      <div class="demo-screen"><iframe id="demo-frame" title="Interactive Playwright course demo"></iframe></div>
+                      <p class="demo-disclaimer">This teaching walkthrough simulates the sample page; it does not execute Python or control a real browser. Scroll inside the preview to see every control and result.</p>
+                    </aside>
+                  </div></div>
+                </section>
+                <section class="practice-card"><div class="practice-icon" data-icon="question"></div><div class="practice-body"><div class="practice-header"><span class="practice-label">QUICK CHECK</span><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="practice-content" aria-label="Collapse Quick check" title="Collapse Quick check"><span class="section-chevron" aria-hidden="true"></span></button></div><div class="section-content" id="practice-content"><h2 id="quiz-question"></h2><div class="quiz-options" id="quiz-options"></div><p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p></div></div></section>
+                <div class="lesson-footer"><button class="prev-button" id="prev-button"><span class="control-icon left-icon" aria-hidden="true"></span><span>Previous lesson</span></button><span id="footer-position"></span><button class="next-button" id="next-button"><span>Next lesson</span><span class="control-icon right-icon" aria-hidden="true"></span></button></div>
+              </article>
+              <aside class="lesson-aside">
+                <div class="aside-card on-this-page"><div class="aside-heading">IN THIS LESSON</div><a href="#idea" class="aside-link active">01 <span>The idea</span></a><a href="#visual" class="aside-link">02 <span>Visual model</span></a><a href="#code" class="aside-link">03 <span>Code example</span></a><a href="#practice" class="aside-link">04 <span>Quick check</span></a></div>
+                <div class="aside-card goal-card"><div class="goal-icon">✦</div><div class="aside-heading">YOU'LL LEARN</div><p id="lesson-goal"></p><div class="goal-time">◷ &nbsp;About <span id="goal-duration">5</span> minutes</div></div>
+                <div class="aside-note"><span>i</span><p>Learning tip</p><small>Use role-based locators and assertions that describe what a user sees. Reliable tests read like user stories.</small></div>
+              </aside>
+            </div>
+          </div>
+          <section class="resource-view" id="cheatsheet-view" hidden>
+            <div class="resource-heading"><div class="eyebrow"><span class="eyebrow-dot"></span><span>INTERVIEW QUICK REFERENCE</span></div><h1>Playwright interview cheat sheet</h1><p>Python snippets and practical patterns to revise before your automation interview.</p></div>
+            <div class="cheat-toolbar"><label class="resource-search"><span data-icon="search"></span><input id="cheat-search" type="search" placeholder="Search the cheat sheet..." aria-label="Search cheat sheet" /></label><span id="cheat-count"></span><button class="resource-action" id="print-cheatsheet">Print / Save PDF</button></div>
+            <div class="cheat-grid" id="cheat-grid"></div>
+          </section>
+          <section class="resource-view" id="interview-view" hidden>
+            <div class="resource-heading"><div class="eyebrow"><span class="eyebrow-dot"></span><span>PREPARE WITH CONFIDENCE</span></div><h1>100 Playwright interview questions</h1><p>Concise answers about architecture, locators, assertions, fixtures, isolation, debugging, and CI.</p></div>
+            <div class="interview-toolbar"><label class="resource-search"><span data-icon="search"></span><input id="question-search" type="search" placeholder="Search questions or answers..." aria-label="Search interview questions" /></label><select id="question-category" aria-label="Filter questions by category"><option value="">All topics</option></select><span id="question-count" aria-live="polite"></span></div>
+            <div class="question-list" id="question-list"></div>
+            <div class="question-footer">Tip: explain the trade-offs and describe how you would diagnose a flaky test.</div>
+          </section>
+          <section class="resource-view" id="mock-exam-view" hidden>
+            <div class="resource-heading"><div class="eyebrow"><span class="eyebrow-dot"></span><span>PREPARE WITH CONFIDENCE</span></div><h1>Playwright mock exam</h1><p>Choose a speaking practice round or a multiple-choice exam. Your Python automation challenge remains available below.</p></div>
+            <div class="mock-mode-tabs" role="tablist" aria-label="Mock exam mode">
+              <button class="mock-mode-tab" id="mock-voice-tab" type="button" role="tab" aria-selected="true" aria-controls="mock-voice-panel" tabindex="0"><span data-icon="volume"></span>Voice practice</button>
+              <button class="mock-mode-tab" id="mock-best-tab" type="button" role="tab" aria-selected="false" aria-controls="mock-best-panel" tabindex="-1"><span data-icon="check"></span>Choose the best answer</button>
+            </div>
+            <div class="mock-exam-workspace">
+              <section class="mock-mode-panel mock-panel" id="mock-voice-panel" role="tabpanel" aria-labelledby="mock-voice-tab">
+                <div class="mock-panel-heading"><span class="question-category-tag">SPEAKING PRACTICE</span><span id="mock-question-position">Question 1</span></div><h2 id="mock-question-title"></h2><label class="mock-answer-label" for="mock-answer">Your answer</label><textarea id="mock-answer" rows="5" placeholder="Speak or type your explanation..." aria-describedby="mock-speech-status"></textarea><div class="mock-actions"><button class="resource-action" id="mock-speech-button" type="button">Answer by voice</button><button class="resource-action primary-action" id="mock-grade-button" type="button">Review answer</button><button class="resource-action" id="mock-next-question" type="button">Next question</button><button class="resource-action" id="mock-finish-voice" type="button">Finish practice</button></div><p class="mock-speech-status" id="mock-speech-status" aria-live="polite"></p><div class="mock-feedback" id="mock-feedback" role="status" aria-live="polite" hidden></div>
+              </section>
+              <section class="mock-mode-panel mock-panel" id="mock-best-panel" role="tabpanel" aria-labelledby="mock-best-tab" hidden>
+                <div class="mock-panel-heading"><span class="question-category-tag">MULTIPLE CHOICE</span><span id="mock-best-question-position">Question 1</span></div><h2 id="mock-best-question-title"></h2><div class="mock-best-options" id="mock-best-options" role="group" aria-label="Answer choices"></div><p class="mock-feedback" id="mock-best-feedback" role="status" aria-live="polite" hidden></p><div class="mock-actions"><span class="mock-best-score" id="mock-best-score">Score: 0 / 0</span><button class="resource-action primary-action" id="mock-next-best" type="button" disabled>Next question</button><button class="resource-action" id="mock-finish-best" type="button" disabled>Finish exam</button></div>
+              </section>
+            </div>
+            <section class="mock-panel mock-coding-panel" aria-labelledby="mock-code-title"><div class="mock-panel-heading"><span class="question-category-tag">CODING CHALLENGE</span><span id="mock-program-category"></span></div><h2 id="mock-code-title"></h2><p class="mock-prompt" id="mock-program-prompt"></p><label class="mock-answer-label" for="mock-code">Write your Python solution</label><textarea id="mock-code" class="mock-code-editor" rows="12" spellcheck="false" aria-label="Python program editor"></textarea><div class="mock-actions"><button class="resource-action primary-action" id="mock-run-code" type="button">Run sample check</button><button class="resource-action" id="mock-next-program" type="button">New challenge</button><span class="mock-runtime-status" id="mock-runtime-status" role="status" aria-live="polite">Python runtime loads when you run a solution.</span></div><pre class="mock-run-output" id="mock-run-output" aria-live="polite">Output will appear here.</pre><details class="mock-solution"><summary>Show sample solution</summary><pre><code id="mock-solution-code"></code></pre></details></section>
+            <p class="mock-disclosure">Voice input uses your browser's speech recognition when available; otherwise you can type. Voice feedback compares key terms with a reference answer and is not an AI evaluation. Program code runs in a browser-based Python WebAssembly runtime and requires an internet connection.</p>
+          </section>
+        </div>
+      </main>
+      <div class="mobile-scrim" id="mobile-scrim"></div>
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+    <script src="../assets/playwright-data.js"></script>
+    <script src="../assets/flow-examples.js"></script>
+    <script src="../assets/concept-visuals.js"></script>
+    <script src="../assets/audio-teacher.js"></script>
+    <script src="../assets/icons.js"></script>
+    <script src="../assets/theme-settings.js"></script>
+    <script src="../assets/accordion-controls.js"></script>
+    <script src="../assets/lesson-section-progress.js"></script>
+    <script src="../assets/playwright.js"></script>
+    <script src="../assets/python-programs.js"></script>
+    <script src="../assets/mock-exam.js"></script>
+  </body>
+</html>

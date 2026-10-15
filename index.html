@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f8fc" />
+    <title>Sathishram School — Interactive learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <style>
+      .course-picker { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; width:min(1050px,calc(100% - 36px)); margin:7vh auto; }
+      .picker-heading { grid-column:1/-1; margin-bottom:8px; text-align:center; }
+      .picker-heading .brand-name { color:#24283b; font:700 20px "Space Grotesk",sans-serif; }
+      .picker-heading .brand-accent { color:var(--purple); }
+      .picker-heading p { color:#8991a2; font-size:13px; }
+      .course-choice { min-height:205px; padding:22px; border:1px solid #e2e9e8; border-radius:14px; background:#fff; color:var(--ink); text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s; }
+      .course-choice:hover { transform:translateY(-4px); border-color:#cfc9fb; box-shadow:0 14px 36px #38306012; }
+      .choice-icon { display:grid; place-items:center; width:40px; height:40px; margin-bottom:15px; border-radius:12px; background:#eaf5f2; color:var(--purple); font:700 13px var(--mono); }
+      .course-choice h1 { margin:0 0 8px; font:700 21px "Space Grotesk",sans-serif; }
+      .course-choice p { min-height:48px; color:#8991a2; font-size:12px; line-height:1.7; }
+      .choice-link { display:inline-block; margin-top:12px; color:var(--purple-dark); font-size:11px; font-weight:700; }
+      .choice-django .choice-icon { background:#edf5ea;color:#387a3e; }.choice-fastapi .choice-icon { background:#e8f6f3;color:#178a75; }.choice-langchain .choice-icon { background:#f2edfc;color:#7452b5; }.choice-langgraph .choice-icon { background:#e8f0fb;color:#3e6fae; }.choice-rag .choice-icon { background:#fdf2e6;color:#b2712b; }.choice-mcp .choice-icon { background:#eaf0f2;color:#536c79; }.choice-evals .choice-icon { background:#f9eefa;color:#ad58a6; }
+      .dashboard-theme-control { position:fixed;z-index:20;top:18px;right:22px; }.dashboard-theme-control .theme-panel { top:45px;right:0;left:auto; }
+      html[data-theme] body .course-picker { color:var(--ink); }.course-choice { background:var(--surface,#fff);border-color:var(--line);color:var(--ink); }.course-choice p { color:var(--muted); }.picker-heading .brand-name { color:var(--ink); }.picker-heading>p { color:var(--muted); }
+      html[data-mode="dark"] body .course-choice { background:var(--surface);border-color:var(--line);color:var(--ink);box-shadow:0 8px 24px #0002; }.course-choice:hover { border-color:var(--purple); }.course-choice .choice-link { color:var(--purple); }
+      @media(max-width:520px) { .dashboard-theme-control { top:12px;right:12px; }.picker-heading { padding-top:45px; } }
+      @media(max-width:780px) { .course-picker { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+      @media(max-width:520px) { .course-picker { grid-template-columns:1fr; margin:6vh auto; } .picker-heading { grid-column:auto; } .course-choice p { min-height:0; } }
+    </style>
+  </head>
+  <body>
+    <div class="theme-control dashboard-theme-control">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span data-icon="settings"></span></button>
+      <section class="theme-panel" id="theme-panel" aria-label="Appearance settings" hidden>
+        <strong>Appearance</strong><p>Choose a color style and display mode.</p>
+        <span class="theme-group-label">DISPLAY MODE</span>
+        <button class="mode-toggle" id="mode-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="mode-light-icon" data-icon="sun"></span><span class="mode-dark-icon" data-icon="moon"></span><span class="mode-toggle-label">Light mode</span><i aria-hidden="true"></i></button>
+        <span class="theme-group-label">COLOR STYLE</span>
+        <div class="theme-options" role="group" aria-label="Color themes"><button type="button" data-theme-choice="evergreen" aria-pressed="false"><i></i>Evergreen</button><button type="button" data-theme-choice="ocean" aria-pressed="false"><i></i>Ocean</button><button type="button" data-theme-choice="violet" aria-pressed="false"><i></i>Violet</button><button type="button" data-theme-choice="sunset" aria-pressed="false"><i></i>Sunset</button></div>
+      </section>
+    </div>
+    <main class="course-picker">
+      <header class="picker-heading">
+        <div class="picker-brand"><span class="brand-mark" aria-hidden="true"><span>S</span></span><span class="brand-name">Sathishram <span class="brand-accent">School</span></span></div>
+        <p>Choose a learning path and build practical skills, one lesson at a time.</p>
+      </header>
+      <a class="course-choice choice-python" href="tutorial/python.html">
+        <span class="choice-icon" data-icon="python"></span>
+        <h1>Learn Python</h1>
+        <p>Start from the fundamentals, explore OOP, and prepare with a Python cheat sheet and 100 interview questions.</p>
+        <span class="choice-link">Open Python course →</span>
+      </a>
+      <a class="course-choice choice-playwright" href="tutorial/playwright.html">
+        <span class="choice-icon" data-icon="browser"></span>
+        <h1>Learn Playwright</h1>
+        <p>Learn browser automation with Python, from your first test to reliable end-to-end workflows and interview prep.</p>
+        <span class="choice-link">Open Playwright course →</span>
+      </a>
+      <a class="course-choice choice-django" href="tutorial/ai-paths.html?course=django"><span class="choice-icon">Dj</span><h1>Django</h1><p>Build full stack web applications with URLs, views, templates, models, forms, and tests.</p><span class="choice-link">Explore Django →</span></a>
+      <a class="course-choice choice-fastapi" href="tutorial/ai-paths.html?course=fastapi"><span class="choice-icon">Fa</span><h1>FastAPI</h1><p>Design typed APIs with validation, dependencies, authentication, async patterns, and tests.</p><span class="choice-link">Explore FastAPI →</span></a>
+      <a class="course-choice choice-langchain" href="tutorial/ai-paths.html?course=langchain"><span class="choice-icon">LC</span><h1>LangChain</h1><p>Connect language models to prompts, structured output, tools, retrieval, and production workflows.</p><span class="choice-link">Explore LangChain →</span></a>
+      <a class="course-choice choice-langgraph" href="tutorial/ai-paths.html?course=langgraph"><span class="choice-icon">LG</span><h1>LangGraph</h1><p>Build stateful agent workflows with graphs, branching, checkpoints, and human review.</p><span class="choice-link">Explore LangGraph →</span></a>
+      <a class="course-choice choice-rag" href="tutorial/ai-paths.html?course=rag"><span class="choice-icon">RAG</span><h1>Retrieval Augmented Generation</h1><p>Build grounded answers from your own data and improve retrieval quality systematically.</p><span class="choice-link">Explore RAG →</span></a>
+      <a class="course-choice choice-mcp" href="tutorial/ai-paths.html?course=mcp"><span class="choice-icon">MCP</span><h1>Model Context Protocol</h1><p>Connect AI applications to tools and data with interoperable MCP clients and servers.</p><span class="choice-link">Explore MCP →</span></a>
+      <a class="course-choice choice-evals" href="tutorial/ai-paths.html?course=ai-evaluation"><span class="choice-icon">AI</span><h1>AI &amp; Agent Engineering</h1><p>Learn LLMs, Claude, agent APIs, model selection, token budgets, fine-tuning, and evaluation.</p><span class="choice-link">Explore AI &amp; Agent Engineering →</span></a>
+    </main>
+    <script src="assets/icons.js"></script>
+    <script src="assets/theme-settings.js"></script>
+  </body>
+</html>

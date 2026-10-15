@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playwright lesson demo</title>
+    <style>
+      :root { color-scheme: light; font-family: "Segoe UI", Arial, sans-serif; color: #263a3b; background: #f4f8f7; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 16px; }
+      .site-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid #e2ece9; border-radius: 8px; background: #fff; }
+      .brand { display: flex; align-items: center; gap: 8px; color: #246f65; font-size: 11px; font-weight: 700; }
+      .brand-mark { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; background: #e7f5f0; }
+      .site-header small,.eyebrow { color: #79918c; font: 8px/1.5 "Segoe UI",Arial,sans-serif; letter-spacing: .45px; }
+      main { max-width: 430px; margin: 19px auto 0; }
+      .eyebrow { color: #318a79; font-weight: 700; }
+      h1 { margin: 6px 0; font-size: 19px; letter-spacing: -.45px; }
+      .intro { margin: 0 0 14px; color: #778885; font-size: 10px; line-height: 1.6; }
+      .demo-card { padding: 11px; border: 1px solid #e0ebe8; border-radius: 9px; background: #fff; box-shadow: 0 8px 22px #2758490a; }
+      .demo-card h2 { margin: 0 0 5px; font-size: 12px; }
+      .demo-card > p { margin: 0 0 12px; color: #71817e; font-size: 9px; line-height: 1.6; }
+      .visual-guide { margin-bottom: 10px; padding: 10px; border: 1px solid #dfeae7; border-radius: 8px; background: linear-gradient(135deg,#f8fbfa,#fff); }
+      .guide-heading { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 7px; }
+      .guide-heading strong { color: #365651; font-size: 9px; }
+      .guide-heading span { color: #78918b; font: 7px "Segoe UI",Arial,sans-serif; }
+      .compare-panels { display: grid; grid-template-columns: minmax(0,1fr) 18px minmax(0,1fr); gap: 5px; align-items: center; }
+      .compare-panel { min-width: 0; padding: 6px; border: 1px solid #e4eae8; border-radius: 6px; background: #fff; }
+      .compare-panel.after { border-color: #b8ded0; background: #f5fbf7; }
+      .compare-panel > small { display: block; margin-bottom: 4px; color: #84928f; font: 700 7px "Segoe UI",Arial,sans-serif; letter-spacing: .35px; }
+      .compare-panel.after > small { color: #25866f; }
+      .compare-panel p { min-height: 25px; margin: 4px 0 0; color: #5c6c69; font-size: 7px; line-height: 1.4; overflow-wrap: anywhere; }
+      .state-picture { display: block; width: 100%; height: auto; }
+      .compare-arrow { color: #268c77; font-size: 14px; font-weight: 700; text-align: center; }
+      .difference-note { margin: 7px 0 0; padding: 6px 7px; border-left: 2px solid #48a98d; border-radius: 0 4px 4px 0; background: #eef8f3; color: #43675d; font-size: 8px; line-height: 1.5; }
+      .difference-note strong { color: #266e5d; }
+      .action-flow { display: grid; grid-template-columns: minmax(0,1fr) 12px minmax(0,1fr) 12px minmax(0,1fr); align-items: stretch; gap: 3px; margin-bottom: 10px; }
+      .flow-card { min-width: 0; padding: 6px; border: 1px solid #e2eae7; border-radius: 6px; background: #fff; opacity: .68; }
+      .flow-card.current { border-color: #7fc9b0; background: #f1faf5; opacity: 1; box-shadow: 0 0 0 1px #d2eee1; }
+      .flow-card small { display: block; margin-bottom: 4px; color: #398775; font: 700 6px "Segoe UI",Arial,sans-serif; letter-spacing: .35px; }
+      .flow-card strong { display: block; color: #3c5b55; font-size: 7px; line-height: 1.35; overflow-wrap: anywhere; }
+      .flow-card p { margin: 4px 0 0; color: #71817e; font-size: 7px; line-height: 1.4; overflow-wrap: anywhere; }
+      .flow-arrow { align-self: center; color: #53a28a; font-size: 11px; text-align: center; }
+      .fields { display: grid; gap: 8px; }
+      label { display: grid; gap: 4px; color: #637673; font-size: 8px; font-weight: 600; }
+      input { width: 100%; padding: 8px; border: 1px solid #dce7e4; border-radius: 5px; color: #425653; font: 9px "Segoe UI",Arial,sans-serif; background: #fbfdfc; }
+      select { width: 100%; padding: 8px; border: 1px solid #dce7e4; border-radius: 5px; color: #425653; font: 9px "Segoe UI",Arial,sans-serif; background: #fbfdfc; }
+      .choice-control { grid-template-columns: 14px minmax(0,1fr); align-items: center; gap: 7px; }
+      .choice-control input { width: 14px; height: 14px; margin: 0; accent-color: #268c77; }
+      input:focus,select:focus { outline: 2px solid #a5ddc6; outline-offset: 1px; }
+      .choice-control { cursor: pointer; }
+      .mouse-playground { display: grid; gap: 9px; }
+      .mouse-instructions { margin: 0 !important; color: #627773 !important; }
+      .mouse-source { justify-self: start; padding: 9px 12px; border: 1px solid #b9d8ce; border-radius: 6px; background: #f2faf6; color: #286e5c; font: 700 9px "Segoe UI",Arial,sans-serif; cursor: grab; }
+      .mouse-source:active { cursor: grabbing; }
+      .mouse-source.is-hovered { outline: 2px solid #8ccdb5; outline-offset: 2px; }
+      .mouse-source.is-dragging { opacity: .55; }
+      .mouse-drop-zone { display: grid; min-height: 58px; place-items: center; padding: 10px; border: 2px dashed #c7d8d3; border-radius: 7px; color: #6c827c; font-size: 9px; }
+      .mouse-drop-zone.is-over,.mouse-drop-zone.has-item { border-color: #4ca889; background: #eef8f2; }
+      .mouse-drop-zone .mouse-source { justify-self: center; }
+      .mouse-hold { justify-self: start; padding: 8px 11px; border: 1px solid #e3e8e5; border-radius: 5px; background: #fff; color: #516a64; font: 600 9px "Segoe UI",Arial,sans-serif; touch-action: none; }
+      .mouse-hold.is-holding { border-color: #318a79; background: #eaf7f0; box-shadow: 0 0 0 3px #318a7926; }
+      .fact-list { display: grid; gap: 5px; }
+      .fact-item { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 6px; padding: 6px 7px; border: 1px solid #e6eeeb; border-radius: 5px; background: #fbfdfc; color: #536966; font-size: 8px; line-height: 1.4; }
+      .fact-item strong { color: #318a79; }
+      .demo-action-button { margin-top: 10px; padding: 8px 11px; border: 0; border-radius: 5px; background: #268c77; color: white; font: 600 9px "Segoe UI",Arial,sans-serif; cursor: pointer; }
+      .demo-action-button:hover { background: #187762; }
+      .demo-action-button:focus-visible { outline: 2px solid #82cbb1; outline-offset: 2px; }
+      .demo-action-button:disabled { cursor: default; opacity: .7; }
+      .demo-outcome { margin: 8px 0 0; padding: 7px 8px; border-radius: 5px; background: #edf7f2; color: #286e5c; font-size: 8px; font-weight: 700; line-height: 1.5; overflow-wrap: anywhere; }
+      .status { min-height: 14px; margin: 9px 0 0; color: #23866f; font-size: 9px; font-weight: 600; }
+      .result-list { display: grid; gap: 6px; margin-top: 10px; }
+      .result-list div { padding: 7px 8px; border: 1px solid #e8efed; border-radius: 5px; color: #536966; font-size: 9px; }
+      .step-strip { display: flex; gap: 4px; margin-top: 14px; }
+      .step-strip span { height: 4px; flex: 1; border-radius: 4px; background: #e4edeb; }
+      .step-strip span.done { background: #41ae91; }
+      .step-label { display: block; margin-top: 6px; color: #8b9996; font: 8px "Segoe UI",Arial,sans-serif; }
+      @media (max-width: 430px) { body { padding: 10px; } main { margin-top: 13px; } h1 { font-size: 17px; } }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <span class="brand"><span class="brand-mark">✦</span> Demo learning app</span>
+      <small>PLAYWRIGHT PRACTICE</small>
+    </header>
+    <main>
+      <small class="eyebrow" id="demo-category">SAMPLE PAGE</small>
+      <h1 id="demo-title">Interactive browser demo</h1>
+      <p class="intro" id="demo-intro"></p>
+      <section class="visual-guide" aria-label="Before and after browser comparison">
+        <div class="guide-heading"><strong>PICTURE GUIDE · WHAT CHANGES?</strong><span id="compare-progress"></span></div>
+        <div class="compare-panels">
+          <article class="compare-panel">
+            <small>BEFORE</small>
+            <div id="before-picture"></div>
+            <p id="before-copy"></p>
+          </article>
+          <span class="compare-arrow" aria-hidden="true">→</span>
+          <article class="compare-panel after">
+            <small>AFTER</small>
+            <div id="after-picture"></div>
+            <p id="after-copy"></p>
+          </article>
+        </div>
+        <p class="difference-note"><strong>Key difference:</strong> <span id="difference-copy"></span></p>
+      </section>
+      <section class="action-flow" aria-label="How the Playwright action works">
+        <article class="flow-card" id="flow-card-test"><small>1 · TEST CODE</small><strong id="flow-test-title"></strong><p id="flow-test-copy"></p></article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article class="flow-card" id="flow-card-playwright"><small>2 · PLAYWRIGHT</small><strong id="flow-action-title"></strong><p id="flow-action-copy"></p></article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article class="flow-card" id="flow-card-result"><small>3 · BROWSER RESULT</small><strong id="flow-result-title"></strong><p id="flow-result-copy"></p></article>
+      </section>
+      <section class="demo-card" aria-live="polite">
+        <h2 id="card-title"></h2>
+        <p id="card-description"></p>
+        <div class="fields" id="demo-fields"></div>
+        <button class="demo-action-button" id="demo-action" type="button"></button>
+        <p class="demo-outcome" id="demo-outcome" hidden></p>
+        <p class="status" id="demo-status"></p>
+        <div class="result-list" id="demo-results"></div>
+      </section>
+      <div class="step-strip" id="step-strip" aria-hidden="true"></div>
+      <small class="step-label" id="step-label"></small>
+    </main>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const lesson = params.get("lesson") || "Playwright demo";
+      let step = Number(params.get("step") || 0);
+      let stepTitle = params.get("stepTitle") || "";
+      let stepDetail = params.get("stepDetail") || "";
+      const steps = Math.max(1, Number(params.get("steps") || 4));
+      const scenarios = {
+        "Locators & auto-waiting": {
+          category: "PROFILE SETTINGS", pageTitle: "Your profile", intro: "A sample form for practicing accessible locators and reliable actions.",
+          cardTitle: "Personal details", description: ["The test finds the Save button by its role and name.", "The locator waits until the button is ready to use.", "Playwright performs the click after actionability checks pass.", "The page confirms the saved profile."],
+          fields: [["Full name", "Asha Kumar"], ["Email", "asha@example.test"]], action: "Save profile", result: "Profile saved successfully."
+        },
+        "Click, fill & keyboard actions": {
+          category: "CONTACT FORM", pageTitle: "Get in touch", intro: "See typed values and a submit action reflected in a sample page.",
+          cardTitle: "Send a message", description: ["The test locates the name field and Send button.", "Playwright fills the name field with the test value.", "The sample form is submitted with a click.", "A confirmation appears in the page."],
+          fields: [["Your name", "Learner"], ["Message", "I am learning Playwright"]], action: "Send message", result: "Message sent. Thanks!"
+        },
+        "Mouse actions: hover, hold & drag-and-drop": {
+          category: "MOUSE ACTIONS", pageTitle: "Move the report card", intro: "Hover over a draggable card, then press and hold to move it into the drop zone.",
+          cardTitle: "Drag the report card", description: ["Find the card and the named drop zone.", "Hover moves the pointer over the source item.", "Hold the mouse button while moving toward the tray.", "Release to drop, or use locator.drag_to(target)."],
+          fields: [["Source", "Report card"], ["Destination", "Drop zone"]], action: "Run mouse gesture", result: "✓ Report card dropped in the tray"
+        },
+        "Network requests & API testing": {
+          category: "SHOP API", pageTitle: "Explore the catalog", intro: "Follow a sample UI action through an HTTP response and rendered items.",
+          cardTitle: "Featured items", description: ["The test registers a wait for the items response.", "Clicking Load items starts the sample request.", "The sample server responds with HTTP 200 and JSON.", "The returned products are rendered on the page."],
+          fields: [], action: "Load items", result: "HTTP 200 · GET /api/items", items: ["Notebook · $8", "Canvas bag · $24", "Desk lamp · $32"]
+        },
+        "Authentication & storage state": {
+          category: "MEMBER SIGN IN", pageTitle: "Welcome back", intro: "A sample sign-in page that shows where an authenticated flow leads.",
+          cardTitle: "Sign in to your account", description: ["The test opens the sample sign-in page.", "The test fills in the sample account details.", "The sign-in action creates a sample session.", "The member dashboard is now available."],
+          fields: [["Email", "learner@example.test"], ["Password", "sample-password"]], action: "Sign in", result: "Signed in · sample session active"
+        },
+        "Role & text locators in practice": {
+          category: "ACCESSIBLE LOCATORS", pageTitle: "Account settings", intro: "Locate controls by their accessible role and visible name.",
+          cardTitle: "Profile", description: ["The page exposes a Save profile button and a Welcome back message.", "get_by_role matches the button's semantic role and accessible name.", "get_by_text matches the exact visible message.", "The test verifies both targets before saving."],
+          fields: [["Heading", "Welcome back"], ["Button role", "Save profile"]], action: "Save profile", result: "✓ Profile saved"
+        },
+        "Checkboxes, radio buttons & dropdowns": {
+          category: "FORM CONTROLS", pageTitle: "Delivery preferences", intro: "Choose a checkbox, one radio option, and a dropdown value.",
+          cardTitle: "Your choices", description: ["The form starts with independent terms, a radio group, and a country select.", "check() turns the terms checkbox on.", "The radio group selects one delivery option.", "The native select chooses a country; custom menus use their visible option."],
+          controls: [["checkbox", "Accept terms", false], ["radio", "Standard delivery", false], ["radio", "Express delivery", false], ["select", "Country", ["Canada", "India", "Japan"], "Canada"]],
+          action: "Confirm choices", result: "✓ Preferences saved"
+        },
+        "Pagination & paged results": {
+          category: "SEARCH RESULTS", pageTitle: "Course catalog", intro: "Move between pages and check both the active page and its results.",
+          cardTitle: "Python courses", description: ["Page 1 is active and shows its first set of courses.", "The Next control advances the result list.", "The page marker changes to page 2.", "The new page's items are visible and ready to assert."],
+          fields: [["Current page", "1"], ["Results", "Python basics · Variables · Strings"]], action: "Next page →", result: "Page 2 · OOP · Testing · Async"
+        },
+        "Navigate backward & forward": {
+          category: "BROWSER HISTORY", pageTitle: "Help center", intro: "Follow one tab as it navigates, goes back, and moves forward.",
+          cardTitle: "Navigation history", description: ["The current tab opens the start page.", "A Details link adds a location to its history.", "go_back() returns to the earlier page.", "go_forward() restores the details page."],
+          fields: [["History", "/start → /details → back → forward"]], action: "Current: /details", result: "✓ Forward navigation complete"
+        },
+        "Multiple tabs, windows & popups": {
+          category: "BROWSER PAGES", pageTitle: "Workspace tabs", intro: "Capture new pages and switch among three open tabs.",
+          cardTitle: "Open browser pages", description: ["The context contains the original page.", "A click opens and captures the report popup.", "A second action creates a help page in the same context.", "The test selects the intended Page and brings it to the front."],
+          fields: [["Page 1", "Home"], ["Page 2", "Report popup"], ["Page 3", "Help · active"]], action: "Switch to Page 3", result: "✓ Help page is active"
+        },
+        "Frames & nested iframes": {
+          category: "NESTED FRAMES", pageTitle: "Embedded survey", intro: "Each frame boundary contains another document to locate through.",
+          cardTitle: "Frame hierarchy", description: ["The top-level page contains the outer iframe.", "The outer document contains the middle iframe.", "The middle document contains a third nested iframe.", "The test locates Submit answer inside the deepest frame."],
+          fields: [["Frame path", "Main → #outer → #middle → #inner"], ["Target", "Submit answer · frame 3"]], action: "Submit answer", result: "✓ Answer received"
+        },
+        "Shadow DOM components": {
+          category: "WEB COMPONENT", pageTitle: "Preferences component", intro: "Supported Playwright locators can traverse open shadow roots.",
+          cardTitle: "Settings panel", description: ["A custom element renders its controls inside an open shadow root.", "A role locator finds the visible Save settings button.", "The test activates the component's public control.", "The public page confirms the saved state; closed roots stay encapsulated."],
+          fields: [["Component", "<settings-panel> · open shadow root"], ["Control", "button · Save settings"]], action: "Save settings", result: "✓ Settings saved"
+        },
+        "API requests & network handling": {
+          category: "API + BROWSER NETWORK", pageTitle: "Catalog service", intro: "Compare direct API setup with browser response observation and route mocks.",
+          cardTitle: "Items endpoint", description: ["APIRequestContext creates test data directly.", "The test listens for /api/items before clicking Load items.", "The browser request receives a status and JSON response.", "A route can fulfill a mocked response for a deterministic UI test."],
+          fields: [["Endpoint", "POST /todos · GET /api/items"], ["Response", "HTTP 200 · JSON"]], action: "Load items", result: "✓ 3 items rendered", items: ["Notebook · $8", "Canvas bag · $24", "Desk lamp · $32"]
+        },
+        "Record & replay with codegen": {
+          category: "RECORD & REPLAY", pageTitle: "Recorded journey", intro: "Codegen records a first draft; assertions make the replay meaningful.",
+          cardTitle: "Course search", description: ["Start codegen and perform a user journey in the browser.", "Generated Python contains candidate locators and actions.", "Review selectors and add an assertion for the expected result.", "Replay the reviewed test with pytest or the standalone script."],
+          fields: [["Recorder", "python -m playwright codegen"], ["Replay", "pytest -q tests/test_journey.py"]], action: "Replay journey", result: "✓ Test passed"
+        },
+        "Assertions & expect": {
+          category: "MEMBER DASHBOARD", pageTitle: "Your dashboard", intro: "The test waits for this heading to become visible before passing.",
+          cardTitle: "Welcome, Asha", description: ["The test locates the dashboard heading.", "The visibility assertion retries while the page updates.", "The expected heading is now visible.", "The Playwright assertion passes."],
+          fields: [], action: "Dashboard ready", result: "✓ Assertion passed"
+        }
+      };
+      const scenario = scenarios[lesson] || {
+        category: "SAMPLE PAGE", pageTitle: lesson, intro: "A local demo page showing the browser state as the Playwright flow progresses.",
+        cardTitle: "Demo interaction", description: ["The Python test starts this browser workflow.", "Playwright sends the selected step to the browser.", "The sample page processes the interaction.", "The test can inspect the visible result."],
+        fields: [["Sample input", "Playwright learner"]], action: "Continue", result: "Step complete"
+      };
+      const textFormLessons = new Set([
+        "Locators & auto-waiting",
+        "Click, fill & keyboard actions",
+        "Authentication & storage state"
+      ]);
+      const actionLabels = {
+        "Locators & auto-waiting": "Save profile",
+        "Click, fill & keyboard actions": "Send message",
+        "Mouse actions: hover, hold & drag-and-drop": "Run mouse gesture",
+        "Network requests & API testing": "Load items",
+        "Authentication & storage state": "Sign in",
+        "Role & text locators in practice": "Save profile",
+        "Checkboxes, radio buttons & dropdowns": "Apply selected options",
+        "Pagination & paged results": "Next page",
+        "Navigate backward & forward": "Replay history navigation",
+        "Multiple tabs, windows & popups": "Open Page 3",
+        "Frames & nested iframes": "Submit answer in nested frame",
+        "Shadow DOM components": "Save settings",
+        "API requests & network handling": "Load items",
+        "Record & replay with codegen": "Replay recorded test",
+        "Assertions & expect": "Run assertion"
+      };
+      const editableValues = new Map();
+      let actionComplete = false;
+      let currentPageNumber = 1;
+      let historyPosition = 1;
+      let activeTab = 0;
+      let networkLoaded = false;
+      let mouseDropped = false;
+      let mouseIsHolding = false;
+      let mouseIsHovering = false;
+      const lessonComparisons = {
+        "What is Playwright?": ["A person repeats browser checks by hand.", "A Python test drives a browser and checks the result.", "Automation makes browser actions repeatable across supported engines."],
+        "Install Playwright for Python": ["Python code has no installed browser engines to launch.", "The Python package and Chromium, Firefox, or WebKit are ready.", "Installing the package and installing browser binaries are separate setup steps."],
+        "Launch, page & browser context": ["No isolated browser session or tab exists yet.", "A Browser contains an isolated Context, which contains a Page.", "Context isolates cookies and storage; Page represents a tab."],
+        "Your first browser test": ["The page is unopened and the expected result is unchecked.", "The test navigates, performs an action, and asserts visible behavior.", "A test connects setup, user behavior, an assertion, and cleanup."],
+        "Sync & async APIs": ["Browser calls block in a synchronous script.", "The async API awaits browser operations inside the event loop.", "Choose sync or async to match the surrounding Python runtime."],
+        "Locators & auto-waiting": ["The Save action has not completed.", "Playwright finds the Save control, waits until it is actionable, then clicks.", "A Locator re-finds the target and auto-waits; it is not a one-time element handle."],
+        "Mouse actions: hover, hold & drag-and-drop": ["Report card is outside the tray; the pointer is idle.", "The pointer moves onto the card and the mouse button stays held during movement.", "The card is released inside the drop zone; drag_to(target) models the same transfer."],
+        "User-facing locators": ["A control is identified by fragile page structure.", "The test locates a control by role, label, or accessible name.", "User-facing locators describe what the learner can perceive."],
+        "CSS, text & test-id locators": ["The target has not been scoped to a stable selector.", "CSS, text, or an agreed test ID identifies the target.", "Use semantic locators first; CSS/XPath are fallback choices."],
+        "Advanced browser interactions": ["The browser is in its initial state.", "A focused browser action changes the visible page state.", "Use the Playwright action that matches the actual user interaction."],
+        "Role & text locators in practice": ["The Save button and welcome message have not been checked.", "Role and exact visible text identify the intended elements.", "Role finds controls; text finds visible content."],
+        "Checkboxes, radio buttons & dropdowns": ["Terms are unchecked, no delivery option is selected, and the default country remains.", "The checkbox, one radio choice, and a country selection are set.", "Checkboxes are independent; radios choose one option; selects choose a value."],
+        "Pagination & paged results": ["Page 1 and its original results are active.", "Page 2 is active and a different result set is shown.", "Verify both the active-page marker and the items after navigation."],
+        "Navigate backward & forward": ["The tab is at its starting history entry.", "Back and forward move the same tab between history entries.", "History navigation changes the current page without creating a new tab."],
+        "Multiple tabs, windows & popups": ["Only the original tab is open.", "The popup and additional pages exist; the intended Page is active.", "Each tab is a Page; capture a popup before its triggering action."],
+        "Frames & nested iframes": ["The target is inside nested documents, outside the main page scope.", "Chained frame locators reach the control in the innermost frame.", "Each frame boundary needs another frame_locator scope."],
+        "Shadow DOM components": ["The component's public control has not been reached.", "A supported locator reaches a control inside an open shadow root.", "Open roots are traversable; closed roots remain encapsulated."],
+        "API requests & network handling": ["No API response is observed and UI data is not loaded.", "The test observes or mocks a response and checks rendered data.", "Direct API calls, response listeners, and route mocks solve different tasks."],
+        "Record & replay with codegen": ["There is no recorded journey or assertion.", "A reviewed Python test replays the journey and checks expected behavior.", "Codegen drafts actions; learners should review locators and add assertions."],
+        "Pytest & pytest-playwright": ["A test has no managed browser page.", "Pytest injects a page fixture and cleans its resources.", "Fixtures manage browser lifecycle so tests can focus on behavior."],
+        "Fixtures, hooks & test isolation": ["Tests risk sharing mutable cookies and browser state.", "Each test receives isolated state and fixture teardown runs afterward.", "Fresh per-test fixtures prevent state leakage and ordering dependencies."],
+        "Navigation, waits & timeouts": ["The test continues before the required page state is ready.", "The test waits for a meaningful load or locator condition.", "Condition-based waits replace arbitrary sleeps and expose timeout failures."],
+        "Forms, dialogs & file uploads": ["The form has not been submitted; dialogs and file data are unhandled.", "Controls are filled, the dialog handler is ready, and the upload is supplied.", "Register event handlers before triggering dialogs; use set_input_files for uploads."],
+        "Frames, popups & downloads": ["The popup/download event has not been captured.", "The event is awaited before the click, then its result is inspected.", "Register popup or download waits before the action that emits the event."],
+        "Network requests & API testing": ["The UI request and its server response have not been observed.", "A matching response is captured and status/data can be asserted.", "Listen for the specific response before triggering the UI request."],
+        "Authentication & storage state": ["A fresh context has no saved signed-in session.", "A context loads saved cookies and local storage.", "Storage state speeds setup but is sensitive and must be protected."],
+        "Trace viewer, screenshots & debugging": ["A failing test provides little evidence about what happened.", "Trace, screenshot, or video artifacts show browser state around failure.", "Artifacts help investigate failures; they do not replace assertions."],
+        "Parallelism, browsers & configuration": ["One default browser run covers only one engine/configuration.", "Pytest runs selected browser engines with isolated worker data.", "Cross-browser coverage finds engine differences; parallel tests need isolation."],
+        "CI, flakiness & interview strategy": ["Local-only tests lack repeatable setup and useful failure artifacts.", "CI installs dependencies and browsers, runs tests, and preserves evidence.", "Stable CI comes from deterministic data and synchronization, not blanket sleeps."],
+        "Playwright compared with other tools": ["Tool choice is based on names rather than project needs.", "Playwright, Selenium, Cypress, and Puppeteer are compared by language, engines, and workflow.", "Choose by concrete language, browser, runner, and ecosystem requirements."],
+        "Python project setup & layout": ["The project has no declared test dependencies or installed browsers.", "pytest-playwright, browser binaries, and a tests/ layout are ready.", "This course uses Python and pytest, not npm or the TypeScript test runner."],
+        "Pytest test anatomy, fixtures & hooks": ["No fixture has prepared the page or test state.", "Pytest sets up a fixture, runs the test, then tears it down.", "Python uses pytest fixtures/hooks rather than test.describe or beforeEach."],
+        "pytest.ini configuration & browser matrix": ["Tests use implicit defaults and a single browser configuration.", "pytest.ini and repeated browser flags define repeatable runs.", "Python config and reporters use pytest settings/plugins, not playwright.config.ts."],
+        "Run, select & debug pytest tests": ["The suite is not filtered or running in a visible browser.", "Pytest selects tests, runs headed, or enters Python debugging.", "Use pytest -k and pytest debugging; --grep/--ui belong to the JS runner."],
+        "Assertions: web-first, soft & screenshots": ["A one-time check can run before the page reaches its expected state.", "Retrying text/value/attribute/count or screenshot assertions report the outcome.", "Web-first expect retries; ordinary Python assert does not poll the page."],
+        "Locator chaining, filtering & strict mode": ["A broad locator matches several possible targets.", "Chaining and filtering narrow the locator to the intended unique element.", "Strict mode prevents actions on ambiguous matches; positional choice must be intentional."],
+        "Actions & actionability checks": ["The control may be hidden, moving, disabled, or covered.", "Playwright waits for the target and applicable actionability checks before acting.", "Click checks uniqueness, visibility, stability, enabled state, and event reception."],
+        "Explicit waits & timeout budgets": ["The test continues without confirming the required condition.", "A locator/load condition is awaited with an operation-specific deadline.", "Use condition-based waits and configure action, navigation, assertion, and test timeouts separately."]
+      };
+      const comparison = lessonComparisons[lesson] || [
+        "The expected browser change has not happened yet.",
+        scenario.result || "The test has reached its expected result.",
+        scenario.description[scenario.description.length - 1] || "The test checks the resulting browser state."
+      ];
+      const initialScenarioResult = scenario.result;
+      const initialComparisonAfter = comparison[1];
+      if (!scenarios[lesson]) {
+        scenario.category = "LESSON VISUAL";
+        scenario.intro = "Follow the highlighted step beside this picture. Compare the starting page with the expected result.";
+        scenario.cardTitle = "What this Playwright step means";
+        scenario.fields = [];
+        scenario.result = comparison[1];
+      }
+      const updateStatus = (message) => {
+        document.getElementById("demo-status").textContent = message;
+      };
+      function resetCodeDemoState() {
+        editableValues.clear();
+        actionComplete = false;
+        currentPageNumber = 1;
+        historyPosition = 1;
+        activeTab = 0;
+        networkLoaded = false;
+        mouseDropped = false;
+        mouseIsHolding = false;
+        mouseIsHovering = false;
+        scenario.result = initialScenarioResult;
+        comparison[1] = initialComparisonAfter;
+        renderDemo();
+      }
+      function makeStatePicture(containerId, complete, label) {
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 160 70");
+        svg.setAttribute("class", "state-picture");
+        svg.setAttribute("role", "img");
+        svg.setAttribute("aria-label", complete ? "Expected browser state illustration" : "Starting browser state illustration");
+        const rect = (x, y, width, height, fill, stroke, radius = 4) => {
+          const element = document.createElementNS(svg.namespaceURI, "rect");
+          element.setAttribute("x", x); element.setAttribute("y", y); element.setAttribute("width", width);
+          element.setAttribute("height", height); element.setAttribute("rx", radius); element.setAttribute("fill", fill);
+          element.setAttribute("stroke", stroke); svg.appendChild(element);
+        };
+        const circle = (x, y, fill) => {
+          const element = document.createElementNS(svg.namespaceURI, "circle");
+          element.setAttribute("cx", x); element.setAttribute("cy", y); element.setAttribute("r", 2.4);
+          element.setAttribute("fill", fill); svg.appendChild(element);
+        };
+        rect(2, 2, 156, 66, "#ffffff", "#dfe9e5", 6);
+        rect(2, 2, 156, 13, "#f0f6f3", "#f0f6f3", 6);
+        circle(11, 8.5, "#e58c7c"); circle(19, 8.5, "#e7bd68"); circle(27, 8.5, "#65b88d");
+        if (complete) {
+          rect(12, 23, 26, 25, "#eaf7f0", "#c5e6d5", 5);
+          const check = document.createElementNS(svg.namespaceURI, "path");
+          check.setAttribute("d", "M19 36l5 5 9-11"); check.setAttribute("fill", "none");
+          check.setAttribute("stroke", "#27856d"); check.setAttribute("stroke-width", "3");
+          check.setAttribute("stroke-linecap", "round"); check.setAttribute("stroke-linejoin", "round");
+          svg.appendChild(check);
+          rect(46, 24, 95, 6, "#dcebe4", "#dcebe4", 3);
+          rect(46, 36, 78, 5, "#e8f1ed", "#e8f1ed", 3);
+          rect(12, 54, 54, 7, "#dbf1e5", "#dbf1e5", 3);
+          rect(69, 54, 69, 7, "#f0f5f2", "#f0f5f2", 3);
+        } else {
+          rect(13, 24, 126, 8, "#f0f2f1", "#f0f2f1", 3);
+          rect(13, 38, 91, 6, "#f3f5f4", "#f3f5f4", 3);
+          rect(13, 51, 54, 10, "#f8faf9", "#dfe8e4", 4);
+        }
+        document.getElementById(containerId).replaceChildren(svg);
+      }
+      function completeMouseAction(result) {
+        actionComplete = true;
+        scenario.result = result;
+        comparison[1] = result;
+        document.getElementById("after-copy").textContent = result;
+        document.getElementById("flow-result-title").textContent = "Action demonstrated";
+        document.getElementById("flow-result-copy").textContent = result;
+        document.getElementById("demo-outcome").textContent = `Result: ${result}`;
+        document.getElementById("demo-outcome").hidden = false;
+        document.getElementById("demo-action").textContent = "Run the action again";
+        updateStatus(result);
+      }
+      function runMouseCodeLine(line) {
+        const source = document.getElementById("mouse-source");
+        const zone = document.getElementById("mouse-drop-zone");
+        if (!source || !zone) return false;
+        if (/\.hover\s*\(/.test(line)) {
+          mouseIsHovering = true;
+          source.classList.add("is-hovered");
+          updateStatus("Pointer is hovering over the Report card.");
+          return true;
+        }
+        if (/mouse\.down\s*\(/.test(line)) {
+          mouseIsHolding = true;
+          source.classList.add("is-dragging");
+          updateStatus("Mouse button is held down on the Report card.");
+          return true;
+        }
+        if (/mouse\.move\s*\(/.test(line)) {
+          zone.classList.add("is-over");
+          updateStatus("Pointer moves toward the drop zone while held.");
+          return true;
+        }
+        if (/\.drag_to\s*\(/.test(line) || /mouse\.up\s*\(/.test(line)) {
+          mouseIsHolding = false;
+          mouseDropped = true;
+          zone.classList.remove("is-over");
+          zone.classList.add("has-item");
+          zone.replaceChildren(source);
+          source.classList.remove("is-dragging");
+          completeMouseAction("✓ Report card dropped in the tray");
+          return true;
+        }
+        return false;
+      }
+      function dropMouseCard(source, zone) {
+        mouseDropped = true;
+        mouseIsHolding = false;
+        zone.classList.remove("is-over");
+        zone.classList.add("has-item");
+        zone.replaceChildren(source);
+        source.classList.remove("is-dragging");
+        completeMouseAction("✓ Report card dropped in the tray");
+      }
+      function runCodeLine(message) {
+        const line = message.line || "";
+        if (lesson === "Mouse actions: hover, hold & drag-and-drop") {
+          runMouseCodeLine(line);
+          if (message.triggerAction && !/\.drag_to\s*\(|mouse\.up\s*\(/.test(line)) {
+            runMouseCodeLine("source.drag_to(target)");
+          }
+          return;
+        }
+        const fieldMatch = line.match(/(?:get_by_label|get_by_placeholder)\(["']([^"']+)["']\)/);
+        const fillMatch = line.match(/\.fill\(["']([^"']*)["']\)/);
+        if (fieldMatch && fillMatch) {
+          const control = [...document.querySelectorAll("#demo-fields input, #demo-fields select")]
+            .find((item) => item.getAttribute("aria-label") === fieldMatch[1]);
+          if (control) {
+            control.value = fillMatch[1];
+            control.dispatchEvent(new Event("input", { bubbles: true }));
+            control.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+        }
+        const choiceMatch = line.match(/get_by_role\("(checkbox|radio)",\s*name=["']([^"']+)["']\)/);
+        if (choiceMatch && /\.(check|uncheck)\s*\(/.test(line)) {
+          const control = [...document.querySelectorAll(`#demo-fields input[type="${choiceMatch[1]}"]`)]
+            .find((item) => item.getAttribute("aria-label") === choiceMatch[2]);
+          if (control) {
+            control.checked = /\.check\s*\(/.test(line) && !/\.uncheck\s*\(/.test(line);
+            control.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+        }
+        const selectMatch = line.match(/get_by_label\(["']([^"']+)["']\)\.select_option\((?:label|value)=["']([^"']+)["']\)/);
+        if (selectMatch) {
+          const control = [...document.querySelectorAll("#demo-fields select")]
+            .find((item) => item.getAttribute("aria-label") === selectMatch[1]);
+          if (control) {
+            control.value = selectMatch[2];
+            control.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+        }
+        const pressMatch = line.match(/get_by_label\(["']([^"']+)["']\)\.press\(["']([^"']+)["']\)/);
+        if (pressMatch) {
+          const control = [...document.querySelectorAll("#demo-fields input, #demo-fields select")]
+            .find((item) => item.getAttribute("aria-label") === pressMatch[1]);
+          if (control) {
+            control.dispatchEvent(new KeyboardEvent("keydown", { key: pressMatch[2], bubbles: true }));
+            control.dispatchEvent(new KeyboardEvent("keyup", { key: pressMatch[2], bubbles: true }));
+            if (pressMatch[2] === "Tab") document.getElementById("demo-action").focus();
+          }
+        }
+        if (message.triggerAction) document.getElementById("demo-action").click();
+      }
+      function renderDemo() {
+        const currentStep = steps <= 1
+          ? scenario.description.length - 1
+          : Math.round(Math.min(Math.max(0, step), steps - 1) / (steps - 1) * (scenario.description.length - 1));
+        document.title = `${scenario.pageTitle} · Playwright demo`;
+        document.getElementById("demo-category").textContent = scenario.category;
+        document.getElementById("demo-title").textContent = scenario.pageTitle;
+        document.getElementById("demo-intro").textContent = scenario.intro;
+        document.getElementById("compare-progress").textContent = `STEP ${currentStep + 1} / ${scenario.description.length}`;
+        document.getElementById("before-copy").textContent = comparison[0];
+        document.getElementById("after-copy").textContent = actionComplete ? scenario.result : comparison[1];
+        document.getElementById("difference-copy").textContent = comparison[2];
+        makeStatePicture("before-picture", false, `Before: ${comparison[0]}`);
+        makeStatePicture("after-picture", true, `After: ${comparison[1]}`);
+        document.getElementById("flow-test-title").textContent = stepTitle || scenario.category;
+        document.getElementById("flow-test-copy").textContent = stepDetail || scenario.description[currentStep];
+        document.getElementById("flow-action-title").textContent = actionLabels[lesson] || scenario.action;
+        document.getElementById("flow-action-copy").textContent = scenario.description[Math.min(currentStep, scenario.description.length - 1)];
+        document.getElementById("flow-result-title").textContent = actionComplete ? "Action demonstrated" : "Expected page state";
+        document.getElementById("flow-result-copy").textContent = scenario.result;
+        const activeFlowCard = currentStep < 1 ? "flow-card-test" : currentStep < scenario.description.length - 1 ? "flow-card-playwright" : "flow-card-result";
+        ["flow-card-test", "flow-card-playwright", "flow-card-result"].forEach((id) => {
+          document.getElementById(id).classList.toggle("current", id === activeFlowCard);
+        });
+        document.getElementById("card-title").textContent = stepTitle
+          ? `${scenario.cardTitle} · ${stepTitle}`
+          : scenario.cardTitle;
+        document.getElementById("card-description").textContent = stepDetail || scenario.description[currentStep];
+        const actionButton = document.getElementById("demo-action");
+        actionButton.textContent = actionComplete ? "Run the action again" : (actionLabels[lesson] || scenario.action);
+        actionButton.disabled = false;
+        document.getElementById("demo-outcome").textContent = actionComplete ? `Result: ${scenario.result}` : "";
+        document.getElementById("demo-outcome").hidden = !actionComplete;
+        updateStatus("Controls below are interactive examples. Changes stay in this local demo.");
+        const fields = document.getElementById("demo-fields");
+        fields.replaceChildren();
+        fields.className = scenario.controls || textFormLessons.has(lesson) ? "fields" : "fact-list";
+        const demoControls = scenario.controls || (textFormLessons.has(lesson) ? (scenario.fields || []).map(([labelText, value]) => ["text", labelText, value]) : []);
+        demoControls.forEach((control) => {
+          const [kind, labelText, ...values] = control;
+          const label = document.createElement("label");
+          label.textContent = labelText;
+          if (kind === "checkbox" || kind === "radio") {
+            label.replaceChildren();
+            const input = document.createElement("input");
+            input.type = kind;
+            const key = `${kind}:${labelText}`;
+            if (!editableValues.has(key)) editableValues.set(key, Boolean(values[0]));
+            input.checked = editableValues.get(key);
+            if (kind === "radio") input.name = "demo-radio-group";
+            input.setAttribute("aria-label", labelText);
+            label.classList.add("choice-control");
+            input.addEventListener("change", () => {
+              if (kind === "radio" && input.checked) {
+                for (const key of editableValues.keys()) {
+                  if (key.startsWith("radio:")) editableValues.set(key, key === `radio:${labelText}`);
+                }
+              }
+              editableValues.set(key, input.checked);
+              updateStatus(`${labelText}: ${input.checked ? "selected" : "cleared"}. Click “${actionLabels[lesson] || scenario.action}” to apply.`);
+            });
+            const text = document.createElement("span");
+            text.textContent = labelText;
+            label.append(input, text);
+          } else if (kind === "select") {
+            const select = document.createElement("select");
+            values[0].forEach((optionText) => {
+              const option = document.createElement("option");
+              option.textContent = optionText;
+              option.value = optionText;
+              select.appendChild(option);
+            });
+            const key = `select:${labelText}`;
+            if (!editableValues.has(key)) editableValues.set(key, values[1]);
+            select.value = editableValues.get(key);
+            select.setAttribute("aria-label", labelText);
+            select.addEventListener("change", () => {
+              editableValues.set(key, select.value);
+              updateStatus(`${labelText} set to ${select.value}. Click “${actionLabels[lesson] || scenario.action}” to apply.`);
+            });
+            label.appendChild(select);
+          } else {
+            const input = document.createElement("input");
+            input.type = /password/i.test(labelText) ? "password" : /email/i.test(labelText) ? "email" : "text";
+            const key = `text:${labelText}`;
+            if (!editableValues.has(key)) editableValues.set(key, values[0]);
+            input.value = editableValues.get(key);
+            input.setAttribute("aria-label", labelText);
+            input.addEventListener("input", () => {
+              editableValues.set(key, input.value);
+              updateStatus(`${labelText} updated. Click “${actionLabels[lesson] || scenario.action}” to apply.`);
+            });
+            label.appendChild(input);
+          }
+          fields.appendChild(label);
+        });
+        if (!demoControls.length && scenario.fields?.length) {
+          scenario.fields.forEach(([labelText, value]) => {
+            const fact = document.createElement("div");
+            fact.className = "fact-item";
+            const label = document.createElement("strong");
+            label.textContent = labelText;
+            const content = document.createElement("span");
+            content.textContent = value;
+            fact.append(label, content);
+            fields.appendChild(fact);
+          });
+        }
+        if (lesson === "Mouse actions: hover, hold & drag-and-drop") {
+          fields.className = "mouse-playground";
+          fields.replaceChildren();
+          const instructions = document.createElement("p");
+          instructions.className = "mouse-instructions";
+          instructions.textContent = "Drag the card into the tray, or press and hold the button to see the held-pointer state.";
+          const source = document.createElement("button");
+          source.id = "mouse-source";
+          source.type = "button";
+          source.className = "mouse-source";
+          source.draggable = false;
+          source.textContent = "Report card";
+          source.classList.toggle("is-hovered", mouseIsHovering);
+          source.classList.toggle("is-dragging", mouseIsHolding);
+          source.addEventListener("pointerdown", (event) => {
+            mouseIsHolding = true;
+            source.classList.add("is-dragging");
+            source.setPointerCapture(event.pointerId);
+            updateStatus("Mouse button down · move the held Report card into the tray.");
+          });
+          source.addEventListener("pointermove", (event) => {
+            if (!mouseIsHolding) return;
+            const rect = zone.getBoundingClientRect();
+            const overZone = event.clientX >= rect.left && event.clientX <= rect.right &&
+              event.clientY >= rect.top && event.clientY <= rect.bottom;
+            zone.classList.toggle("is-over", overZone);
+            updateStatus(overZone ? "Card is over the tray · release to drop." : "Dragging Report card · keep holding as you move.");
+          });
+          source.addEventListener("pointerup", (event) => {
+            if (!mouseIsHolding) return;
+            const rect = zone.getBoundingClientRect();
+            const dropped = event.clientX >= rect.left && event.clientX <= rect.right &&
+              event.clientY >= rect.top && event.clientY <= rect.bottom;
+            mouseIsHolding = false;
+            if (dropped) dropMouseCard(source, zone);
+            else {
+              source.classList.remove("is-dragging");
+              zone.classList.remove("is-over");
+              updateStatus("Released outside the tray · try dragging the card again.");
+            }
+          });
+          source.addEventListener("pointerenter", () => source.classList.add("is-hovered"));
+          source.addEventListener("pointerleave", () => source.classList.remove("is-hovered"));
+          const zone = document.createElement("div");
+          zone.id = "mouse-drop-zone";
+          zone.className = "mouse-drop-zone";
+          zone.setAttribute("role", "region");
+          zone.setAttribute("aria-label", "Drop zone");
+          zone.classList.toggle("has-item", mouseDropped);
+          if (mouseDropped) zone.appendChild(source);
+          else zone.textContent = "Drop zone · release the card here";
+          zone.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            zone.classList.add("is-over");
+          });
+          zone.addEventListener("dragleave", () => zone.classList.remove("is-over"));
+          zone.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropMouseCard(source, zone);
+          });
+          const hold = document.createElement("button");
+          hold.type = "button";
+          hold.className = "mouse-hold";
+          hold.textContent = "Press and hold";
+          let holdStartedAt = 0;
+          let holdTimer = 0;
+          hold.addEventListener("pointerdown", (event) => {
+            holdStartedAt = Date.now();
+            hold.classList.add("is-holding");
+            hold.setPointerCapture(event.pointerId);
+            updateStatus("Mouse button down · keep holding, then release.");
+            holdTimer = window.setTimeout(() => updateStatus("Still holding · the pointer remains pressed until release."), 450);
+          });
+          const releaseHold = () => {
+            if (!holdStartedAt) return;
+            window.clearTimeout(holdTimer);
+            const elapsed = Date.now() - holdStartedAt;
+            holdStartedAt = 0;
+            hold.classList.remove("is-holding");
+            completeMouseAction(`✓ Press held for ${elapsed} ms, then released`);
+          };
+          hold.addEventListener("pointerup", releaseHold);
+          hold.addEventListener("pointercancel", releaseHold);
+          fields.append(instructions, source, zone, hold);
+        }
+        if (lesson === "Pagination & paged results") {
+          const pageLabel = document.createElement("div");
+          pageLabel.className = "fact-item";
+          pageLabel.innerHTML = `<strong>Page</strong><span>${currentPageNumber} of 2</span>`;
+          const itemsLabel = document.createElement("div");
+          itemsLabel.className = "fact-item";
+          itemsLabel.innerHTML = `<strong>Results</strong><span>${currentPageNumber === 1 ? "Python basics · Variables · Strings" : "OOP · Testing · Async"}</span>`;
+          fields.replaceChildren(pageLabel, itemsLabel);
+        }
+        if (lesson === "Multiple tabs, windows & popups") {
+          const tabs = document.createElement("div");
+          tabs.className = "demo-tabs";
+          ["Home", "Report popup", "Help"].forEach((name, index) => {
+            const tab = document.createElement("button");
+            tab.type = "button";
+            tab.className = `demo-tab${activeTab === index ? " active" : ""}`;
+            tab.textContent = `Page ${index + 1} · ${name}`;
+            tab.addEventListener("click", () => {
+              activeTab = index;
+              scenario.result = `✓ ${name} page is active`;
+              comparison[1] = scenario.result;
+              actionComplete = true;
+              renderDemo();
+              updateStatus(`${name} is now the selected demo tab.`);
+            });
+            tabs.appendChild(tab);
+          });
+          fields.replaceChildren(tabs);
+        }
+        if (lesson === "Navigate backward & forward") {
+          const history = document.createElement("div");
+          history.className = "fact-item";
+          history.innerHTML = `<strong>Current URL</strong><span>${historyPosition === 0 ? "/start" : "/details"}</span>`;
+          fields.replaceChildren(history);
+          const historyButtons = document.createElement("div");
+          historyButtons.className = "history-actions";
+          ["Go back", "Go forward"].forEach((label, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "history-button";
+            button.textContent = label;
+            button.disabled = index === 0 ? historyPosition === 0 : historyPosition === 1;
+            button.addEventListener("click", () => {
+              historyPosition = index === 0 ? 0 : 1;
+              scenario.result = index === 0 ? "✓ Back navigation · /start" : "✓ Forward navigation · /details";
+              comparison[1] = scenario.result;
+              actionComplete = true;
+              renderDemo();
+              updateStatus(`Navigation changed to ${historyPosition === 0 ? "/start" : "/details"}.`);
+            });
+            historyButtons.appendChild(button);
+          });
+          fields.appendChild(historyButtons);
+        }
+        const results = document.getElementById("demo-results");
+        results.replaceChildren();
+        if (scenario.items && (actionComplete || (lesson === "Network requests & API testing" && networkLoaded))) {
+          scenario.items.forEach((item) => {
+            const row = document.createElement("div");
+            row.textContent = item;
+            results.appendChild(row);
+          });
+        }
+        const strip = document.getElementById("step-strip");
+        strip.replaceChildren();
+        for (let index = 0; index < steps; index += 1) {
+          const segment = document.createElement("span");
+          if (index <= step) segment.className = "done";
+          strip.appendChild(segment);
+        }
+        document.getElementById("step-label").textContent = `Visual flow step ${step + 1} of ${steps} · ${lesson}`;
+      }
+      document.getElementById("demo-action").addEventListener("click", () => {
+        if (lesson === "Mouse actions: hover, hold & drag-and-drop") {
+          runMouseCodeLine("source.drag_to(target)");
+          return;
+        }
+        actionComplete = true;
+        if (lesson === "Pagination & paged results") {
+          currentPageNumber = currentPageNumber === 1 ? 2 : 1;
+          scenario.result = `Page ${currentPageNumber} · ${currentPageNumber === 1 ? "Python basics · Variables · Strings" : "OOP · Testing · Async"}`;
+          comparison[1] = scenario.result;
+        }
+        if (lesson === "Network requests & API testing") networkLoaded = true;
+        if (lesson === "Multiple tabs, windows & popups") activeTab = 2;
+        if (lesson === "Navigate backward & forward") {
+          historyPosition = 1;
+          scenario.result = "✓ Forward navigation · /details";
+          comparison[1] = scenario.result;
+        }
+        if (lesson === "Checkboxes, radio buttons & dropdowns") {
+          const selected = [...editableValues.entries()].filter(([, value]) => value).map(([key, value]) => key.startsWith("select:") ? value : key.slice(key.indexOf(":") + 1));
+          scenario.result = selected.length ? `Preferences saved: ${selected.join(", ")}` : "Preferences saved with no optional choices.";
+          comparison[1] = scenario.result;
+        }
+        if (textFormLessons.has(lesson)) {
+          const values = Object.fromEntries([...editableValues.entries()]
+            .filter(([key]) => key.startsWith("text:"))
+            .map(([key, value]) => [key.slice("text:".length), value]));
+          scenario.result = lesson === "Authentication & storage state"
+            ? `Demo sign-in accepted for ${values.Email || "the sample account"} · no real account used`
+            : lesson === "Click, fill & keyboard actions"
+              ? `Message sent from ${values["Your name"] || "Learner"}: “${values.Message || ""}”`
+              : `Profile saved for ${values["Full name"] || "Asha Kumar"} · ${values.Email || "asha@example.test"}`;
+          comparison[1] = scenario.result;
+        }
+        actionComplete = true;
+        renderDemo();
+        updateStatus("Demo action completed. This state is local and illustrative; no real service was contacted.");
+      });
+      renderDemo();
+      window.addEventListener("message", (event) => {
+        if (event.source !== window.parent) return;
+        if (event.data?.type === "playwright-demo-step") {
+          if (!Number.isInteger(event.data.step) || !Number.isInteger(event.data.steps) || event.data.steps < 1) return;
+          step = event.data.step;
+          stepTitle = typeof event.data.stepTitle === "string" ? event.data.stepTitle : "";
+          stepDetail = typeof event.data.stepDetail === "string" ? event.data.stepDetail : "";
+          renderDemo();
+          return;
+        }
+        if (event.data?.type === "playwright-demo-execution-state") {
+          if (!Array.isArray(event.data.lines)) return;
+          resetCodeDemoState();
+          event.data.lines.forEach((line, index) => {
+            if (typeof line === "string") runCodeLine({
+              line,
+              triggerAction: index === event.data.actionIndex
+            });
+          });
+          return;
+        }
+      });
+    </script>
+  </body>
+</html>

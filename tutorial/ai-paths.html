@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f7f6" />
+    <title>Learning Path | Sathishram School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <link rel="stylesheet" href="../assets/ai-paths.css" />
+  </head>
+  <body class="path-body">
+    <div class="path-app app-shell">
+      <aside id="sidebar" class="sidebar path-sidebar" aria-label="Course navigation">
+        <a class="brand" href="../index.html" aria-label="Sathishram School course selection">
+          <span class="brand-mark" aria-hidden="true"><span>S</span></span>
+          <span class="brand-name">Sathishram <span class="brand-accent">School</span><small>COURSE LEARNING</small></span>
+        </a>
+        <a class="back-link" href="../index.html">← All learning paths</a>
+
+        <div class="course-label">YOUR LEARNING PATH</div>
+        <div id="path-course-card" class="course-card path-course-card">
+          <div class="course-card-top">
+            <span class="course-mark" data-icon="spark"></span>
+            <span class="course-level">BEGINNER → PRO</span>
+          </div>
+          <strong>AI learning path</strong>
+          <div class="progress-row path-progress-row">
+            <div class="progress-track path-progress-track" role="progressbar" aria-label="Course progress" aria-valuemin="0" aria-valuemax="0"><span id="path-progress-fill"></span></div>
+            <span id="path-progress-count">0 / 0</span>
+          </div>
+          <small>Progress is saved on this device</small>
+        </div>
+
+        <nav id="path-study-tabs" class="study-tabs path-study-tabs" aria-label="Learning and interview resources">
+          <button class="study-tab path-study-tab active" type="button" data-view="learn" aria-pressed="true"><span data-icon="book"></span><span>Learning path</span></button>
+          <button class="study-tab path-study-tab" type="button" data-view="cheatsheet" aria-pressed="false"><span data-icon="file"></span><span>Interview cheat sheet</span></button>
+          <button class="study-tab path-study-tab" type="button" data-view="interview" aria-pressed="false"><span data-icon="question"></span><span>Interview questions</span><b>100</b></button>
+          <button class="study-tab path-study-tab" type="button" data-view="mock" aria-pressed="false"><span data-icon="spark"></span><span>Mock exam</span></button>
+          <button class="study-tab path-study-tab" type="button" data-view="programs" aria-pressed="false"><span data-icon="code"></span><span>Interview programs</span><b id="path-program-total">36</b></button>
+        </nav>
+
+        <div id="path-curriculum-heading" class="nav-label curriculum-heading">
+          <span class="curriculum-title"><span data-icon="layers"></span> CURRICULUM <span class="curriculum-total"><span id="path-curriculum-count">0</span> lessons</span></span>
+        </div>
+        <nav id="path-lesson-list" class="curriculum path-lesson-list" aria-label="Lessons"></nav>
+
+        <div class="sidebar-bottom path-sidebar-bottom">
+          <div class="streak-card"><span class="streak-icon" data-icon="spark"></span><div><strong>Keep the momentum</strong><small>One concept a day adds up.</small></div></div>
+          <div class="sidebar-foot"><span class="status-dot"></span><span>Progress is saved on this device</span><button id="path-clear-progress" type="button">Clear progress</button></div>
+        </div>
+      </aside>
+
+      <main class="main-area path-main">
+        <header class="topbar path-topbar">
+          <button class="menu-button" id="menu-button" aria-label="Open curriculum" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
+          <div class="breadcrumb">
+            <a class="breadcrumb-root" href="../index.html">All learning paths</a>
+            <span class="crumb-slash">/</span>
+            <strong id="path-top-title">AI learning path</strong>
+          </div>
+          <div class="accordion-actions" aria-label="Course controls">
+            <button id="path-expand-all" class="accordion-toggle-all" type="button" aria-expanded="true" aria-label="Collapse all sections" title="Collapse all sections"><span data-icon="collapse"></span><span>Collapse all</span></button>
+          </div>
+          <div class="topbar-right">
+            <label class="search-box path-search"><span data-icon="search"></span><input id="path-search" type="search" placeholder="Find a concept..." aria-label="Search lessons" /></label>
+            <div class="theme-control path-settings-control">
+              <button class="theme-toggle" id="path-settings-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span data-icon="settings"></span></button>
+              <section class="theme-panel" id="path-settings-panel" aria-label="Appearance settings" hidden>
+                <strong>Appearance</strong>
+                <p>Choose a color style and display mode.</p>
+                <span class="theme-group-label">DISPLAY MODE</span>
+                <button class="mode-toggle" id="path-theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="mode-light-icon" data-icon="sun"></span><span class="mode-dark-icon" data-icon="moon"></span><span class="mode-toggle-label">Light mode</span><i aria-hidden="true"></i></button>
+                <span class="theme-group-label">COLOR STYLE</span>
+                <div class="theme-options" role="group" aria-label="Color themes">
+                  <button type="button" data-theme-choice="evergreen" aria-pressed="false"><i></i>Evergreen</button>
+                  <button type="button" data-theme-choice="ocean" aria-pressed="false"><i></i>Ocean</button>
+                  <button type="button" data-theme-choice="violet" aria-pressed="false"><i></i>Violet</button>
+                  <button type="button" data-theme-choice="sunset" aria-pressed="false"><i></i>Sunset</button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </header>
+
+        <div class="page-content path-content">
+          <div id="path-lesson-view">
+            <section id="path-hero" class="path-hero"><div class="path-hero-copy"><span id="path-category" class="path-category"></span><h1 id="path-title"></h1><p id="path-summary"></p></div><div class="path-hero-actions"><div id="path-course-mark" class="path-course-mark" aria-hidden="true"></div><div class="lesson-actions path-lesson-actions"><label class="audio-language-picker"><span>Audio language</span><select id="audio-language" aria-label="Choose narration language"><option value="en">English</option><option value="ta">Tamil</option></select></label><button class="audio-button" id="audio-button" type="button"><span data-icon="volume"></span><span>Teach this lesson</span></button><button id="path-complete" class="path-complete-button" type="button" aria-pressed="false"><span class="complete-check" aria-hidden="true"></span><span class="complete-label">Mark complete</span></button><span class="audio-status path-audio-status" id="audio-status" role="status" aria-live="polite"></span></div></div></section>
+
+            <div class="path-lesson-meta"><span id="path-lesson-number"></span><span id="path-lesson-duration"></span></div>
+
+            <div id="path-lesson-progress" class="path-lesson-progress" aria-live="polite">
+              <div class="path-lesson-progress-heading">
+                <span>LESSON PROGRESS</span>
+                <strong id="path-lesson-progress-count">0 / 4 sections complete</strong>
+              </div>
+              <div class="path-lesson-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
+                <span id="path-lesson-progress-fill"></span>
+              </div>
+            </div>
+
+            <div class="lesson-layout">
+              <article id="path-lesson-content" class="lesson-main path-lesson-content"></article>
+              <aside class="lesson-aside path-lesson-aside" aria-label="Lesson summary">
+                <div class="aside-card">
+                  <div class="aside-heading">IN THIS LESSON</div>
+                  <nav class="on-this-page" id="path-lesson-toc" aria-label="Lesson sections"></nav>
+                </div>
+                <div class="aside-card goal-card">
+                  <span class="goal-icon" data-icon="spark"></span>
+                  <div class="aside-heading">YOU'LL LEARN</div>
+                  <p id="path-lesson-goal">Core concepts and practical patterns for this lesson.</p>
+                  <div class="goal-time"><span>Duration:</span> <span id="path-lesson-timer">5 min read</span></div>
+                </div>
+                <div class="aside-card aside-note">
+                  <span data-icon="book"></span>
+                  <p>Learning tip</p>
+                  <small id="path-lesson-tip">Try to explain the concept out loud before coding it.</small>
+                </div>
+              </aside>
+            </div>
+
+            <details id="path-rag-explorer-disclosure" class="path-section path-rag-disclosure" hidden>
+              <summary>RAG architecture explorer</summary>
+              <div id="path-rag-explorer" class="rag-explorer" hidden></div>
+            </details>
+
+            <section class="path-check" id="path-check" aria-labelledby="path-check-heading">
+              <div class="path-check-title"><span class="path-check-icon">?</span><div><span class="path-eyebrow">QUICK CHECK</span><h2 id="path-check-heading">Check your understanding</h2></div></div>
+              <p id="path-question"></p>
+              <div id="path-options" class="path-options"></div>
+              <p id="path-feedback" class="path-feedback" aria-live="polite"></p>
+              <button id="path-check-complete" class="path-part-complete" type="button" aria-pressed="false"><span class="complete-check" aria-hidden="true"></span><span class="complete-label">Mark complete</span></button>
+            </section>
+
+            <footer class="path-footer"><button id="path-prev" class="path-nav-button" type="button">&#8592; Previous</button><button id="path-next" class="path-nav-button path-next" type="button">Next lesson &#8594;</button></footer>
+            <p class="path-reference" id="path-reference"></p>
+          </div>
+
+          <section id="path-resource-view" class="path-resource-view" hidden></section>
+        </div>
+      </main>
+      <div class="mobile-scrim" id="mobile-scrim"></div>
+    </div>
+
+    <script src="../assets/ai-paths-data.js"></script>
+    <script src="../assets/ai-paths-complete-data.js"></script>
+    <script src="../assets/framework-gaps-data.js"></script>
+    <script src="../assets/langgraph-deep-data.js"></script>
+    <script src="../assets/langgraph-api-refinements.js"></script>
+    <script src="../assets/rag-types.js"></script>
+    <script src="../assets/ai-engineering-data.js"></script>
+    <script src="../assets/rag-explorer.js"></script>
+    <script src="../assets/rag-explorer-ui.js"></script>
+    <script src="../assets/concept-visuals.js"></script>
+    <script src="../assets/audio-teacher.js"></script>
+    <script src="../assets/icons.js"></script>
+    <script src="../assets/ai-paths.js"></script>
+  </body>
+</html>
