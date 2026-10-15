@@ -50,14 +50,12 @@
             <span class="curriculum-title"><span data-icon="layers"></span> CURRICULUM <span class="curriculum-total"><span id="path-curriculum-count">0</span> lessons</span></span>
             <span class="curriculum-chevron" aria-hidden="true"></span>
           </summary>
-          <div class="curriculum-actions"><button id="path-expand-curriculum" type="button">Expand all</button></div>
-          <nav id="path-lesson-list" class="curriculum path-lesson-list" aria-label="Lessons"></nav>
+          <div class="path-curriculum-content">
+            <div class="curriculum-actions"><button id="path-expand-curriculum" type="button">Expand all</button></div>
+            <nav id="path-lesson-list" class="curriculum path-lesson-list" aria-label="Lessons"></nav>
+          </div>
         </details>
 
-        <div class="sidebar-bottom path-sidebar-bottom">
-          <div class="streak-card"><span class="streak-icon" data-icon="spark"></span><div><strong>Keep the momentum</strong><small>One concept a day adds up.</small></div></div>
-          <div class="sidebar-foot"><span class="status-dot"></span><span>Progress is saved on this device</span><button id="path-clear-progress" type="button">Clear progress</button></div>
-        </div>
       </aside>
 
       <main class="main-area path-main">
@@ -71,7 +69,7 @@
           <div class="topbar-right">
             <label class="search-box path-search"><span data-icon="search"></span><input id="path-search" type="search" placeholder="Find a concept..." aria-label="Search lessons" /></label>
             <div class="theme-control path-settings-control">
-              <button class="theme-toggle" id="path-settings-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span data-icon="settings"></span></button>
+              <button class="theme-toggle" id="path-settings-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span class="theme-icon theme-icon-light" data-icon="sun"></span><span class="theme-icon theme-icon-dark" data-icon="moon"></span></button>
               <section class="theme-panel" id="path-settings-panel" aria-label="Appearance settings" hidden>
                 <strong>Appearance</strong>
                 <p>Choose a color style and display mode.</p>
@@ -84,6 +82,7 @@
                   <button type="button" data-theme-choice="violet" aria-pressed="false"><i></i>Violet</button>
                   <button type="button" data-theme-choice="sunset" aria-pressed="false"><i></i>Sunset</button>
                 </div>
+                <div class="settings-danger-zone"><span>PROGRESS</span><button id="path-clear-progress" type="button">Clear progress</button></div>
               </section>
             </div>
           </div>

@@ -9,7 +9,7 @@
 
   const savedTheme = localStorage.getItem(storageKey);
   const applyTheme = (name) => {
-    const theme = themeNames.includes(name) ? name : "evergreen";
+    const theme = themeNames.includes(name) ? name : "ocean";
     document.documentElement.dataset.theme = theme;
     panel.querySelectorAll("[data-theme-choice]").forEach((button) => {
       button.setAttribute("aria-pressed", String(button.dataset.themeChoice === theme));

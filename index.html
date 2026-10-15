@@ -15,12 +15,15 @@
       .picker-heading .brand-name { color:#24283b; font:700 20px "Space Grotesk",sans-serif; }
       .picker-heading .brand-accent { color:var(--purple); }
       .picker-heading p { color:#8991a2; font-size:13px; }
-      .course-choice { min-height:205px; padding:22px; border:1px solid #e2e9e8; border-radius:14px; background:#fff; color:var(--ink); text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s; }
-      .course-choice:hover { transform:translateY(-4px); border-color:#cfc9fb; box-shadow:0 14px 36px #38306012; }
-      .choice-icon { display:grid; place-items:center; width:40px; height:40px; margin-bottom:15px; border-radius:12px; background:#eaf5f2; color:var(--purple); font:700 13px var(--mono); }
+      .course-choice {
+        min-height:205px; padding:22px; border:1px solid #e2e9f6; border-radius:18px; background:linear-gradient(145deg, rgba(255,255,255,0.96), rgba(245,248,255,0.96)); color:var(--ink); text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s;
+        box-shadow:0 12px 28px rgba(30,41,59,0.06), inset 0 1px rgba(255,255,255,0.8);
+      }
+      .course-choice:hover { transform:translateY(-4px); border-color:color-mix(in srgb,var(--purple) 36%,transparent); box-shadow:0 18px 42px rgba(91,103,247,0.12); }
+      .choice-icon { display:grid; place-items:center; width:42px; height:42px; margin-bottom:15px; border-radius:12px; background:linear-gradient(135deg, rgba(91,103,247,0.12), rgba(20,184,166,0.14)); color:var(--purple); font:700 13px var(--mono); }
       .course-choice h1 { margin:0 0 8px; font:700 21px "Space Grotesk",sans-serif; }
-      .course-choice p { min-height:48px; color:#8991a2; font-size:12px; line-height:1.7; }
-      .choice-link { display:inline-block; margin-top:12px; color:var(--purple-dark); font-size:11px; font-weight:700; }
+      .course-choice p { min-height:48px; color:#5f7286; font-size:12px; line-height:1.7; }
+      .choice-link { display:inline-flex; align-items:center; gap:7px; margin-top:12px; padding:10px 12px; border-radius:10px; background:var(--purple-pale); color:var(--purple-dark); font-size:11px; font-weight:700; }
       .choice-django .choice-icon { background:#edf5ea;color:#387a3e; }.choice-fastapi .choice-icon { background:#e8f6f3;color:#178a75; }.choice-langchain .choice-icon { background:#f2edfc;color:#7452b5; }.choice-langgraph .choice-icon { background:#e8f0fb;color:#3e6fae; }.choice-rag .choice-icon { background:#fdf2e6;color:#b2712b; }.choice-mcp .choice-icon { background:#eaf0f2;color:#536c79; }.choice-evals .choice-icon { background:#f9eefa;color:#ad58a6; }
       .dashboard-theme-control { position:fixed;z-index:20;top:18px;right:22px; }.dashboard-theme-control .theme-panel { top:45px;right:0;left:auto; }
       html[data-theme] body .course-picker { color:var(--ink); }.course-choice { background:var(--surface,#fff);border-color:var(--line);color:var(--ink); }.course-choice p { color:var(--muted); }.picker-heading .brand-name { color:var(--ink); }.picker-heading>p { color:var(--muted); }
@@ -28,11 +31,29 @@
       @media(max-width:520px) { .dashboard-theme-control { top:12px;right:12px; }.picker-heading { padding-top:45px; } }
       @media(max-width:780px) { .course-picker { grid-template-columns:repeat(2,minmax(0,1fr)); } }
       @media(max-width:520px) { .course-picker { grid-template-columns:1fr; margin:6vh auto; } .picker-heading { grid-column:auto; } .course-choice p { min-height:0; } }
+      body { min-height:100vh; background-image:radial-gradient(ellipse at 50% -20%,#e8e5d8 0,transparent 48%),radial-gradient(ellipse at 100% 65%,#dcebe5 0,transparent 35%); background-attachment:fixed; }
+      .course-picker { width:min(1050px,calc(100% - 48px)); gap:18px; margin:6vh auto; }
+      .picker-heading { padding:18px 0 22px; }
+      .picker-heading p { max-width:480px; margin:12px auto 0; line-height:1.75; }
+      .course-choice { position:relative; isolation:isolate; overflow:hidden; min-height:218px; padding:24px; border-radius:18px; box-shadow:0 2px 5px #173c3510,0 14px 34px #173c3510,inset 0 1px #fff; }
+      .course-choice:after { position:absolute; z-index:-1; top:-55px; right:-48px; width:150px; height:150px; border:1px solid color-mix(in srgb,var(--purple) 13%,transparent); border-radius:50%; box-shadow:0 0 0 18px color-mix(in srgb,var(--purple) 3%,transparent),0 0 0 42px color-mix(in srgb,var(--purple) 2%,transparent); content:""; transition:transform .35s ease; }
+      .course-choice:hover { transform:translateY(-5px); box-shadow:0 5px 10px #173c3514,0 24px 48px #173c3518,inset 0 1px #fff; }
+      .course-choice:hover:after { transform:scale(1.12) translate(-3px,3px); }
+      .choice-icon { width:46px; height:46px; border-radius:14px; }
+      .choice-link { display:inline-flex; align-items:center; gap:7px; padding-top:3px; }
+      .dashboard-theme-control .theme-toggle { box-shadow:0 5px 16px #173c3518,inset 0 1px #fff; }
+      html[data-mode="dark"] body { background-image:radial-gradient(ellipse at 50% -20%,#16423766 0,transparent 48%),radial-gradient(ellipse at 100% 65%,#34312266 0,transparent 35%); }
+      html[data-mode="dark"] body .course-choice { box-shadow:0 2px 5px #0003,0 14px 34px #0003,inset 0 1px #ffffff0a; }
+      html[data-mode="dark"] body .course-choice:hover { box-shadow:0 5px 10px #0004,0 24px 48px #0004,inset 0 1px #ffffff0a; }
+      .course-choice .choice-link { min-height:40px; margin-top:14px; padding:0 12px; border:1px solid color-mix(in srgb,var(--purple) 18%,var(--line)); border-radius:11px; background:linear-gradient(145deg,var(--surface-alt,#f5faf7),var(--surface,#fff)); box-shadow:0 2px 0 color-mix(in srgb,var(--line) 85%,transparent),inset 0 1px #ffffffa8; transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease; }
+      .course-choice:hover .choice-link { transform:translateX(3px); border-color:color-mix(in srgb,var(--purple) 42%,var(--line)); background:var(--purple-pale); box-shadow:0 3px 0 color-mix(in srgb,var(--purple) 16%,var(--line)); }
+      .course-choice:focus-visible { outline:3px solid color-mix(in srgb,var(--purple) 62%,transparent); outline-offset:5px; }
+      @media(prefers-reduced-motion:reduce) { .course-choice,.course-choice:after,.course-choice .choice-link { transition:none; }.course-choice:hover,.course-choice:hover .choice-link { transform:none; } }
     </style>
   </head>
   <body>
     <div class="theme-control dashboard-theme-control">
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span data-icon="settings"></span></button>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span class="theme-icon theme-icon-light" data-icon="sun"></span><span class="theme-icon theme-icon-dark" data-icon="moon"></span></button>
       <section class="theme-panel" id="theme-panel" aria-label="Appearance settings" hidden>
         <strong>Appearance</strong><p>Choose a color style and display mode.</p>
         <span class="theme-group-label">DISPLAY MODE</span>
