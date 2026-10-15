@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f7fb" />
+    <title>Account | Sathishram School</title>
+    <link rel="icon" type="image/svg+xml" href="assets/brand-icon.svg" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body class="account-page">
+    <main class="account-shell">
+      <a class="account-brand" href="index.html">
+        <img src="assets/brand-icon.svg" alt="" />
+        <span>Sathishram <b>School</b></span>
+      </a>
+      <a class="account-back" href="index.html">← Back to learning paths</a>
+      <section class="account-card">
+        <header class="account-heading">
+          <span class="account-symbol" data-icon="user"></span>
+          <div>
+            <p class="account-eyebrow">YOUR LEARNING ACCOUNT</p>
+            <h1>Welcome to your space</h1>
+            <p>Sign in to manage your profile, learning preferences, and security.</p>
+          </div>
+        </header>
+        <p class="account-notice" id="account-status" role="status" hidden></p>
+        <p class="account-message" id="account-message" role="status" aria-live="polite"></p>
+
+        <section id="sign-in-view" class="account-view">
+          <h2>Sign in</h2>
+          <form id="sign-in-form" class="account-form">
+            <label>Email address<input id="sign-in-email" name="email" type="email" autocomplete="email" required /></label>
+            <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+            <button class="account-primary" type="submit">Sign in</button>
+          </form>
+          <div class="account-actions">
+            <button id="password-reset" class="account-text-button" type="button">Forgot password?</button>
+            <button class="account-text-button" type="button" data-account-show="sign-up">Create an account</button>
+          </div>
+        </section>
+
+        <section id="mfa-login-view" class="account-view" hidden>
+          <h2>Verify your identity</h2>
+          <p class="account-help">Enter the six-digit code from your authenticator app to finish signing in.</p>
+          <form id="mfa-login-form" class="account-form">
+            <label>Authenticator code<input id="mfa-login-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required /></label>
+            <button class="account-primary" type="submit">Verify and sign in</button>
+          </form>
+          <div class="account-actions"><button class="account-text-button" type="button" data-account-show="sign-in">Back to sign in</button></div>
+        </section>
+
+        <section id="sign-up-view" class="account-view" hidden>
+          <h2>Create your account</h2>
+          <form id="sign-up-form" class="account-form">
+            <label>Full name<input name="display_name" type="text" autocomplete="name" maxlength="80" required /></label>
+            <label>Email address<input name="email" type="email" autocomplete="email" required /></label>
+            <label>Password<input name="password" type="password" autocomplete="new-password" minlength="8" required /></label>
+            <button class="account-primary" type="submit">Create account</button>
+          </form>
+          <div class="account-actions"><button class="account-text-button" type="button" data-account-show="sign-in">Already have an account? Sign in</button></div>
+        </section>
+
+        <section id="profile-view" class="account-view" hidden>
+          <div class="account-profile-heading"><div><h2>Profile &amp; security</h2><p id="profile-created"></p></div><button id="sign-out" class="account-secondary" type="button">Sign out everywhere</button></div>
+          <form id="profile-form" class="account-form account-form-inline">
+            <label>Display name<input id="profile-name" name="display_name" type="text" maxlength="80" required /></label>
+            <button class="account-secondary" type="submit">Save profile</button>
+          </form>
+          <form id="email-form" class="account-form account-form-inline">
+            <label>Account email<input id="profile-email" name="email" type="email" autocomplete="email" required /></label>
+            <button class="account-secondary" type="submit">Change email</button>
+          </form>
+          <form id="password-form" class="account-form account-form-inline">
+            <label>New password<input id="new-password" name="password" type="password" autocomplete="new-password" minlength="8" required /></label>
+            <button class="account-secondary" type="submit">Update password</button>
+          </form>
+          <section class="account-security">
+            <div>
+              <h3><span data-icon="shield"></span> Two-factor authentication</h3>
+              <p id="mfa-state">Checking authenticator status…</p>
+            </div>
+            <button id="mfa-enroll" class="account-secondary" type="button">Set up authenticator</button>
+            <button id="mfa-disable" class="account-secondary" type="button" hidden>Turn off</button>
+            <div class="mfa-setup">
+              <img id="mfa-qr" alt="Authenticator setup QR code" hidden />
+              <p>Manual setup key: <code id="mfa-secret"></code></p>
+              <form id="mfa-verify-form" class="account-form account-form-inline" hidden>
+                <label>Six-digit authenticator code<input id="mfa-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required /></label>
+                <button class="account-secondary" type="submit">Verify and enable</button>
+              </form>
+            </div>
+          </section>
+        </section>
+      </section>
+      <p class="account-footnote">Your account is managed securely through Supabase.</p>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="assets/supabase-config.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/account.js"></script>
+  </body>
+</html>

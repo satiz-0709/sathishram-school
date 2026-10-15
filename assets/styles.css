@@ -558,6 +558,79 @@ h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk"
   .course-python .topbar .search-box,.course-playwright .topbar .search-box { flex:1;min-width:0;width:auto; }
 }
 
+.account-link {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:38px;
+  padding:0 11px;
+  border:1px solid color-mix(in srgb,var(--purple) 18%,var(--line));
+  border-radius:12px;
+  background:linear-gradient(145deg,var(--surface,#fff),var(--surface-alt,#f4f8f6));
+  box-shadow:0 2px 0 color-mix(in srgb,var(--line) 78%,transparent),0 5px 12px #173c3510;
+  color:var(--purple-dark);
+  font-size:10px;
+  font-weight:700;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.account-link:hover { border-color:var(--purple); background:var(--purple-pale); color:var(--purple-dark); }
+.account-link .ui-icon { width:16px;height:16px; }
+.dashboard-theme-control { display:flex;align-items:center;gap:8px; }
+
+.account-page { min-height:100vh; padding:32px 16px; }
+.account-shell { width:min(620px,100%);margin:0 auto; }
+.account-brand { display:inline-flex;align-items:center;gap:10px;margin-bottom:30px;color:var(--ink);font:700 17px "Space Grotesk",sans-serif;text-decoration:none; }
+.account-brand img { width:36px;height:36px;filter:drop-shadow(0 5px 7px #3146b944); }
+.account-brand b { color:var(--purple); }
+.account-back { display:inline-block;margin-bottom:12px;color:var(--muted);font-size:11px;text-decoration:none; }
+.account-back:hover { color:var(--purple-dark); }
+.account-card { padding:28px;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:0 18px 55px #21365612; }
+.account-heading { display:flex;align-items:center;gap:15px;margin-bottom:22px; }
+.account-symbol { display:grid;place-items:center;flex:none;width:48px;height:48px;border-radius:15px;background:var(--purple-pale);color:var(--purple); }
+.account-symbol .ui-icon { width:23px;height:23px; }
+.account-eyebrow { margin:0 0 4px;color:var(--purple-dark);font:600 9px var(--mono);letter-spacing:1px; }
+.account-heading h1 { margin:0;color:var(--ink);font:700 24px "Space Grotesk",sans-serif;letter-spacing:-.8px; }
+.account-heading > div > p:last-child { margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.6; }
+.account-view h2 { margin:0 0 15px;color:var(--ink);font:700 17px "Space Grotesk",sans-serif; }
+.account-help { margin:0 0 14px;color:var(--muted);font-size:11px;line-height:1.6; }
+.account-form { display:grid;gap:13px; }
+.account-form label { display:grid;gap:6px;color:var(--muted);font-size:10px;font-weight:700; }
+.account-form input { width:100%;min-height:42px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-alt);color:var(--ink);font:12px "DM Sans",sans-serif; }
+.account-form input:focus { outline:3px solid color-mix(in srgb,var(--purple) 20%,transparent);border-color:var(--purple); }
+.account-primary,.account-secondary { display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border:1px solid var(--purple);border-radius:10px;background:var(--purple);color:#fff;font-size:11px;font-weight:700; }
+.account-primary:hover { background:var(--purple-dark); }
+.account-secondary { border-color:var(--line);background:var(--surface);color:var(--purple-dark); }
+.account-secondary:hover { border-color:var(--purple);background:var(--purple-pale); }
+.account-actions { display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:15px; }
+.account-text-button { padding:2px 0;border:0;background:transparent;color:var(--purple-dark);font-size:10px;font-weight:700;text-decoration:underline;text-underline-offset:3px; }
+.account-notice,.account-message { padding:10px 12px;border-radius:10px;background:var(--purple-pale);color:var(--purple-dark);font-size:11px;line-height:1.5; }
+.account-notice:empty,.account-message:empty { display:none; }
+.account-message[data-state="error"] { background:#fff0f0;color:#a43636; }
+.account-profile-heading { display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px; }
+.account-profile-heading h2 { margin:0; }
+.account-profile-heading p,.account-security p { margin:5px 0 0;color:var(--muted);font-size:10px; }
+.account-form-inline { grid-template-columns:minmax(0,1fr) auto;align-items:end;padding:12px 0;border-top:1px solid var(--line); }
+.account-security { display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:15px 0 0;border-top:1px solid var(--line); }
+.account-security h3 { display:flex;align-items:center;gap:7px;margin:0;color:var(--ink);font-size:12px; }
+.account-security h3 .ui-icon { width:16px;height:16px;color:var(--purple); }
+.mfa-setup { grid-column:1/-1; }
+.mfa-setup > img { display:block;width:190px;height:190px;margin:10px 0;border:1px solid var(--line);border-radius:12px; }
+.mfa-setup p { overflow-wrap:anywhere; }
+.mfa-setup code { color:var(--ink);font-size:10px; }
+.account-footnote { margin:14px 0;color:var(--muted);font-size:9px;text-align:center; }
+@media(max-width:520px) {
+  .account-page { padding:20px 12px; }
+  .account-card { padding:20px 16px;border-radius:18px; }
+  .account-heading h1 { font-size:20px; }
+  .account-link { min-height:34px;padding:0 8px;font-size:9px; }
+  .dashboard-theme-control { top:12px;right:12px; }
+  .dashboard-theme-control .account-link { min-height:36px; }
+  .account-form-inline { grid-template-columns:1fr; }
+  .account-profile-heading { align-items:flex-start;flex-direction:column; }
+}
+
 /* Unified visual system: calm ink, evergreen accents, and clearer spacing. */
 :root {
   --ink: #18313b;
@@ -572,6 +645,7 @@ body { background:var(--bg); color:var(--ink); }
 .sidebar { background:#fbfdfc; border-right-color:#dfe9e6; box-shadow:4px 0 24px #183b3210; }
 .brand { gap:12px; margin-bottom:32px; color:#18313b; }
 .brand-mark { position:relative; width:36px; height:36px; display:grid; place-items:center; flex:none; border-radius:12px; transform:none; background:linear-gradient(145deg,#174d50,#167c6d); box-shadow:0 5px 12px #126c6230; }
+.brand-mark-image { display:block;flex:none;width:36px;height:36px;filter:drop-shadow(0 5px 7px #3146b933); }
 .brand-mark span { display:grid; place-items:center; width:auto; height:auto; border-radius:0; background:none; color:#fff; font:700 20px/1 "Space Grotesk",sans-serif; letter-spacing:-1.8px; }
 .brand-mark:after { position:absolute; right:6px; bottom:6px; width:5px; height:5px; border:1.5px solid #174d50; border-radius:50%; background:#e8bd70; content:""; }
 .brand-name { color:#18313b; }
@@ -1337,6 +1411,10 @@ html[data-theme] body :is(.primary-action,.flow-play-button,.execution-controls 
 .path-resource-accordion .path-study-tab > span:nth-child(2) { min-width:0;line-height:1.35;overflow-wrap:anywhere; }
 .path-resource-accordion .path-study-tab > b { grid-column:3;white-space:nowrap; }
 .course-choice:focus-visible { outline:3px solid color-mix(in srgb,var(--purple) 62%,transparent);outline-offset:5px; }
+.course-choice-locked { cursor:pointer; }
+.course-lock-badge { position:absolute;z-index:2;top:16px;right:16px;display:inline-flex;align-items:center;gap:5px;padding:6px 8px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--surface,#fff) 92%,transparent);box-shadow:0 3px 9px #173c3510;color:var(--muted);font-size:9px;font-weight:700; }
+.course-lock-badge .ui-icon { width:12px;height:12px;color:var(--purple); }
+.course-choice-locked .choice-link { background:var(--surface-alt);color:var(--purple-dark); }
 @media(prefers-reduced-motion:reduce) {
   :is(.primary-action,.flow-play-button,.execution-controls .code-run-button,.theme-toggle,.theme-panel) { animation:none;transition:none; }
 }

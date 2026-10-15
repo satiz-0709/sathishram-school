@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f7f8fc" />
     <title>Sathishram School — Interactive learning</title>
+    <link rel="icon" type="image/svg+xml" href="assets/brand-icon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -53,7 +54,8 @@
   </head>
   <body>
     <div class="theme-control dashboard-theme-control">
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span class="theme-icon theme-icon-light" data-icon="sun"></span><span class="theme-icon theme-icon-dark" data-icon="moon"></span></button>
+      <a class="account-link" data-account-link href="account.html" aria-label="Sign in or create an account"><span data-icon="user"></span><span data-account-link-label>Sign in</span></a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Appearance settings" aria-haspopup="true" aria-expanded="false"><span data-icon="settings"></span></button>
       <section class="theme-panel" id="theme-panel" aria-label="Appearance settings" hidden>
         <strong>Appearance</strong><p>Choose a color style and display mode.</p>
         <span class="theme-group-label">DISPLAY MODE</span>
@@ -64,30 +66,34 @@
     </div>
     <main class="course-picker">
       <header class="picker-heading">
-        <div class="picker-brand"><span class="brand-mark" aria-hidden="true"><span>S</span></span><span class="brand-name">Sathishram <span class="brand-accent">School</span></span></div>
+        <div class="picker-brand"><img class="brand-mark-image" src="assets/brand-icon.svg" alt="" /><span class="brand-name">Sathishram <span class="brand-accent">School</span></span></div>
         <p>Choose a learning path and build practical skills, one lesson at a time.</p>
       </header>
-      <a class="course-choice choice-python" href="tutorial/python.html">
+      <a class="course-choice choice-python" data-module="python" href="tutorial/python.html">
         <span class="choice-icon" data-icon="python"></span>
         <h1>Learn Python</h1>
         <p>Start from the fundamentals, explore OOP, and prepare with a Python cheat sheet and 100 interview questions.</p>
         <span class="choice-link">Open Python course →</span>
       </a>
-      <a class="course-choice choice-playwright" href="tutorial/playwright.html">
+      <a class="course-choice choice-playwright" data-module="playwright" href="tutorial/playwright.html">
         <span class="choice-icon" data-icon="browser"></span>
         <h1>Learn Playwright</h1>
         <p>Learn browser automation with Python, from your first test to reliable end-to-end workflows and interview prep.</p>
         <span class="choice-link">Open Playwright course →</span>
       </a>
-      <a class="course-choice choice-django" href="tutorial/ai-paths.html?course=django"><span class="choice-icon">Dj</span><h1>Django</h1><p>Build full stack web applications with URLs, views, templates, models, forms, and tests.</p><span class="choice-link">Explore Django →</span></a>
-      <a class="course-choice choice-fastapi" href="tutorial/ai-paths.html?course=fastapi"><span class="choice-icon">Fa</span><h1>FastAPI</h1><p>Design typed APIs with validation, dependencies, authentication, async patterns, and tests.</p><span class="choice-link">Explore FastAPI →</span></a>
-      <a class="course-choice choice-langchain" href="tutorial/ai-paths.html?course=langchain"><span class="choice-icon">LC</span><h1>LangChain</h1><p>Connect language models to prompts, structured output, tools, retrieval, and production workflows.</p><span class="choice-link">Explore LangChain →</span></a>
-      <a class="course-choice choice-langgraph" href="tutorial/ai-paths.html?course=langgraph"><span class="choice-icon">LG</span><h1>LangGraph</h1><p>Build stateful agent workflows with graphs, branching, checkpoints, and human review.</p><span class="choice-link">Explore LangGraph →</span></a>
-      <a class="course-choice choice-rag" href="tutorial/ai-paths.html?course=rag"><span class="choice-icon">RAG</span><h1>Retrieval Augmented Generation</h1><p>Build grounded answers from your own data and improve retrieval quality systematically.</p><span class="choice-link">Explore RAG →</span></a>
-      <a class="course-choice choice-mcp" href="tutorial/ai-paths.html?course=mcp"><span class="choice-icon">MCP</span><h1>Model Context Protocol</h1><p>Connect AI applications to tools and data with interoperable MCP clients and servers.</p><span class="choice-link">Explore MCP →</span></a>
-      <a class="course-choice choice-evals" href="tutorial/ai-paths.html?course=ai-evaluation"><span class="choice-icon">AI</span><h1>AI &amp; Agent Engineering</h1><p>Learn LLMs, Claude, agent APIs, model selection, token budgets, fine-tuning, and evaluation.</p><span class="choice-link">Explore AI &amp; Agent Engineering →</span></a>
+      <a class="course-choice choice-django" data-module="django" href="tutorial/ai-paths.html?course=django"><span class="choice-icon">Dj</span><h1>Django</h1><p>Build full stack web applications with URLs, views, templates, models, forms, and tests.</p><span class="choice-link">Explore Django →</span></a>
+      <a class="course-choice choice-fastapi" data-module="fastapi" href="tutorial/ai-paths.html?course=fastapi"><span class="choice-icon">Fa</span><h1>FastAPI</h1><p>Design typed APIs with validation, dependencies, authentication, async patterns, and tests.</p><span class="choice-link">Explore FastAPI →</span></a>
+      <a class="course-choice choice-langchain" data-module="langchain" href="tutorial/ai-paths.html?course=langchain"><span class="choice-icon">LC</span><h1>LangChain</h1><p>Connect language models to prompts, structured output, tools, retrieval, and production workflows.</p><span class="choice-link">Explore LangChain →</span></a>
+      <a class="course-choice choice-langgraph" data-module="langgraph" href="tutorial/ai-paths.html?course=langgraph"><span class="choice-icon">LG</span><h1>LangGraph</h1><p>Build stateful agent workflows with graphs, branching, checkpoints, and human review.</p><span class="choice-link">Explore LangGraph →</span></a>
+      <a class="course-choice choice-rag" data-module="rag" href="tutorial/ai-paths.html?course=rag"><span class="choice-icon">RAG</span><h1>Retrieval Augmented Generation</h1><p>Build grounded answers from your own data and improve retrieval quality systematically.</p><span class="choice-link">Explore RAG →</span></a>
+      <a class="course-choice choice-mcp" data-module="mcp" href="tutorial/ai-paths.html?course=mcp"><span class="choice-icon">MCP</span><h1>Model Context Protocol</h1><p>Connect AI applications to tools and data with interoperable MCP clients and servers.</p><span class="choice-link">Explore MCP →</span></a>
+      <a class="course-choice choice-evals" data-module="ai-evaluation" href="tutorial/ai-paths.html?course=ai-evaluation"><span class="choice-icon">AI</span><h1>AI &amp; Agent Engineering</h1><p>Learn LLMs, Claude, agent APIs, model selection, token budgets, fine-tuning, and evaluation.</p><span class="choice-link">Explore AI &amp; Agent Engineering →</span></a>
     </main>
     <script src="assets/icons.js"></script>
     <script src="assets/theme-settings.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="assets/supabase-config.js"></script>
+    <script src="assets/account.js"></script>
+    <script src="assets/access-control.js"></script>
   </body>
 </html>

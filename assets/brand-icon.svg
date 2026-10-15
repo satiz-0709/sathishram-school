@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="front" x1="12" y1="9" x2="52" y2="55" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c83ff"/>
+      <stop offset="1" stop-color="#4358dc"/>
+    </linearGradient>
+    <linearGradient id="side" x1="43" y1="14" x2="56" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3146b9"/>
+      <stop offset="1" stop-color="#24378f"/>
+    </linearGradient>
+    <linearGradient id="top" x1="14" y1="13" x2="47" y2="25" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#aab0ff"/>
+      <stop offset="1" stop-color="#727df5"/>
+    </linearGradient>
+    <filter id="shadow" x="2" y="4" width="64" height="66" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+  <path d="M14 14 43 8l13 8v32l-29 8-13-8V14Z" fill="#203777" opacity=".24" filter="url(#shadow)"/>
+  <path d="m14 14 29-7 13 8v32l-29 8-13-8V14Z" fill="url(#front)"/>
+  <path d="m43 7 13 8v32l-13-8V7Z" fill="url(#side)"/>
+  <path d="m14 14 29-7 13 8-29 8-13-9Z" fill="url(#top)"/>
+  <path d="M25 29c0-4 3-6 8-6 3 0 6 .6 8 1.7l-2 4c-1.5-.8-3.5-1.3-5.7-1.3-2 0-3 .5-3 1.5s1.4 1.4 4 2c5 .9 7 2.7 7 6.2 0 4.2-3.5 6.7-9 6.7-3.7 0-7-.8-9.5-2.3l2.1-4.1a14 14 0 0 0 7.4 2.1c2.3 0 3.5-.6 3.5-1.7 0-.9-1.1-1.4-4.1-2-5.1-.9-7.7-2.8-7.7-6.8Z" fill="#fff"/>
+</svg>
