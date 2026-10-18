@@ -130,8 +130,20 @@
       .product-card.demo-focused-target { z-index: 3; }
       .cart-panel.demo-section-active,.checkout.demo-section-active,.support.demo-section-active { border-color: #b87956; box-shadow: 0 0 0 3px #c7825220; }
       .product-card.demo-section-active { box-shadow: 0 0 0 3px #c7825230; }
+      .demo-native-tooltip { position: fixed; z-index: 31; max-width: min(220px,calc(100vw - 24px)); padding: 7px 9px; border: 1px solid #cfc08b; border-radius: 4px; background: #fff9df; color: #37362e; box-shadow: 0 4px 14px #28271f35; font: 11px/1.4 "Segoe UI",Arial,sans-serif; opacity: 0; pointer-events: none; transform: translateY(-4px); transition: opacity .18s ease,transform .18s ease; }
+      .demo-native-tooltip[hidden] { display: none; }
+      .demo-native-tooltip.is-visible { opacity: 1; transform: translateY(0); }
+      .demo-native-tooltip:before { position: absolute; top: -5px; left: 12px; width: 8px; height: 8px; border-top: 1px solid #cfc08b; border-left: 1px solid #cfc08b; background: #fff9df; content: ""; transform: rotate(45deg); }
+      .attachment-preview { display: flex; align-items: center; gap: 9px; margin-top: 7px; padding: 9px; border: 1px solid #d8e0d1; border-radius: 4px; background: #f7f9f3; color: #39473a; }
+      .attachment-preview[hidden] { display: none; }
+      .attachment-preview.is-selected { animation: attachment-selected .32s ease-out; }
+      .attachment-preview-icon { display: grid; flex: 0 0 30px; place-items: center; height: 34px; border: 1px solid #d6dacf; border-radius: 3px; background: #fff; color: #95634b; font-size: 8px; font-weight: 800; }
+      .attachment-preview strong,.attachment-preview small { display: block; overflow: hidden; max-width: 210px; text-overflow: ellipsis; white-space: nowrap; }
+      .attachment-preview strong { font-size: 9px; }
+      .attachment-preview small { margin-top: 3px; color: #737b6f; font-size: 8px; }
       @keyframes typing { to { translate: 1px 0; } }
       @keyframes click-ring { from { scale: .3; opacity: .9; } to { scale: 1.8; opacity: 0; } }
+      @keyframes attachment-selected { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
       @media(max-width:900px) {
         .site-header { gap: 14px; padding-right: 18px; padding-left: 18px; }
         .main-nav { gap: 12px; }
@@ -291,6 +303,10 @@
           <label class="field" for="support-name">Your name<input id="support-name" aria-label="Your name" autocomplete="off" /></label>
           <label class="field" for="support-message">Message<textarea id="support-message" aria-label="Message" autocomplete="off"></textarea></label>
           <label class="field" for="receipt">Add a receipt or product photo (optional)<input id="receipt" type="file" accept="image/*,application/pdf" autocomplete="off" /></label>
+          <div class="attachment-preview" id="attachment-preview" role="status" aria-live="polite" hidden>
+            <span class="attachment-preview-icon" id="attachment-file-type" aria-hidden="true">FILE</span>
+            <span><strong id="attachment-file-name"></strong><small>Selected locally · this demo does not upload files</small></span>
+          </div>
         </div>
         <button class="form-submit" type="button" id="send-message">Send message</button>
         <span class="form-result" id="message-result" role="status" aria-live="polite"></span>
@@ -300,9 +316,11 @@
     <div class="demo-cursor hidden" id="demo-cursor" aria-hidden="true">
       <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg"><path d="M3 2.5 21 17l-8 .7 4.1 8.2-3.8 1.8-4.2-8.1-4.1 5z" fill="#fff" stroke="#25372b" stroke-width="1.7" stroke-linejoin="round"/></svg>
     </div>
+    <div class="demo-native-tooltip" id="demo-native-tooltip" role="tooltip" hidden></div>
     <script>
       const byId = (id) => document.getElementById(id);
       const cursor = byId("demo-cursor");
+      const nativeTooltip = byId("demo-native-tooltip");
       const result = byId("test-result");
       const operationLog = [];
       const locatorVariables = new Map();
@@ -325,6 +343,24 @@
       let mouseGestureSource = null;
       let mouseGestureTarget = null;
 
+      function hideNativeTooltip() {
+        nativeTooltip.classList.remove("is-visible");
+        nativeTooltip.hidden = true;
+      }
+
+      function showNativeTooltip(target) {
+        nativeTooltip.textContent = target.title;
+        nativeTooltip.hidden = false;
+        const rect = target.getBoundingClientRect();
+        const left = Math.max(8, Math.min(innerWidth - nativeTooltip.offsetWidth - 8, rect.left));
+        const top = rect.bottom + nativeTooltip.offsetHeight + 16 < innerHeight
+          ? rect.bottom + 9
+          : Math.max(8, rect.top - nativeTooltip.offsetHeight - 9);
+        nativeTooltip.style.left = `${left}px`;
+        nativeTooltip.style.top = `${top}px`;
+        requestAnimationFrame(() => nativeTooltip.classList.add("is-visible"));
+      }
+
       function setActivity(title, detail, target, mode = "") {
         window.parent.postMessage({
           type: "playwright-demo-operation",
@@ -339,6 +375,7 @@
 
       function moveCursor(target, mode = "") {
         if (!target) return;
+        if (focusedElement !== target) hideNativeTooltip();
         focusedElement?.closest(".product-card")?.classList.remove("demo-hovered");
         focusedElement?.classList.remove("demo-focused-target");
         focusedSection?.classList.remove("demo-section-active");
@@ -359,7 +396,9 @@
         cursor.classList.remove("hidden", "click", "type");
         if (mode) cursor.classList.add(mode);
         positionCursor();
-        const selector = `#${CSS.escape(target.id)}` || `[data-demo-focus-target="${focusTargetId}"]`;
+        const selector = target.id
+          ? `#${CSS.escape(target.id)}`
+          : `[data-demo-focus-target="${focusTargetId}"]`;
         window.parent.postMessage({ type: "playwright-demo-scroll-target", selector }, window.location.origin);
       }
 
@@ -405,6 +444,11 @@
         byId("contact-message").value = "";
         byId("support-name").value = "";
         byId("support-message").value = "";
+        byId("receipt").value = "";
+        byId("attachment-preview").hidden = true;
+        byId("attachment-preview").classList.remove("is-selected");
+        byId("attachment-file-name").textContent = "";
+        byId("attachment-file-type").textContent = "FILE";
         byId("terms").checked = false;
         byId("express").checked = false;
         byId("plan-result").textContent = "";
@@ -590,6 +634,19 @@
         const sent = Boolean(name && message);
         byId("message-result").textContent = sent ? `Thanks, ${name}. Our team will be in touch.` : "Add your name and a message before sending.";
         setResult(sent ? "Your note has been sent to the Field & Foundry team." : "Complete both fields to send your note.", sent);
+      });
+      byId("receipt").addEventListener("change", () => {
+        const file = byId("receipt").files?.[0];
+        const preview = byId("attachment-preview");
+        if (!file) {
+          preview.hidden = true;
+          return;
+        }
+        byId("attachment-file-name").textContent = file.name;
+        byId("attachment-file-type").textContent = file.type === "application/pdf" ? "PDF" : "IMAGE";
+        preview.hidden = false;
+        preview.classList.remove("is-selected");
+        requestAnimationFrame(() => preview.classList.add("is-selected"));
       });
       byId("country").addEventListener("change", (event) => {
         if (event.target.value) setResult(`Delivery country set to ${event.target.value}.`);
@@ -859,7 +916,7 @@
           transfer.items.add(new File(["Illustration only"], fileName.split(/[\\/]/).pop(), { type }));
           input.files = transfer.files;
           input.dispatchEvent(new Event("change", { bubbles: true }));
-          setActivity("Choose a support attachment", `The file field now contains “${fileName.split(/[\\/]/).pop()}”. No file is uploaded.`, input);
+          setActivity("Select a local attachment", `Playwright selects “${fileName.split(/[\\/]/).pop()}”. The file preview appears, but no file is sent to a server.`, input);
         } else if (/\.scroll_into_view_if_needed\s*\(/.test(cleanLine)) {
           const target = targetFor(cleanLine, "scroll");
           if (!target) return showUnavailableTarget(cleanLine);
@@ -871,6 +928,10 @@
           target.closest(".product-card")?.classList.add("demo-hovered");
           target.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
           setActivity("Move the pointer over a product", "The cursor rests over the product so its hover state is visible.", target);
+          if (target.id === "help-link" && target.title) {
+            setActivity("Reveal the Help tooltip", "Hovering exposes the link's native title hint. The on-page bubble keeps that browser tooltip visible in the walkthrough.", target);
+            showNativeTooltip(target);
+          }
         } else if (/\.(?:inner_text|text_content|get_attribute)\s*\(/.test(cleanLine)) {
           const target = targetFor(cleanLine, "read");
           if (!target) return showUnavailableTarget(cleanLine);
