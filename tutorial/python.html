@@ -15,6 +15,7 @@
   <body class="course-python">
     <div class="app-shell">
       <aside class="sidebar" id="sidebar">
+        <button class="menu-button" id="menu-button" aria-label="Course navigation" aria-controls="sidebar" aria-expanded="true"><span class="sidebar-toggle-icon" aria-hidden="true"></span></button>
         <a class="brand" href="../index.html" aria-label="Sathishram School course selection">
           <img class="brand-mark-image" src="../assets/brand-icon.svg" alt="" />
           <span class="brand-name">Sathishram <span class="brand-accent">School</span><small>PYTHON LEARNING</small></span>
@@ -46,7 +47,7 @@
             <span class="curriculum-chevron" aria-hidden="true"></span>
           </summary>
           <div class="curriculum-content">
-            <div class="curriculum-actions"><button id="expand-curriculum" type="button">Expand all</button></div>
+            <div class="curriculum-actions"><button id="expand-curriculum" type="button">Collapse all</button></div>
             <nav class="curriculum" id="curriculum" aria-label="Python curriculum"></nav>
           </div>
         </details>
@@ -54,7 +55,6 @@
 
       <main class="main-area">
         <header class="topbar">
-          <button class="menu-button" id="menu-button" aria-label="Open curriculum" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
           <div class="breadcrumb"><span id="breadcrumb-root">Python</span><span class="crumb-slash">/</span><strong id="breadcrumb-topic">Getting started</strong></div>
           <div class="topbar-right">
             <label class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="Find a concept..." aria-label="Search lessons" /></label>
@@ -105,8 +105,8 @@
               </section>
 
               <section class="code-card">
-                <div class="code-header"><div class="section-title compact"><span class="section-icon code-icon" data-icon="code"></span><div><h2>Example code</h2><p>Read it, predict it, then check the result.</p></div></div><div class="code-header-actions"><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="code-content" aria-label="Collapse Example code" title="Collapse Example code"><span class="section-toggle-label" aria-hidden="true">Example code</span><span class="section-chevron" aria-hidden="true"></span></button><button class="copy-button" id="copy-button"><span data-icon="copy"></span><span>Copy</span></button></div></div>
-                <div class="code-content" id="code-content"><div class="code-window"><div class="code-window-top"><div class="window-dots"><i></i><i></i><i></i></div><span>lesson.py</span><span class="python-chip">PYTHON 3</span></div><pre><code id="lesson-code"></code></pre><div class="output-bar"><span class="output-label"><span class="output-chevron" aria-hidden="true"></span> OUTPUT</span><span id="lesson-output"></span></div></div></div>
+                <div class="code-header"><div class="section-title compact"><span class="section-icon code-icon" data-icon="code"></span><div><h2>Code example</h2><p>Read it, predict it, then check the result.</p></div></div><div class="code-header-actions"><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="code-content" aria-label="Collapse Example code" title="Collapse Example code"><span class="section-toggle-label" aria-hidden="true">Example code</span><span class="section-chevron" aria-hidden="true"></span></button></div></div>
+                <div class="code-content" id="code-content"><button class="copy-button" id="copy-button"><span data-icon="copy"></span><span>Copy</span></button><div class="code-window"><div class="code-window-top"><div class="window-dots"><i></i><i></i><i></i></div><span>lesson.py</span><span class="python-chip">PYTHON 3</span></div><pre><code id="lesson-code"></code></pre><div class="output-bar"><span class="output-label"><span class="output-chevron" aria-hidden="true"></span> OUTPUT</span><span id="lesson-output"></span></div></div></div>
               </section>
 
               <section class="practice-card">
@@ -185,6 +185,7 @@
     <script src="../assets/concept-visuals.js"></script>
     <script src="../assets/audio-teacher.js"></script>
     <script src="../assets/icons.js"></script>
+    <script src="../assets/sidebar-toggle.js"></script>
     <script src="../assets/theme-settings.js"></script>
     <script src="../assets/accordion-controls.js"></script>
     <script src="../assets/lesson-section-progress.js"></script>

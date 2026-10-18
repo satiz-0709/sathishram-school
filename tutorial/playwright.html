@@ -15,6 +15,7 @@
   <body class="course-playwright">
     <div class="app-shell">
       <aside class="sidebar" id="sidebar">
+        <button class="menu-button" id="menu-button" aria-label="Course navigation" aria-controls="sidebar" aria-expanded="true"><span class="sidebar-toggle-icon" aria-hidden="true"></span></button>
         <a class="brand" href="../index.html" aria-label="Sathishram School course selection">
           <img class="brand-mark-image" src="../assets/brand-icon.svg" alt="" />
           <span class="brand-name">Sathishram <span class="brand-accent">School</span><small>PLAYWRIGHT LEARNING</small></span>
@@ -42,14 +43,13 @@
             <span class="curriculum-chevron" aria-hidden="true"></span>
           </summary>
           <div class="curriculum-content">
-            <div class="curriculum-actions"><button id="expand-curriculum" type="button">Expand all</button></div>
+            <div class="curriculum-actions"><button id="expand-curriculum" type="button">Collapse all</button></div>
             <nav class="curriculum" id="curriculum" aria-label="Playwright curriculum"></nav>
           </div>
         </details>
       </aside>
       <main class="main-area">
         <header class="topbar">
-          <button class="menu-button" id="menu-button" aria-label="Open curriculum" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
           <div class="breadcrumb"><span id="breadcrumb-root">Playwright</span><span class="crumb-slash">/</span><strong id="breadcrumb-topic">Getting started</strong></div>
           <div class="topbar-right">
             <label class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="Find a concept..." aria-label="Search lessons" /></label>
@@ -97,8 +97,8 @@
                   </div></div>
                 </section>
                 <section class="code-card">
-                  <div class="code-header"><div class="section-title compact"><span class="section-icon code-icon" data-icon="code"></span><div><h2>Try the code</h2><p>Run the teaching walkthrough to highlight each line and update the browser preview.</p></div></div><div class="code-header-actions"><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="code-content" aria-label="Collapse Try the code" title="Collapse Try the code"><span class="section-toggle-label" aria-hidden="true">Try the code</span><span class="section-chevron" aria-hidden="true"></span></button><button class="copy-button" id="copy-button"><span data-icon="copy"></span><span>Copy</span></button></div></div>
-                  <div class="code-content" id="code-content"><div class="execution-layout">
+                  <div class="code-header"><div class="section-title compact"><span class="section-icon code-icon" data-icon="code"></span><div><h2>Code example</h2><p>Open the example when you need it.</p></div></div><div class="code-header-actions"><button class="section-collapse-button" type="button" aria-expanded="true" aria-controls="code-content" aria-label="Collapse Code example" title="Collapse Code example"><span class="section-toggle-label" aria-hidden="true">Code example</span><span class="section-chevron" aria-hidden="true"></span></button></div></div>
+                  <div class="code-content" id="code-content"><button class="copy-button" id="copy-button"><span data-icon="copy"></span><span>Copy</span></button><div class="execution-layout">
                     <div class="code-execution">
                       <div class="variable-name-controls" id="variable-name-controls" aria-label="Rename example variables" hidden></div>
                       <div class="execution-controls" aria-label="Code walkthrough controls">
@@ -106,15 +106,21 @@
                         <button type="button" id="code-pause-button" disabled><span class="control-icon pause-icon" aria-hidden="true"></span><span>Pause</span></button>
                         <button type="button" id="code-previous-button" disabled><span class="control-icon left-icon" aria-hidden="true"></span><span>Previous</span></button>
                         <button type="button" id="code-next-button" disabled><span>Next</span><span class="control-icon right-icon" aria-hidden="true"></span></button>
-                        <span id="code-execution-status" role="status" aria-live="polite">Ready ? walkthrough is simulated; Python is not executed.</span>
+                        <span id="code-execution-status" role="status" aria-live="polite">Run the walkthrough to watch the demo site respond.</span>
                       </div>
                       <div class="code-window"><div class="code-window-top"><div class="window-dots"><i></i><i></i><i></i></div><span>test_example.py</span><span class="python-chip">PYTHON</span></div><pre id="lesson-code-scroll"><code id="lesson-code"></code></pre><div class="output-bar"><span class="output-label"><span class="output-chevron" aria-hidden="true"></span> WHAT HAPPENS</span><span id="lesson-output"></span></div></div>
                     </div>
-                    <aside class="playwright-browser-demo" id="playwright-browser-demo" aria-label="Visual demo browser" hidden>
-                      <div class="demo-window-top"><span class="window-dots"><i></i><i></i><i></i></span><strong>Browser preview · simulated</strong><button type="button" id="close-demo-button" aria-label="Close demo browser"><span class="control-icon close-icon" aria-hidden="true"></span></button></div>
-                      <div class="demo-address"><span>↗</span><code id="demo-address">tutorial/demo.html</code><a id="demo-open-link" target="_blank" rel="noopener">Open</a></div>
-                      <div class="demo-screen"><iframe id="demo-frame" title="Interactive Playwright course demo"></iframe></div>
-                      <p class="demo-disclaimer">This teaching walkthrough simulates the sample page; it does not execute Python or control a real browser. Scroll inside the preview to see every control and result.</p>
+                    <aside class="playwright-browser-demo" id="playwright-browser-demo" aria-label="Playwright demo website" hidden>
+                      <div class="demo-window-top"><span class="window-dots"><i></i><i></i><i></i></span><strong>Live browser preview</strong><button type="button" id="close-demo-button" aria-label="Close demo website"><span class="control-icon close-icon" aria-hidden="true"></span></button></div>
+                      <section class="demo-operation" aria-live="polite" aria-atomic="true">
+                        <div class="demo-operation-heading"><div><span>PLAYWRIGHT ACTION</span><strong id="demo-operation-title">Waiting for code</strong></div><span class="demo-operation-count" id="demo-operation-count">Run the example</span></div>
+                        <p id="demo-operation-detail">The local storefront will respond as the highlighted code runs. Python is illustrated, not executed.</p>
+                        <pre><code id="demo-operation-code">Run the walkthrough to see its current line here.</code></pre>
+                        <div class="demo-operation-progress" aria-hidden="true"><span id="demo-operation-progress"></span></div>
+                      </section>
+                      <div class="demo-address"><span>↗</span><code id="demo-address">tutorial/playwright-demo-site.html</code><a id="demo-open-link" target="_blank" rel="noopener">Open site</a></div>
+                      <div class="demo-screen"><iframe id="demo-frame" title="Interactive Playwright demo website"></iframe></div>
+                      <p class="demo-disclaimer">An interactive local storefront. The walkthrough illustrates the Python actions; it does not execute Python.</p>
                     </aside>
                   </div></div>
                 </section>
@@ -185,6 +191,7 @@
     <script src="../assets/concept-visuals.js"></script>
     <script src="../assets/audio-teacher.js"></script>
     <script src="../assets/icons.js"></script>
+    <script src="../assets/sidebar-toggle.js"></script>
     <script src="../assets/theme-settings.js"></script>
     <script src="../assets/accordion-controls.js"></script>
     <script src="../assets/lesson-section-progress.js"></script>

@@ -147,10 +147,10 @@ function renderVariableNameControls(lesson) {
 
 function updateLessonWithVariableNames() {
   const lesson = lessonWithVariableNames(allLessons[state.index]);
+  currentLesson = lesson;
   byId("lesson-code").innerHTML = highlightCode(lesson.code);
   configureExecutionLines(lesson);
   byId("lesson-output").textContent = lesson.output;
-  renderVisual(lesson.visual, lesson);
 }
 
 function renderCurriculum(filter = "") {
@@ -163,8 +163,7 @@ function renderCurriculum(filter = "") {
     if (!lessons.length) return;
     matches += lessons.length;
     const section = document.createElement("section");
-    const isActiveChapter = lessons.some(({ lesson }) => lesson.title === allLessons[state.index].title);
-    const expanded = window.curriculumAccordionsExpanded === null ? isActiveChapter : window.curriculumAccordionsExpanded;
+    const expanded = window.curriculumAccordionsExpanded === null ? true : window.curriculumAccordionsExpanded;
     section.className = `chapter${expanded ? "" : " closed"}`;
     const toggle = document.createElement("button");
     toggle.className = "chapter-toggle";
@@ -187,7 +186,7 @@ function renderCurriculum(filter = "") {
     subgroups.forEach((groupLessons, name) => {
       const subgroup = document.createElement("section");
       const subgroupExpanded = window.curriculumAccordionsExpanded === true ||
-        (window.curriculumAccordionsExpanded === null && groupLessons.some(({ lesson }) => lesson.title === allLessons[state.index].title));
+        window.curriculumAccordionsExpanded === null;
       subgroup.className = `curriculum-subgroup${subgroupExpanded ? "" : " closed"}`;
       const subgroupToggle = document.createElement("button");
       subgroupToggle.className = "subgroup-toggle";
@@ -221,6 +220,7 @@ function renderCurriculum(filter = "") {
     root.appendChild(section);
   });
   byId("curriculum-count").textContent = filter ? String(matches) : String(allLessons.length);
+  byId("expand-curriculum").textContent = window.curriculumAccordionsExpanded === false ? "Expand all" : "Collapse all";
   if (!matches) root.innerHTML = '<div class="empty-state">No lessons match that search. Try another concept.</div>';
 }
 
@@ -275,6 +275,7 @@ function configureExecutionLines(lesson) {
 function runCodeStep(index) {
   if (!executionLines.length) return;
   executionPosition = Math.max(0, Math.min(index, executionLines.length - 1));
+  if (executionPosition === 0) resetDemoOperation();
   document.querySelectorAll("#lesson-code .code-line").forEach((line) => {
     const lineIndex = Number(line.dataset.executionIndex);
     line.classList.toggle("is-current", lineIndex === executionPosition);
@@ -292,6 +293,7 @@ function runCodeStep(index) {
   const demoMessage = {
     type: "playwright-demo-execution-state",
     lines: executionLines.slice(0, executionPosition + 1).map((entry) => entry.text),
+    totalLines: executionLines.length,
     actionIndex: actionExecutionPosition
   };
   frame.dataset.pendingCodeLine = JSON.stringify(demoMessage);
@@ -306,7 +308,13 @@ function runCodeStep(index) {
   }
   updateExecutionControls();
 }
-
+function resetDemoOperation() {
+  byId("demo-operation-title").textContent = "Waiting for code";
+  byId("demo-operation-count").textContent = "Run the example";
+  byId("demo-operation-detail").textContent = "The local storefront will respond as the highlighted code runs. Python is illustrated, not executed.";
+  byId("demo-operation-code").textContent = "Run the walkthrough to see its current line here.";
+  byId("demo-operation-progress").style.width = "0%";
+}
 function pauseCodeRun() {
   if (codeTimer) window.clearInterval(codeTimer);
   codeTimer = null;
@@ -356,7 +364,7 @@ function renderBrowserDemo(lesson, index, count, stepTitle, stepDetail) {
   if (!lesson || !demo) return;
   const workspace = byId("visual-workspace");
   demo.hidden = false;
-  const demoUrl = new URL("demo.html", window.location.href);
+  const demoUrl = new URL("playwright-demo-site.html", window.location.href);
   demoUrl.searchParams.set("lesson", lesson.title);
   demoUrl.searchParams.set("step", String(index));
   demoUrl.searchParams.set("steps", String(count));
@@ -407,14 +415,33 @@ function renderBrowserDemo(lesson, index, count, stepTitle, stepDetail) {
 
 window.addEventListener("message", (event) => {
   const frame = byId("demo-frame");
-  if (event.source !== frame.contentWindow || event.data?.type !== "playwright-demo-scroll-target") return;
+  if (event.source !== frame.contentWindow || event.origin !== window.location.origin) return;
+  if (event.data?.type === "playwright-demo-operation") {
+    byId("demo-operation-title").textContent = event.data.title || "Playwright action";
+    byId("demo-operation-detail").textContent = event.data.detail || "";
+    byId("demo-operation-code").textContent = event.data.code || "";
+    const step = Number(event.data.step);
+    const steps = Number(event.data.steps);
+    byId("demo-operation-count").textContent = Number.isFinite(step) && Number.isFinite(steps) && steps > 0
+      ? `Step ${step} of ${steps}`
+      : "Browser setup";
+    byId("demo-operation-progress").style.width = Number.isFinite(step) && Number.isFinite(steps) && steps > 0
+      ? `${Math.min(100, Math.max(0, step / steps * 100))}%`
+      : "0%";
+    return;
+  }
+  if (event.data?.type !== "playwright-demo-scroll-target" || typeof event.data.selector !== "string") return;
   const screen = frame.closest(".demo-screen");
-  const target = frame.contentDocument?.querySelector(event.data.selector);
+  let target;
+  try {
+    target = frame.contentDocument?.querySelector(event.data.selector);
+  } catch (error) {
+    console.warn("The browser demo requested an invalid focus target.", error);
+  }
   if (!target || !screen || byId("playwright-browser-demo").hidden) {
     frame.contentWindow.postMessage({ type: "playwright-demo-scroll-complete" }, "*");
     return;
   }
-  target.classList.add("target-highlight");
   const frameTop = frame.getBoundingClientRect().top - screen.getBoundingClientRect().top + screen.scrollTop;
   const targetTop = frameTop + target.getBoundingClientRect().top;
   const top = targetTop - screen.clientHeight * 0.24;
@@ -595,8 +622,7 @@ function renderInterviewQuestions() {
 }
 
 function closeMobileMenu() {
-  byId("sidebar").classList.remove("open");
-  byId("mobile-scrim").classList.remove("show");
+  window.closeCourseNavigation();
 }
 
 function setView(view) {
@@ -627,6 +653,7 @@ function renderLesson() {
   if (window.lessonNarrator) window.lessonNarrator.stop();
   const baseLesson = allLessons[state.index];
   const lesson = lessonWithVariableNames(baseLesson);
+  currentLesson = lesson;
   saveCourseProgress();
   byId("breadcrumb-topic").textContent = lesson.chapter;
   byId("lesson-category").textContent = lesson.category;
@@ -634,20 +661,30 @@ function renderLesson() {
   byId("lesson-title").textContent = lesson.title;
   byId("lesson-theory").textContent = lesson.summary;
   byId("lesson-detailed-theory").textContent = lesson.theory;
-  document.querySelector(".lesson-explanation").open = true;
-  byId("lesson-description-visual").replaceChildren(buildLessonDescriptionIllustration(lesson));
+  const explanation = document.querySelector(".lesson-explanation");
+  explanation.open = true;
+  explanation.querySelector("summary").textContent = "Key details";
+  document.querySelector(".concept-card .section-title h2").textContent = "At a glance";
+  const picture = byId("lesson-description-visual");
+  picture.replaceChildren(buildLessonDescriptionIllustration(lesson));
+  const pictureCaption = document.createElement("figcaption");
+  pictureCaption.textContent = "Follow the numbered steps from start to finish.";
+  picture.append(pictureCaption);
+  byId("lesson-theory").after(picture);
   byId("lesson-analogy").textContent = lesson.analogy;
   byId("lesson-goal").textContent = lesson.goal;
   byId("goal-duration").textContent = String(lesson.duration);
+  document.querySelector(".code-card .section-title h2").textContent = "Code example";
+  document.querySelector(".code-card .section-title p").textContent = "Open the example when you need it.";
   byId("lesson-code").innerHTML = highlightCode(lesson.code);
   configureExecutionLines(lesson);
-  renderVariableNameControls(baseLesson);
-  byId("code-execution-status").textContent = "Ready · walkthrough is simulated; Python is not executed.";
+  byId("code-execution-status").textContent = "Ready - run the walkthrough to watch the demo site respond.";
   byId("lesson-output").textContent = lesson.output;
+  const codeToggle = document.querySelector('.code-card .section-collapse-button[aria-controls="code-content"]');
+  if (codeToggle) window.setLessonSectionExpanded(codeToggle, true);
   const complete = state.completed.has(state.index);
   byId("complete-button").classList.toggle("done", complete);
   byId("complete-button").querySelector(".complete-label").textContent = complete ? "Completed" : "Mark complete";
-  renderVisual(lesson.visual, lesson);
   renderQuiz(lesson.quiz);
   renderCurriculum(byId("search").value);
   const progress = Math.round(state.completed.size / allLessons.length * 100);
@@ -758,11 +795,6 @@ byId("copy-button").addEventListener("click", async () => {
     showToast("Clipboard access isn't available in this browser");
   }
 });
-byId("menu-button").addEventListener("click", () => {
-  byId("sidebar").classList.add("open");
-  byId("mobile-scrim").classList.add("show");
-});
-byId("mobile-scrim").addEventListener("click", closeMobileMenu);
 document.querySelectorAll(".aside-link").forEach((link) => link.addEventListener("click", (event) => {
   event.preventDefault();
   document.querySelectorAll(".aside-link").forEach((item) => item.classList.remove("active"));

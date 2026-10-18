@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f6f4ee" />
+    <link rel="icon" href="data:," />
+    <title>Field &amp; Foundry | Outdoor Goods</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+        color: #242821;
+        background: #f8f7f3;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+      }
+      * { box-sizing: border-box; }
+      body { min-width: 320px; margin: 0; background: #f8f7f3; }
+      button, input, select, textarea { font: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      button { cursor: pointer; }
+      a { color: inherit; }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+      .announcement { padding: 8px 18px; background: #303d32; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-align: center; }
+      .site-header { position: sticky; z-index: 10; top: 0; display: flex; align-items: center; gap: 22px; min-height: 69px; padding: 0 clamp(16px, 4vw, 58px); border-bottom: 1px solid #e9e6de; background: #fff; }
+      .brand { flex: 0 0 auto; color: #29372c; font: 700 15px/1 "Segoe UI", Arial, sans-serif; letter-spacing: 1.4px; text-decoration: none; }
+      .brand small { display: block; margin-top: 5px; color: #899084; font-size: 8px; font-weight: 600; letter-spacing: 2.3px; }
+      .main-nav { display: flex; align-items: center; gap: 21px; }
+      .main-nav a { color: #4e544b; font-size: 11px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+      .main-nav a:hover,.help-link:hover { color: #a45a3b; }
+      .header-search { display: flex; flex: 1 1 200px; max-width: 330px; margin-left: auto; }
+      .header-search input { width: 100%; min-width: 0; height: 37px; padding: 0 12px; border: 1px solid #e2e0d9; border-right: 0; border-radius: 3px 0 0 3px; background: #faf9f6; color: #30352e; font-size: 11px; }
+      .header-search input:focus,.field input:focus,.field textarea:focus,.field select:focus { outline: 2px solid #b5c39f; outline-offset: 1px; }
+      .header-search button { display: grid; place-items: center; width: 40px; border: 0; border-radius: 0 3px 3px 0; background: #39493a; color: white; }
+      .header-search button svg { width: 15px; height: 15px; }
+      .header-actions { display: flex; align-items: center; gap: 16px; }
+      .help-link { color: #53584f; font-size: 11px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+      .cart-link { display: flex; align-items: center; gap: 6px; padding: 8px 0; border: 0; background: transparent; color: #333b31; font-size: 11px; font-weight: 700; white-space: nowrap; }
+      .cart-link svg { width: 17px; height: 17px; }
+      .cart-count { display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 50%; background: #a75c3f; color: white; font-size: 9px; }
+      main { width: min(1280px, 100%); margin: 0 auto; padding: 0 clamp(16px, 4vw, 58px) 48px; }
+      .hero { position: relative; display: grid; min-height: 264px; grid-template-columns: 1fr 1fr; margin: 22px 0 28px; overflow: hidden; background: #e9e7dc; }
+      .hero-copy { z-index: 1; align-self: center; padding: 30px clamp(20px, 4vw, 50px); }
+      .eyebrow { color: #936044; font-size: 9px; font-weight: 750; letter-spacing: 1.7px; text-transform: uppercase; }
+      h1 { max-width: 420px; margin: 12px 0 9px; color: #273329; font: 600 clamp(25px, 4vw, 43px)/1.06 Georgia, "Times New Roman", serif; letter-spacing: -.8px; }
+      .hero-copy p { max-width: 330px; margin: 0 0 19px; color: #64695f; font-size: 12px; line-height: 1.7; }
+      .primary-link { display: inline-flex; align-items: center; gap: 10px; padding: 11px 14px; background: #39493a; color: white; font-size: 10px; font-weight: 700; text-decoration: none; transition: background .18s; }
+      .primary-link:hover { background: #26352a; }
+      .hero-photo { min-height: 264px; background: #c9c8b8 url("demo-assets/hero-trail.jpg") center 47% / cover no-repeat; }
+      .catalog-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 0 0 16px; }
+      .catalog-heading h2,.cart-heading h2,.checkout h2,.support h2 { margin: 0; color: #30372f; font: 600 23px/1.2 Georgia, "Times New Roman", serif; }
+      .catalog-heading p { margin: 6px 0 0; color: #85877d; font-size: 10px; }
+      .catalog-tools { display: flex; align-items: center; gap: 10px; }
+      .catalog-tools label { color: #818379; font-size: 9px; }
+      .catalog-tools select { height: 33px; padding: 0 26px 0 9px; border: 1px solid #e2dfd7; border-radius: 2px; background: #fff; color: #4b5048; font-size: 10px; }
+      .update-status { display: block; margin-top: 5px; color: #858b7e; font-size: 7px; text-align: right; }
+      .refresh-button { padding: 8px 10px; border: 1px solid #d8d7ce; border-radius: 2px; background: #fff; color: #535a4e; font-size: 9px; font-weight: 650; white-space: nowrap; }
+      .refresh-button:hover { border-color: #9da891; background: #f5f6f0; }
+      .shop-layout { display: grid; grid-template-columns: minmax(0,1fr) 250px; gap: 24px; align-items: start; }
+      .filter-row { display: flex; gap: 7px; margin: 0 0 15px; overflow-x: auto; scrollbar-width: thin; }
+      .filter-chip { flex: 0 0 auto; padding: 7px 11px; border: 1px solid #e2dfd7; border-radius: 20px; background: #fff; color: #686b62; font-size: 9px; }
+      .filter-chip:hover,.filter-chip[aria-pressed="true"] { border-color: #435542; background: #435542; color: #fff; }
+      .product-pagination { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
+      .product-pagination button { min-width: 31px; min-height: 30px; padding: 5px 9px; border: 1px solid #e2dfd7; background: #fff; color: #53584f; font-size: 9px; }
+      .product-pagination button[aria-current="page"] { border-color: #435542; background: #435542; color: #fff; }
+      .product-pagination button:disabled { opacity: .45; }
+      .product-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px 12px; }
+      .product-card { min-width: 0; background: #fff; }
+      .product-photo { position: relative; overflow: hidden; aspect-ratio: 1.12; background: #ecebe6; }
+      .product-photo img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+      .product-card:hover .product-photo img { transform: scale(1.035); }
+      .product-card.demo-hovered .product-photo img { transform: scale(1.035); }
+      .product-tag { position: absolute; top: 9px; left: 9px; padding: 5px 7px; background: #fff; color: #5c6257; font-size: 8px; font-weight: 700; letter-spacing: .45px; text-transform: uppercase; }
+      .product-info { padding: 11px 10px 12px; }
+      .product-rating { color: #a4633f; font-size: 9px; letter-spacing: 1px; }
+      .product-rating span { margin-left: 4px; color: #92938a; font-size: 8px; letter-spacing: 0; }
+      .product-card h3 { margin: 5px 0 4px; color: #353a32; font: 600 12px/1.35 Georgia, "Times New Roman", serif; }
+      .product-desc { min-height: 26px; margin: 0; color: #86877e; font-size: 9px; line-height: 1.45; }
+      .product-buy { display: flex; align-items: center; justify-content: space-between; gap: 7px; margin-top: 10px; }
+      .price { color: #343b32; font-size: 11px; font-weight: 750; white-space: nowrap; }
+      .product-buy button { padding: 7px 8px; border: 1px solid #d9ddd3; border-radius: 2px; background: #fff; color: #475143; font-size: 8px; font-weight: 700; white-space: nowrap; }
+      .product-buy button:hover { border-color: #40533f; background: #40533f; color: white; }
+      .no-products { padding: 24px 14px; color: #73776d; font-size: 11px; text-align: center; }
+      .no-products[hidden] { display: none; }
+      .cart-panel { position: sticky; top: 85px; min-height: 238px; padding: 16px; border: 1px solid #e7e4dc; background: #fff; transition: border-color .2s,box-shadow .2s; }
+      .cart-heading { display: flex; align-items: center; justify-content: space-between; padding-bottom: 13px; border-bottom: 1px solid #efede7; }
+      .cart-heading h2 { font-size: 19px; }
+      .cart-heading span { color: #888b80; font-size: 9px; }
+      .cart-empty { margin: 18px 0; color: #898b81; font-size: 10px; line-height: 1.6; }
+      .cart-empty[hidden] { display: none; }
+      .cart-items { display: grid; gap: 12px; padding: 12px 0; }
+      .cart-line { display: grid; grid-template-columns: 48px minmax(0,1fr) auto; gap: 9px; align-items: center; color: #4f554c; font-size: 9px; }
+      .cart-line img { width: 48px; height: 48px; object-fit: cover; }
+      .cart-line strong { color: #33392f; font-size: 9px; }
+      .cart-line small { display: block; margin-top: 4px; color: #929389; font-size: 8px; }
+      .cart-total { display: flex; justify-content: space-between; margin-top: 7px; padding-top: 12px; border-top: 1px solid #e9e7df; color: #464c42; font-size: 10px; font-weight: 700; }
+      .checkout,.support { margin-top: 30px; padding: 22px; border: 1px solid #e9e6df; background: #fff; }
+      .checkout-intro,.support-intro { margin: 7px 0 16px; color: #888a80; font-size: 10px; line-height: 1.6; }
+      .checkout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 15px; }
+      .field { display: grid; gap: 6px; min-width: 0; color: #62675d; font-size: 9px; font-weight: 650; }
+      .field input,.field select,.field textarea { width: 100%; min-width: 0; min-height: 35px; padding: 8px 9px; border: 1px solid #e0ded6; border-radius: 2px; background: #fff; color: #363b33; font-size: 10px; font-weight: 400; }
+      .field input[type="file"] { padding: 7px; }
+      .field textarea { min-height: 69px; resize: vertical; }
+      .choice-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+      .choice-label { display: flex; align-items: center; gap: 7px; color: #64695f; font-size: 9px; }
+      .choice-label input { width: 14px; height: 14px; margin: 0; accent-color: #465842; }
+      .delivery-wrap { position: relative; display: inline-block; margin-top: 14px; }
+      .delivery-button { display: inline-flex; align-items: center; gap: 14px; min-height: 34px; padding: 0 11px; border: 1px solid #deddd5; border-radius: 2px; background: #fff; color: #54594f; font-size: 9px; }
+      .delivery-button:after { content: "▾"; color: #878a80; }
+      .delivery-menu { position: absolute; z-index: 4; top: calc(100% + 4px); left: 0; min-width: 175px; padding: 4px; border: 1px solid #e4e1da; background: #fff; box-shadow: 0 8px 20px #23291e19; }
+      .delivery-menu[hidden] { display: none; }
+      .delivery-menu [role="option"] { display: block; width: 100%; padding: 9px; border: 0; background: #fff; color: #52584e; font-size: 9px; text-align: left; }
+      .delivery-menu [role="option"]:hover { background: #f4f5ef; }
+      .form-submit { margin-top: 15px; padding: 10px 14px; border: 0; border-radius: 2px; background: #40513e; color: #fff; font-size: 9px; font-weight: 700; }
+      .form-submit:hover { background: #29382c; }
+      .form-result { display: block; min-height: 15px; margin-top: 8px; color: #536c48; font-size: 9px; }
+      .support-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .support .form-submit { margin-top: 12px; }
+      footer { display: flex; justify-content: space-between; gap: 18px; margin-top: 28px; padding: 19px 0 0; border-top: 1px solid #e8e5dd; color: #83857b; font-size: 9px; }
+      footer strong { color: #3c4639; letter-spacing: 1px; }
+      #test-result { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+      .demo-cursor { position: fixed; z-index: 30; top: -60px; left: -60px; width: 32px; height: 39px; pointer-events: none; filter: drop-shadow(0 2px 2px #17241866); transition: left .42s cubic-bezier(.2,.7,.2,1),top .42s cubic-bezier(.2,.7,.2,1),transform .16s ease; }
+      .demo-cursor svg { display: block; width: 100%; height: 100%; }
+      .demo-cursor.click { transform: scale(.8); }
+      .demo-cursor.click:after { position: absolute; top: 7px; left: 7px; width: 17px; height: 17px; border: 2px solid #a45b3f; border-radius: 50%; animation: click-ring .6s ease-out forwards; content: ""; }
+      .demo-cursor.type { animation: typing .24s ease-in-out infinite alternate; }
+      .demo-cursor.hidden { opacity: 0; }
+      .demo-focused-target { position: relative !important; z-index: 2; outline: 3px solid #bf744e !important; outline-offset: 3px; box-shadow: 0 0 0 6px #c7825230 !important; scroll-margin: 110px; }
+      .product-card.demo-focused-target { z-index: 3; }
+      .cart-panel.demo-section-active,.checkout.demo-section-active,.support.demo-section-active { border-color: #b87956; box-shadow: 0 0 0 3px #c7825220; }
+      .product-card.demo-section-active { box-shadow: 0 0 0 3px #c7825230; }
+      @keyframes typing { to { translate: 1px 0; } }
+      @keyframes click-ring { from { scale: .3; opacity: .9; } to { scale: 1.8; opacity: 0; } }
+      @media(max-width:900px) {
+        .site-header { gap: 14px; padding-right: 18px; padding-left: 18px; }
+        .main-nav { gap: 12px; }
+        .shop-layout { grid-template-columns: minmax(0,1fr) 210px; gap: 14px; }
+        .product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      }
+      @media(max-width:620px) {
+        .announcement { padding: 7px 10px; font-size: 8px; }
+        .site-header { flex-wrap: wrap; gap: 9px 14px; padding: 12px 15px; }
+        .brand { font-size: 13px; }
+        .main-nav { order: 3; width: 100%; justify-content: space-between; gap: 8px; padding: 4px 0 1px; }
+        .main-nav a { font-size: 9px; }
+        .header-search { flex-basis: 110px; max-width: none; }
+        .header-actions { gap: 9px; }
+        .help-link { display: none; }
+        main { padding-right: 14px; padding-left: 14px; }
+        .hero { grid-template-columns: 1fr; min-height: 0; margin: 14px 0 22px; }
+        .hero-copy { padding: 22px; }
+        .hero-photo { min-height: 145px; }
+        .shop-layout { grid-template-columns: 1fr; }
+        .cart-panel { position: static; grid-row: 1; min-height: 0; }
+        .cart-empty { margin: 9px 0; }
+        .catalog-heading { align-items: start; }
+        .catalog-heading h2 { font-size: 20px; }
+        .catalog-tools { align-items: end; flex-direction: column; gap: 6px; }
+        .catalog-tools label { display: flex; align-items: center; gap: 5px; }
+        .product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 13px 9px; }
+        .product-info { padding: 9px 7px; }
+        .product-card h3 { font-size: 11px; }
+        .product-desc { font-size: 8px; }
+        .product-buy { align-items: start; flex-direction: column; }
+        .checkout,.support { margin-top: 18px; padding: 16px; }
+        .checkout-grid,.support-grid { grid-template-columns: 1fr; }
+        footer { flex-direction: column; }
+      }
+      @media(max-width:370px) { .header-actions { gap: 5px; }.cart-link { font-size: 0; }.cart-count { font-size: 9px; }.product-grid { grid-template-columns: 1fr; } }
+      @media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+    </style>
+  </head>
+  <body>
+    <div class="announcement">COMPLIMENTARY SHIPPING ON ORDERS OVER $75</div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Field and Foundry home">FIELD &amp; FOUNDRY<small>OUTDOOR GOODS</small></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="#shop-heading">New arrivals</a><a href="#shop-heading" data-category-link="packs">Packs</a>
+        <a href="#shop-heading" data-category-link="accessories">Accessories</a><a href="#shop-heading">Our story</a>
+      </nav>
+      <form class="header-search" id="search-form" role="search">
+        <label class="sr-only" for="search">Search products</label>
+        <input id="search" name="search" type="search" placeholder="Search outdoor gear" autocomplete="off" />
+        <button type="submit" id="search-button" aria-label="Search products"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.4" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4.1 4.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+      </form>
+      <div class="header-actions">
+        <a class="help-link" id="help-link" href="#support" title="Contact our team">Help</a>
+        <button class="cart-link" id="cart-toggle" type="button" aria-label="View shopping bag">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 9V6a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Bag           <span class="cart-count" id="cart-count" data-testid="cart-count">0</span>
+        </button>
+      </div>
+    </header>
+    <main id="top">
+      <section class="hero" aria-label="Seasonal collection">
+        <div class="hero-copy">
+          <span class="eyebrow">The spring field guide</span>
+          <h1 id="demo-page-title">Ready when the trail calls</h1>
+          <p>Thoughtful essentials for slow mornings, long weekends, and the miles in between.</p>
+          <a class="primary-link" href="#shop-heading">Explore the collection <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="hero-photo" role="img" aria-label="Hikers following a mountain trail"></div>
+      </section>
+      <div class="catalog-heading">
+        <div><span class="eyebrow">Made to go further</span><h2 id="shop-heading">Everyday field gear</h2><p id="product-count" data-testid="product-count">Six considered pieces for wherever you are headed.</p></div>
+        <div class="catalog-tools">
+          <label for="sort-select">Sort by
+            <select id="sort-select"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option></select>
+          </label>
+          <div><button class="refresh-button" type="button" id="refresh-button">Refresh products</button><span id="update-status" class="update-status">Live collection</span></div>
+        </div>
+      </div>
+      <div class="shop-layout">
+        <section aria-label="Product collection">
+          <div class="filter-row" role="group" aria-label="Filter products">
+            <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All gear</button>
+            <button class="filter-chip" type="button" data-filter="packs" aria-pressed="false">Packs</button>
+            <button class="filter-chip" type="button" data-filter="audio" aria-pressed="false">Audio</button>
+            <button class="filter-chip" type="button" data-filter="accessories" aria-pressed="false">Accessories</button>
+          </div>
+          <div class="product-grid" id="product-grid" role="list">
+            <article class="product-card" id="product-card" role="listitem" data-order="1" data-testid="product-card" data-name="Meridian studio headphones" data-category="audio" data-price="89">
+              <div class="product-photo"><img src="demo-assets/headphones.jpg" alt="Black studio headphones" /><span class="product-tag">Bestseller</span></div>
+              <div class="product-info"><div class="product-rating" aria-label="Rated 4.9 out of 5">★★★★★ <span>(128)</span></div><h3 id="product-name">Meridian studio headphones</h3><p class="product-desc">Quiet comfort for the journey there.</p><div class="product-buy"><span class="price">$89.00</span><button type="button" id="add-to-cart" data-add-product data-ready="true">Add to cart</button></div></div>
+            </article>
+            <article class="product-card" id="product-backpack" role="listitem" data-order="2" data-name="Trailhead daypack" data-category="packs" data-price="112">
+              <div class="product-photo"><img src="demo-assets/backpack.jpg" alt="Olive canvas trail backpack" /><span class="product-tag">New</span></div>
+              <div class="product-info"><div class="product-rating" aria-label="Rated 4.8 out of 5">★★★★★ <span>(64)</span></div><h3 id="backpack-name">Trailhead daypack</h3><p class="product-desc">A light, weather-ready 22-litre pack.</p><div class="product-buy"><span class="price">$112.00</span><button type="button" data-add-product>Add backpack to cart</button></div></div>
+            </article>
+            <article class="product-card" id="product-bottle" role="listitem" data-order="3" data-name="Ridgeline steel bottle" data-category="accessories" data-price="34">
+              <div class="product-photo"><img src="demo-assets/bottle.jpg" alt="Reusable stainless steel water bottle" /></div>
+              <div class="product-info"><div class="product-rating" aria-label="Rated 4.7 out of 5">★★★★★ <span>(91)</span></div><h3>Ridgeline steel bottle</h3><p class="product-desc">Double-wall insulation, all day long.</p><div class="product-buy"><span class="price">$34.00</span><button type="button" data-add-product>Add bottle to cart</button></div></div>
+            </article>
+            <article class="product-card" id="product-sneakers" role="listitem" data-order="4" data-name="Pace trail runners" data-category="packs" data-price="128">
+              <div class="product-photo"><img src="demo-assets/sneakers.jpg" alt="Red trail running shoes" /></div>
+              <div class="product-info"><div class="product-rating" aria-label="Rated 4.9 out of 5">★★★★★ <span>(47)</span></div><h3>Pace trail runners</h3><p class="product-desc">Sure-footed grip for the unmarked path.</p><div class="product-buy"><span class="price">$128.00</span><button type="button" data-add-product>Add shoes to cart</button></div></div>
+            </article>
+            <article class="product-card" id="product-watch" role="listitem" data-order="5" data-name="Field notes watch" data-category="accessories" data-price="156">
+              <div class="product-photo"><img src="demo-assets/watch.jpg" alt="Minimal analog field watch" /><span class="product-tag">Small batch</span></div>
+              <div class="product-info"><div class="product-rating" aria-label="Rated 4.8 out of 5">★★★★★ <span>(32)</span></div><h3>Field notes watch</h3><p class="product-desc">A clean dial built for everyday wear.</p><div class="product-buy"><span class="price">$156.00</span><button type="button" data-add-product>Add watch to cart</button></div></div>
+            </article>
+            <article class="product-card" id="product-accessory" role="listitem" data-order="6" data-name="Alpine travel kit" data-category="accessories" data-price="42">
+              <div class="product-photo"><img src="demo-assets/backpack.jpg" alt="Compact travel gear packed for a weekend" /></div>
+              <div class="product-info"><div class="product-rating" aria-label="Rated 4.6 out of 5">★★★★★ <span>(25)</span></div><h3>Alpine travel kit</h3><p class="product-desc">Small comforts for the road ahead.</p><div class="product-buy"><span class="price">$42.00</span><button type="button" data-add-product>Add kit to cart</button></div></div>
+            </article>
+          </div>
+          <nav class="product-pagination" id="product-pagination" aria-label="Pagination" hidden>
+            <button type="button" id="page-one" aria-current="page">1</button>
+            <button type="button" id="page-two">2</button>
+            <button type="button" id="page-next">Next</button>
+          </nav>
+          <p class="no-products" id="no-products" hidden>No pieces match that search. Try a different term.</p>
+        </section>
+        <aside class="cart-panel" id="cart-panel" data-testid="cart-panel" role="region" aria-label="Your shopping bag, drop zone">
+          <div class="cart-heading"><h2>Your bag</h2><span id="cart-summary">0 items</span></div>
+          <p class="cart-empty" id="cart-empty">Your bag is waiting for something good. Add a piece from the collection to get started.</p>
+          <div class="cart-items" id="cart-items"></div>
+          <div class="cart-total"><span>Subtotal</span><span id="cart-total">$0.00</span></div>
+          <p id="test-result" role="status" aria-live="polite">Your shopping bag is ready.</p>
+        </aside>
+      </div>
+      <section class="checkout" id="checkout" aria-labelledby="checkout-heading">
+        <span class="eyebrow">A few details</span><h2 id="checkout-heading">Plan your delivery</h2>
+        <p class="checkout-intro">Choose where your order is going and how soon you would like it to arrive.</p>
+        <div class="checkout-grid">
+          <label class="field" for="contact-name">Recipient name<input id="contact-name" name="name" autocomplete="name" placeholder="Asha Kumar" /></label>
+          <label class="field" for="email">Email address<input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" /></label>
+          <label class="field" for="country">Country
+            <select id="country" name="country"><option value="">Choose a country</option><option value="Canada">Canada</option><option value="United States">United States</option></select>
+          </label>
+          <label class="field" for="contact-message">Delivery notes<textarea id="contact-message" name="notes" autocomplete="off" placeholder="Anything we should know about your delivery?"></textarea></label>
+        </div>
+        <div class="choice-row">
+          <label class="choice-label"><input id="express" type="radio" name="delivery-speed" value="express" /> Express delivery</label>
+          <label class="choice-label"><input id="terms" type="checkbox" /> Accept terms and conditions</label>
+        </div>
+        <div class="delivery-wrap">
+          <button type="button" class="delivery-button" id="choose-plan" aria-haspopup="listbox" aria-expanded="false">Choose a delivery option</button>
+          <div class="delivery-menu" id="delivery-menu" role="listbox" aria-label="Delivery options" hidden>
+            <button type="button" role="option" id="standard-delivery-option" aria-selected="false" data-delivery="Standard">Standard delivery · Free</button>
+            <button type="button" role="option" id="express-delivery-option" aria-selected="false" data-delivery="Express">Express delivery · $12</button>
+          </div>
+        </div>
+        <span class="form-result" id="plan-result" role="status" aria-live="polite"></span>
+      </section>
+      <section class="support" id="support" aria-labelledby="support-heading">
+        <span class="eyebrow">Here to help</span><h2 id="support-heading">A real person, when you need one</h2>
+        <p class="support-intro">Questions about fit, an order, or the road ahead? Send our small team a note.</p>
+        <div class="support-grid">
+          <label class="field" for="support-name">Your name<input id="support-name" aria-label="Your name" autocomplete="off" /></label>
+          <label class="field" for="support-message">Message<textarea id="support-message" aria-label="Message" autocomplete="off"></textarea></label>
+          <label class="field" for="receipt">Add a receipt or product photo (optional)<input id="receipt" type="file" accept="image/*,application/pdf" autocomplete="off" /></label>
+        </div>
+        <button class="form-submit" type="button" id="send-message">Send message</button>
+        <span class="form-result" id="message-result" role="status" aria-live="polite"></span>
+      </section>
+      <footer><strong>FIELD &amp; FOUNDRY</strong><span>Thoughtful gear. Longer weekends.</span><a href="#top">Back to top ↑</a></footer>
+    </main>
+    <div class="demo-cursor hidden" id="demo-cursor" aria-hidden="true">
+      <svg viewBox="0 0 24 30" xmlns="http://www.w3.org/2000/svg"><path d="M3 2.5 21 17l-8 .7 4.1 8.2-3.8 1.8-4.2-8.1-4.1 5z" fill="#fff" stroke="#25372b" stroke-width="1.7" stroke-linejoin="round"/></svg>
+    </div>
+    <script>
+      const byId = (id) => document.getElementById(id);
+      const cursor = byId("demo-cursor");
+      const result = byId("test-result");
+      const operationLog = [];
+      const locatorVariables = new Map();
+      let processedLines = 0;
+      let animationTimers = [];
+      let responseOk = false;
+      let responseStatus = 0;
+      let focusedElement = null;
+      let focusedSection = null;
+      let focusTarget = null;
+      let focusTargetHadTabindex = false;
+      let focusTargetId = 0;
+      let activeCodeLine = "";
+      let activeStep = 0;
+      let totalSteps = 0;
+      let cart = new Map();
+      let selectedCategory = "all";
+      let currentPage = 1;
+      const productsPerPage = 3;
+      let mouseGestureSource = null;
+      let mouseGestureTarget = null;
+
+      function setActivity(title, detail, target, mode = "") {
+        window.parent.postMessage({
+          type: "playwright-demo-operation",
+          title,
+          detail,
+          code: activeCodeLine,
+          step: activeStep + 1,
+          steps: totalSteps
+        }, window.location.origin);
+        if (target) moveCursor(target, mode);
+      }
+
+      function moveCursor(target, mode = "") {
+        if (!target) return;
+        focusedElement?.closest(".product-card")?.classList.remove("demo-hovered");
+        focusedElement?.classList.remove("demo-focused-target");
+        focusedSection?.classList.remove("demo-section-active");
+        if (focusTarget && !focusTargetHadTabindex) focusTarget.removeAttribute("tabindex");
+        if (focusedElement) focusedElement.removeAttribute("data-demo-focus-target");
+        focusedElement = target;
+        focusedSection = target.closest(".cart-panel,.checkout,.support,.product-card");
+        focusTarget = target;
+        focusTargetHadTabindex = target.hasAttribute("tabindex");
+        if (!target.matches("a,button,input,select,textarea,[tabindex]")) {
+          target.setAttribute("tabindex", "-1");
+          focusTargetHadTabindex = false;
+        }
+        target.setAttribute("data-demo-focus-target", String(++focusTargetId));
+        target.focus({ preventScroll: true });
+        target.classList.add("demo-focused-target");
+        focusedSection?.classList.add("demo-section-active");
+        cursor.classList.remove("hidden", "click", "type");
+        if (mode) cursor.classList.add(mode);
+        positionCursor();
+        const selector = `#${CSS.escape(target.id)}` || `[data-demo-focus-target="${focusTargetId}"]`;
+        window.parent.postMessage({ type: "playwright-demo-scroll-target", selector }, window.location.origin);
+      }
+
+      function positionCursor() {
+        if (!focusedElement) return;
+        const rect = focusedElement.getBoundingClientRect();
+        cursor.style.left = `${Math.max(3, Math.min(innerWidth - 22, rect.left + rect.width / 2))}px`;
+        cursor.style.top = `${Math.max(3, Math.min(innerHeight - 30, rect.top + rect.height / 2))}px`;
+      }
+
+      function setResult(message, passed = true) {
+        result.textContent = message;
+        result.dataset.state = passed ? "success" : "error";
+      }
+
+      async function fetchProductData() {
+        const response = await fetch("/tutorial/demo-assets/products.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`GET products returned HTTP ${response.status}.`);
+        const data = await response.json();
+        if (!Array.isArray(data.products)) throw new Error("The product response has an invalid shape.");
+        return { response, products: data.products };
+      }
+
+      function clearAnimations() {
+        animationTimers.forEach(window.clearTimeout);
+        animationTimers = [];
+        cursor.classList.add("hidden");
+        focusedElement?.classList.remove("demo-focused-target");
+        focusedSection?.classList.remove("demo-section-active");
+        if (focusTarget && !focusTargetHadTabindex) focusTarget.removeAttribute("tabindex");
+        focusedElement?.removeAttribute("data-demo-focus-target");
+        focusedElement = null;
+        focusedSection = null;
+        focusTarget = null;
+        focusTargetHadTabindex = false;
+        locatorVariables.clear();
+        cart.clear();
+        renderCart();
+        byId("search").value = "";
+        byId("contact-name").value = "";
+        byId("email").value = "";
+        byId("country").value = "";
+        byId("contact-message").value = "";
+        byId("support-name").value = "";
+        byId("support-message").value = "";
+        byId("terms").checked = false;
+        byId("express").checked = false;
+        byId("plan-result").textContent = "";
+        byId("message-result").textContent = "";
+        byId("delivery-menu").hidden = true;
+        byId("choose-plan").setAttribute("aria-expanded", "false");
+        byId("choose-plan").textContent = "Choose a delivery option";
+        document.querySelectorAll("[role=option]").forEach((option) => option.setAttribute("aria-selected", "false"));
+        document.querySelectorAll(".product-card").forEach((card) => { card.hidden = false; });
+        [...document.querySelectorAll(".product-card")]
+          .sort((left, right) => Number(left.dataset.order) - Number(right.dataset.order))
+          .forEach((card) => byId("product-grid").append(card));
+        byId("no-products").hidden = true;
+        byId("product-count").textContent = "Six considered pieces for wherever you are headed.";
+        document.querySelectorAll("[data-filter]").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.filter === "all")));
+        selectedCategory = "all";
+        currentPage = 1;
+        byId("sort-select").value = "featured";
+        updateProducts();
+        responseOk = false;
+        responseStatus = 0;
+        processedLines = 0;
+        operationLog.length = 0;
+        setResult("Your shopping bag is ready.");
+      }
+
+      function renderCart() {
+        const items = [...cart.values()];
+        const count = items.reduce((sum, item) => sum + item.quantity, 0);
+        const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        byId("cart-count").textContent = String(count);
+        byId("cart-summary").textContent = `${count} ${count === 1 ? "item" : "items"}`;
+        byId("cart-empty").hidden = count > 0;
+        byId("cart-total").textContent = `$${subtotal.toFixed(2)}`;
+        const rows = items.map((item) => {
+          const row = document.createElement("div");
+          row.className = "cart-line";
+          const image = document.createElement("img");
+          image.src = item.image;
+          image.alt = "";
+          const description = document.createElement("span");
+          description.textContent = item.name;
+          const quantity = document.createElement("small");
+          quantity.textContent = `Qty ${item.quantity}`;
+          description.append(quantity);
+          const price = document.createElement("strong");
+          price.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+          row.append(image, description, price);
+          return row;
+        });
+        byId("cart-items").replaceChildren(...rows);
+      }
+
+      function addToBag(card) {
+        const name = card.dataset.name;
+        const existing = cart.get(name);
+        cart.set(name, {
+          name,
+          price: Number(card.dataset.price),
+          image: card.querySelector("img").src,
+          quantity: existing ? existing.quantity + 1 : 1
+        });
+        renderCart();
+        setResult(`${name} was added to your bag.`);
+      }
+
+      function updateProducts() {
+        const term = byId("search").value.trim().toLowerCase();
+        const cards = [...document.querySelectorAll(".product-card")];
+        const matches = cards.filter((card) => {
+          const matchesSearch = !term || `${card.dataset.name} ${card.textContent}`.toLowerCase().includes(term);
+          const matchesCategory = selectedCategory === "all" || card.dataset.category === selectedCategory;
+          return matchesSearch && matchesCategory;
+        });
+        const pageCount = Math.max(1, Math.ceil(matches.length / productsPerPage));
+        currentPage = Math.min(currentPage, pageCount);
+        const firstVisible = (currentPage - 1) * productsPerPage;
+        cards.forEach((card) => {
+          const matchIndex = matches.indexOf(card);
+          card.hidden = matchIndex < firstVisible || matchIndex >= firstVisible + productsPerPage;
+        });
+        byId("no-products").hidden = matches.length !== 0;
+        byId("product-count").textContent = matches.length
+          ? `Showing ${firstVisible + 1}–${Math.min(firstVisible + productsPerPage, matches.length)} of ${matches.length} pieces`
+          : "No pieces in this collection";
+        const pagination = byId("product-pagination");
+        pagination.hidden = pageCount < 2;
+        byId("page-one").hidden = pageCount < 1;
+        byId("page-two").hidden = pageCount < 2;
+        byId("page-one").toggleAttribute("aria-current", currentPage === 1);
+        byId("page-two").toggleAttribute("aria-current", currentPage === 2);
+        if (currentPage === 1) byId("page-one").setAttribute("aria-current", "page");
+        if (currentPage === 2) byId("page-two").setAttribute("aria-current", "page");
+        byId("page-next").disabled = currentPage >= pageCount;
+        return matches.length;
+      }
+
+      byId("search-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        currentPage = 1;
+        const visible = updateProducts();
+        setResult(visible ? `${visible} product${visible === 1 ? "" : "s"} found.` : "No products match your search.", visible > 0);
+      });
+      byId("search").addEventListener("input", () => {
+        currentPage = 1;
+        updateProducts();
+      });
+      document.querySelectorAll("[data-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedCategory = button.dataset.filter;
+          currentPage = 1;
+          document.querySelectorAll("[data-filter]").forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+          updateProducts();
+        });
+      });
+      document.querySelectorAll("[data-category-link]").forEach((link) => {
+        link.addEventListener("click", () => {
+          selectedCategory = link.dataset.categoryLink;
+          document.querySelector(`[data-filter="${CSS.escape(selectedCategory)}"]`)?.click();
+        });
+      });
+      byId("sort-select").addEventListener("change", (event) => {
+        const cards = [...document.querySelectorAll(".product-card")];
+        const mode = event.target.value;
+        if (mode === "price-low") cards.sort((a, b) => Number(a.dataset.price) - Number(b.dataset.price));
+        if (mode === "price-high") cards.sort((a, b) => Number(b.dataset.price) - Number(a.dataset.price));
+        if (mode === "featured") cards.sort((a, b) => Number(a.dataset.featured || 0) - Number(b.dataset.featured || 0));
+        byId("product-grid").append(...cards);
+        currentPage = 1;
+        updateProducts();
+      });
+      byId("page-one").addEventListener("click", () => { currentPage = 1; updateProducts(); });
+      byId("page-two").addEventListener("click", () => { currentPage = 2; updateProducts(); });
+      byId("page-next").addEventListener("click", () => { currentPage += 1; updateProducts(); });
+      updateProducts();
+      document.querySelectorAll("[data-add-product]").forEach((button) => {
+        button.addEventListener("click", () => addToBag(button.closest(".product-card")));
+      });
+      byId("cart-toggle").addEventListener("click", () => {
+        byId("cart-panel").scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      byId("refresh-button").addEventListener("click", async () => {
+        const button = byId("refresh-button");
+        const status = byId("update-status");
+        button.disabled = true;
+        button.textContent = "Refreshing…";
+        try {
+          const { response, products } = await fetchProductData();
+          responseOk = true;
+          responseStatus = response.status;
+          status.textContent = "Updated just now";
+          byId("product-count").textContent = `${products.length} pieces in the collection`;
+          setResult(`Product availability refreshed: ${products.length} products received.`);
+          setActivity("Product refresh completed", `GET /tutorial/demo-assets/products.json returned HTTP ${response.status} with ${products.length} products.`, button, "click");
+        } catch (error) {
+          responseOk = false;
+          responseStatus = 0;
+          status.textContent = "Refresh failed";
+          setResult(`Product refresh failed: ${error.message}`, false);
+          setActivity("Product refresh failed", error.message, button, "click");
+        } finally {
+          button.disabled = false;
+          button.textContent = "Refresh products";
+        }
+      });
+      byId("choose-plan").addEventListener("click", () => {
+        const menu = byId("delivery-menu");
+        menu.hidden = !menu.hidden;
+        byId("choose-plan").setAttribute("aria-expanded", String(!menu.hidden));
+      });
+      document.querySelectorAll("[data-delivery]").forEach((option) => {
+        option.addEventListener("click", () => {
+          document.querySelectorAll("[role=option]").forEach((item) => item.setAttribute("aria-selected", String(item === option)));
+          byId("choose-plan").textContent = `${option.dataset.delivery} delivery`;
+          byId("choose-plan").setAttribute("aria-expanded", "false");
+          byId("delivery-menu").hidden = true;
+          byId("plan-result").textContent = `${option.dataset.delivery} delivery selected.`;
+        });
+      });
+      byId("send-message").addEventListener("click", () => {
+        const name = byId("support-name").value.trim();
+        const message = byId("support-message").value.trim();
+        const sent = Boolean(name && message);
+        byId("message-result").textContent = sent ? `Thanks, ${name}. Our team will be in touch.` : "Add your name and a message before sending.";
+        setResult(sent ? "Your note has been sent to the Field & Foundry team." : "Complete both fields to send your note.", sent);
+      });
+      byId("country").addEventListener("change", (event) => {
+        if (event.target.value) setResult(`Delivery country set to ${event.target.value}.`);
+      });
+      byId("terms").addEventListener("change", (event) => {
+        setResult(event.target.checked ? "Order terms accepted." : "Order terms not accepted yet.");
+      });
+      byId("express").addEventListener("change", () => {
+        if (byId("express").checked) byId("plan-result").textContent = "Express delivery selected.";
+      });
+      byId("search-form").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") updateProducts();
+      });
+
+      function quotedValues(line) {
+        return [...line.matchAll(/(["'])(.*?)\1/g)].map((match) => match[2]);
+      }
+
+      const roleSelectors = {
+        heading: "h1,h2,h3",
+        textbox: 'input:not([type="checkbox"]):not([type="radio"]),textarea',
+        searchbox: 'input[type="search"],[role="searchbox"]',
+        checkbox: 'input[type="checkbox"]',
+        radio: 'input[type="radio"]',
+        option: '[role="option"],option',
+        button: "button",
+        link: "a",
+        region: '[role="region"],aside',
+        img: "img,[role=img]",
+        list: '[role="list"]',
+        listitem: '[role="listitem"]',
+        navigation: 'nav,[role="navigation"]'
+      };
+
+      function findByRole(scope, role, accessibleName = "", exact = false) {
+        const selector = roleSelectors[role] || `[role="${CSS.escape(role)}"]`;
+        return [...scope.querySelectorAll(selector)].find((item) => {
+          const accessibleLabel = item.getAttribute("aria-label") || item.labels?.[0]?.textContent || item.getAttribute("alt") || item.textContent;
+          const name = accessibleLabel.trim().toLowerCase();
+          return !accessibleName || name === accessibleName || (!exact && name.includes(accessibleName));
+        });
+      }
+
+      function targetFor(line, kind) {
+        const testIdMatch = /get_by_test_id\(\s*["']([^"']+)["']/.exec(line);
+        const variableUse = /^\s*(?:expect\(\s*)?([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\s*\)?\s*\./.exec(line)?.[1];
+        const chainedRole = /([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\.get_by_role\(\s*["']([^"']+)["'](?:\s*,\s*name\s*=\s*["']([^"']+)["'])?/.exec(line);
+        if (chainedRole && locatorVariables.has(chainedRole[1])) {
+          const scope = locatorVariables.get(chainedRole[1]);
+          if (/get_by_role\(\s*["']listitem["']/.test(line) && /to_have_count/.test(line) && scope.matches('[role="list"]')) return scope;
+          const match = findByRole(scope, chainedRole[2].toLowerCase(), (chainedRole[3] || "").toLowerCase(), /exact\s*=\s*True/.test(line));
+          if (match) return match.tagName === "OPTION" ? match.closest("select") : match;
+        }
+        const chainedRead = /\b([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\.(?:get_attribute|inner_text|text_content|click|dblclick|fill|type|check|uncheck|select_option|hover|press|drag_to|scroll_into_view_if_needed)\s*\(/.exec(line);
+        if (chainedRead && locatorVariables.has(chainedRead[1])) return locatorVariables.get(chainedRead[1]);
+        if (variableUse && locatorVariables.has(variableUse)) return locatorVariables.get(variableUse);
+        if (/to_have_url/.test(line)) return byId("help-link");
+        if (/to_have_title/.test(line)) return byId("demo-page-title");
+        if (/expect_response|\b(?:info|response_info)\.value|response(?:_info)?\.(?:value|status|ok)|request\.get\s*\(/.test(line)) return byId("test-result");
+
+        const roleMatch = /get_by_role\(\s*["']([^"']+)["'](?:\s*,\s*name\s*=\s*["']([^"']+)["'])?/.exec(line);
+        const labelMatch = /get_by_label\(\s*["']([^"']+)["']/.exec(line);
+        const placeholderMatch = /get_by_placeholder\(\s*["']([^"']+)["']/.exec(line);
+        const textMatch = /get_by_text\(\s*["']([^"']+)["']/.exec(line);
+        const cssMatch = /(?:\.locator|page\.locator)\(\s*["']([^"']+)["']/.exec(line);
+
+        if (labelMatch) {
+          const wanted = labelMatch[1].trim().toLowerCase();
+          const label = [...document.querySelectorAll("label")].find((item) => item.textContent.trim().toLowerCase() === wanted || item.textContent.trim().toLowerCase().includes(wanted));
+          if (label?.control) return label.control;
+          const control = [...document.querySelectorAll("[aria-label]")].find((item) => item.getAttribute("aria-label").trim().toLowerCase() === wanted);
+          if (control) return control;
+        }
+        if (placeholderMatch) {
+          const wanted = placeholderMatch[1].toLowerCase();
+          const match = [...document.querySelectorAll("input,textarea")].find((item) => item.placeholder.toLowerCase().includes(wanted));
+          if (match) return match;
+        }
+        if (roleMatch) {
+          const [role, accessibleName = ""] = [roleMatch[1].toLowerCase(), (roleMatch[2] || "").toLowerCase()];
+          const matched = findByRole(document, role, accessibleName, /exact\s*=\s*True/.test(line));
+          if (matched) return matched.tagName === "OPTION" ? matched.closest("select") : matched;
+        }
+        if (textMatch) {
+          const wanted = textMatch[1].trim().toLowerCase();
+          const match = [...document.querySelectorAll("h1,h2,h3,p,button,a,label,span,[data-testid]")].find((item) => item.textContent.trim().toLowerCase().includes(wanted));
+          if (match) return match;
+        }
+        if (cssMatch) {
+          try {
+            const candidates = [...document.querySelectorAll(cssMatch[1])];
+            const filterText = /has_text\s*=\s*["']([^"']+)["']/.exec(line)?.[1].trim().toLowerCase();
+            const match = filterText
+              ? candidates.find((item) => item.textContent.toLowerCase().includes(filterText))
+              : candidates[0];
+            if (match) return match;
+          } catch (error) {
+            console.warn("The demo could not resolve this CSS locator.", error);
+          }
+        }
+        if (testIdMatch) {
+          const match = document.querySelector(`[data-testid="${CSS.escape(testIdMatch[1])}"]`);
+          if (match) return match;
+        }
+
+        const text = line.toLowerCase();
+        if (/refresh|availability/.test(text)) return byId("refresh-button");
+        if (/accept.terms|terms/.test(text)) return byId("terms");
+        if (/choose.plan|choose.delivery|delivery.menu|priority/.test(text)) return byId("choose-plan");
+        if (/canada|country/.test(text)) return byId("country");
+        if (/express|delivery|radio/.test(text)) return byId("express");
+        if (/your.name|contact.name|support.name/.test(text)) return byId("support-name");
+        if (/message/.test(text)) return kind === "fill" ? byId("support-message") : byId("send-message");
+        if (/email/.test(text)) return byId("email");
+        if (/search|query/.test(text)) return kind === "fill" ? byId("search") : byId("search-button");
+        if (/cart|bag|drop.zone/.test(text)) return byId("cart-panel");
+        if (/backpack|daypack/.test(text)) return byId("product-backpack");
+        if (/headphone/.test(text)) return kind === "hover" ? byId("product-card") : byId("add-to-cart");
+        if (/heading|title/.test(text)) return byId("demo-page-title");
+        return null;
+      }
+
+      function rememberLocator(line, target) {
+        const assignment = /^\s*([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\s*=\s*(?!=)/.exec(line);
+        if (assignment && /get_by_|\.locator\(/.test(line) && target) locatorVariables.set(assignment[1], target);
+      }
+
+      function showUnavailableTarget(line) {
+        focusedElement?.classList.remove("demo-focused-target");
+        focusedSection?.classList.remove("demo-section-active");
+        if (focusTarget && !focusTargetHadTabindex) focusTarget.removeAttribute("tabindex");
+        focusedElement?.removeAttribute("data-demo-focus-target");
+        focusedElement = null;
+        focusedSection = null;
+        focusTarget = null;
+        focusTargetHadTabindex = false;
+        cursor.classList.add("hidden");
+        setActivity("No matching control in this demo", `The storefront does not contain a control for “${line.trim()}”, so this line is shown but not simulated.`);
+      }
+
+      function typeInto(field, value) {
+        field.focus();
+        field.value = "";
+        field.dispatchEvent(new Event("input", { bubbles: true }));
+        if (!value) return;
+        cursor.classList.add("type");
+        const delay = Math.min(24, 420 / Math.max(value.length, 1));
+        [...value].forEach((character, index) => {
+          const timer = window.setTimeout(() => {
+            field.value = value.slice(0, index + 1);
+            field.dispatchEvent(new Event("input", { bubbles: true }));
+            if (index === value.length - 1) cursor.classList.remove("type");
+          }, index * delay);
+          animationTimers.push(timer);
+        });
+      }
+
+      function playCodeLine(line, index, total) {
+        const cleanLine = line.trim();
+        if (!cleanLine || cleanLine.startsWith("#")) return;
+        activeCodeLine = cleanLine;
+        activeStep = index;
+        totalSteps = total;
+        operationLog.push(cleanLine);
+
+        if (/expect_response/.test(cleanLine)) {
+          responseOk = false;
+          responseStatus = 0;
+          setActivity("Wait for the product response", "The test registers a listener for the products request before triggering it.", byId("test-result"));
+        } else if (/^(?:from|import)\s/.test(cleanLine)) {
+          setActivity("Load the Playwright library", "The Python test imports Playwright before it opens a browser.");
+        } else if (/\.goto\s*\(/.test(cleanLine)) {
+          setActivity("Open the storefront", "page.goto(...) navigates to the Field & Foundry practice store.", byId("demo-page-title"));
+        } else if (/request\.get\s*\(/.test(cleanLine)) {
+          responseOk = false;
+          responseStatus = 0;
+          setActivity("Request product data directly", "APIRequestContext sends a GET request to the products endpoint without clicking a storefront control.", byId("test-result"));
+          fetchProductData().then(({ response, products }) => {
+            responseOk = true;
+            responseStatus = response.status;
+            setResult(`Direct API request returned HTTP ${response.status} with ${products.length} products.`);
+            setActivity("Read the API response", `The products endpoint returned HTTP ${response.status} with ${products.length} products.`, byId("test-result"));
+          }).catch((error) => {
+            responseOk = false;
+            responseStatus = 0;
+            setResult(`Direct API request failed: ${error.message}`, false);
+            setActivity("Direct API request failed", error.message, byId("test-result"));
+          });
+        } else if (/\.fill\s*\(|\.type\s*\(/.test(cleanLine)) {
+          const field = targetFor(cleanLine, "fill");
+          if (!field) return showUnavailableTarget(cleanLine);
+          const value = /\.(?:fill|type)\(\s*(["'])(.*?)\1/.exec(cleanLine)?.[2] ?? "";
+          moveCursor(field, "type");
+          setActivity("Enter text", `Playwright fills “${field.labels?.[0]?.textContent.trim() || field.getAttribute("aria-label") || field.placeholder || field.name}” with ${value ? `“${value}”` : "the example value"}.`, field, "type");
+          typeInto(field, value);
+        } else if (/\.dblclick\s*\(/.test(cleanLine)) {
+          const target = targetFor(cleanLine, "click");
+          if (!target) return showUnavailableTarget(cleanLine);
+          setActivity("Double-click a store control", `The test double-clicks “${target.getAttribute("aria-label") || target.textContent.trim()}”.`, target, "click");
+          const timer = window.setTimeout(() => { target.click(); target.click(); }, 250);
+          animationTimers.push(timer);
+        } else if (/\.click\s*\(/.test(cleanLine)) {
+          const target = targetFor(cleanLine, "click");
+          if (!target) return showUnavailableTarget(cleanLine);
+          const label = target.getAttribute("aria-label") || target.textContent.trim() || target.id;
+          setActivity("Click a store control", `The test clicks “${label}” and the page responds.`, target, "click");
+          const timer = window.setTimeout(() => target.click(), 250);
+          animationTimers.push(timer);
+        } else if (/^\s*[A-Za-z_]\w*\s*=\s*[A-Za-z_]\w*(?:_info)?\.value\b/.test(cleanLine)) {
+          setActivity(
+            "Read the captured response",
+            responseStatus ? `The products response is ready with HTTP status ${responseStatus}.` : "The test reads the response captured by its network wait.",
+            byId("test-result")
+          );
+        } else if (/\.check\s*\(|\.uncheck\s*\(/.test(cleanLine)) {
+          const control = targetFor(cleanLine, "check");
+          if (!control) return showUnavailableTarget(cleanLine);
+          control.checked = /\.check\s*\(/.test(cleanLine);
+          control.dispatchEvent(new Event("change", { bubbles: true }));
+          const choice = control.id === "express" ? "express delivery" : "order terms";
+          setActivity("Set a form choice", `The ${choice} option is ${control.checked ? "selected" : "cleared"}.`, control, "click");
+        } else if (/\.select_option\s*\(/.test(cleanLine)) {
+          const select = targetFor(cleanLine, "select");
+          if (!select) return showUnavailableTarget(cleanLine);
+          const requested = quotedValues(cleanLine).pop() || "";
+          const option = [...select.options].find((item) => item.value.toLowerCase() === requested.toLowerCase() || item.textContent.toLowerCase() === requested.toLowerCase());
+          if (option) {
+            select.value = option.value;
+            select.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+          setActivity("Choose a country", `Playwright selects ${option?.textContent || requested || "an option"} in the native country menu.`, select, "click");
+        } else if (/\.drag_to\s*\(/.test(cleanLine)) {
+          const sourceName = /^\s*([A-Za-z_]\w*)/.exec(cleanLine)?.[1];
+          const targetName = /\.drag_to\(\s*([A-Za-z_]\w*)/.exec(cleanLine)?.[1];
+          const source = locatorVariables.get(sourceName);
+          const target = locatorVariables.get(targetName);
+          if (!source || !target) return showUnavailableTarget(cleanLine);
+          moveCursor(source);
+          setActivity("Drag a product into your bag", "The product is picked up and dropped on the shopping bag; the cart updates when it lands.", source);
+          const timer = window.setTimeout(() => {
+            moveCursor(target, "click");
+            addToBag(source.closest(".product-card") || byId("product-backpack"));
+          }, 420);
+          animationTimers.push(timer);
+        } else if (/page\.mouse\.down\s*\(/.test(cleanLine)) {
+          const locators = [...locatorVariables.values()];
+          mouseGestureSource = locators.find((item) => item.closest(".product-card"));
+          mouseGestureTarget = locators.find((item) => item.closest(".cart-panel"));
+          if (!mouseGestureSource || !mouseGestureTarget) return showUnavailableTarget(cleanLine);
+          setActivity("Hold the mouse button", "The pointer is held on the product before moving it toward your bag.", mouseGestureSource, "click");
+        } else if (/page\.mouse\.move\s*\(/.test(cleanLine)) {
+          if (!mouseGestureTarget) return showUnavailableTarget(cleanLine);
+          setActivity("Move the held pointer", "The held pointer moves the product over the shopping bag.", mouseGestureTarget || byId("cart-panel"), "click");
+        } else if (/page\.mouse\.up\s*\(/.test(cleanLine)) {
+          const source = mouseGestureSource;
+          if (!source) return showUnavailableTarget(cleanLine);
+          addToBag(source.closest(".product-card") || byId("product-backpack"));
+          setActivity("Release the product in the bag", "The mouse button is released and the shopping bag receives the product.", byId("cart-panel"), "click");
+          mouseGestureSource = null;
+          mouseGestureTarget = null;
+        } else if (/\.set_input_files\s*\(/.test(cleanLine)) {
+          const input = targetFor(cleanLine, "file");
+          if (!input) return showUnavailableTarget(cleanLine);
+          const fileName = quotedValues(cleanLine).pop() || "sample-file";
+          const type = /\.pdf$/i.test(fileName) ? "application/pdf" : "image/jpeg";
+          const transfer = new DataTransfer();
+          transfer.items.add(new File(["Illustration only"], fileName.split(/[\\/]/).pop(), { type }));
+          input.files = transfer.files;
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+          setActivity("Choose a support attachment", `The file field now contains “${fileName.split(/[\\/]/).pop()}”. No file is uploaded.`, input);
+        } else if (/\.scroll_into_view_if_needed\s*\(/.test(cleanLine)) {
+          const target = targetFor(cleanLine, "scroll");
+          if (!target) return showUnavailableTarget(cleanLine);
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+          setActivity("Bring the target into view", "Playwright scrolls the selected control into the visible part of the page.", target);
+        } else if (/\.hover\s*\(/.test(cleanLine)) {
+          const target = targetFor(cleanLine, "hover");
+          if (!target) return showUnavailableTarget(cleanLine);
+          target.closest(".product-card")?.classList.add("demo-hovered");
+          target.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true }));
+          setActivity("Move the pointer over a product", "The cursor rests over the product so its hover state is visible.", target);
+        } else if (/\.(?:inner_text|text_content|get_attribute)\s*\(/.test(cleanLine)) {
+          const target = targetFor(cleanLine, "read");
+          if (!target) return showUnavailableTarget(cleanLine);
+          const attributeName = /\.get_attribute\(\s*["']([^"']+)["']/.exec(cleanLine)?.[1];
+          const value = attributeName ? target.getAttribute(attributeName) : target.textContent.trim();
+          setActivity("Read product information", `The test reads: ${value || "the selected attribute"}.`, target);
+          setResult(value ? `Read successfully: ${value}.` : "No value was found.", Boolean(value));
+        } else if (/\.press\s*\(/.test(cleanLine)) {
+          const field = targetFor(cleanLine, "fill");
+          if (!field) return showUnavailableTarget(cleanLine);
+          const key = quotedValues(cleanLine).pop() || "a key";
+          let focusedControl = field;
+          if (/enter/i.test(key) && field.form) field.form.requestSubmit();
+          else if (/tab/i.test(key)) {
+            const controls = [...document.querySelectorAll("input,textarea,select,button,a[href]")].filter((item) => !item.disabled && item.getClientRects().length);
+            const current = controls.indexOf(field);
+            focusedControl = controls[current + 1] || field;
+            focusedControl.focus();
+          }
+          setActivity("Use the keyboard", `Playwright presses ${key} while “${field.placeholder || field.name || "the selected field"}” is focused.`, focusedControl, "click");
+        } else if (/expect\(|assert\s/.test(cleanLine)) {
+          const target = targetFor(cleanLine, "assert");
+          if (!target) return showUnavailableTarget(cleanLine);
+          const expectedStatus = Number(/status\s*==\s*(\d+)/.exec(cleanLine)?.[1]);
+          const expectedAttribute = /to_have_attribute\(\s*["']([^"']+)["']\s*,\s*["']([^"']+)["']/.exec(cleanLine);
+          const expectedCount = /to_have_count\(\s*(\d+)/.exec(cleanLine);
+          const expected = expectedCount ? `${expectedCount[1]} results` : quotedValues(cleanLine).pop();
+          const pageText = `${document.title}\n${document.body.innerText}`;
+          const actualText = target?.textContent || "";
+          const passed = /response\.ok/.test(cleanLine) ? responseOk
+            : expectedAttribute ? target.getAttribute(expectedAttribute[1]) === expectedAttribute[2]
+              : expectedCount ? target.querySelectorAll('[role="listitem"]:not([hidden])').length === Number(expectedCount[1])
+                : /to_have_value/.test(cleanLine) ? target.value === expected
+                  : /to_have_url/.test(cleanLine) ? (expected.includes("#") ? location.hash === expected.slice(expected.indexOf("#")) : location.hash === "")
+                    : /to_have_title/.test(cleanLine) ? document.title === expected
+            : /to_be_unchecked/.test(cleanLine) ? !target.checked
+              : /to_be_checked|is_checked/.test(cleanLine) ? Boolean(target.checked)
+                : /to_be_visible|is_visible/.test(cleanLine) ? Boolean(target.getClientRects().length && !target.hidden)
+                  : /to_be_enabled/.test(cleanLine) ? !target.disabled
+                    : /to_contain_text|to_have_text/.test(cleanLine) ? actualText.toLowerCase().includes((expected || "").toLowerCase())
+                      : Number.isFinite(expectedStatus) && expectedStatus > 0 ? expectedStatus === responseStatus
+                        : !expected || pageText.toLowerCase().includes(expected.toLowerCase());
+          setResult(passed ? `Passed: the page matches the expected result${expected ? ` (“${expected}”)` : ""}.` : `The expected result is not visible yet${expected ? ` (“${expected}”)` : ""}.`, passed);
+          setActivity(passed ? "Check the expected result" : "The expected result needs attention", passed ? `The requested state is verified${responseStatus ? ` (HTTP ${responseStatus})` : ""}.` : "The requested state is not visible yet.", target);
+        } else if (/page\.go_back\s*\(/.test(cleanLine)) {
+          setActivity("Return to the previous page state", "The browser history moves back from the support section to the storefront.", byId("help-link"));
+          history.back();
+        } else if (/page\.go_forward\s*\(/.test(cleanLine)) {
+          setActivity("Restore the next page state", "The browser history moves forward to the support section.", byId("help-link"));
+          history.forward();
+        } else if (/\.(?:close|dispose)\s*\(/.test(cleanLine)) {
+          setActivity("Finish the browser session", "The test closes its browser or API resources after completing the check.");
+        } else if (/launch\s*\(|new_page\s*\(|new_context\s*\(/.test(cleanLine)) {
+          setActivity("Prepare a browser session", "Playwright starts a browser, creates a page, or opens an isolated context.");
+        } else if (/page\.set_default_(?:navigation_)?timeout\s*\(/.test(cleanLine)) {
+          setActivity("Configure the wait budget", "This line sets how long the browser test waits for an action or navigation.");
+        } else if (/page\.wait_for_load_state\s*\(|\.wait_for\(/.test(cleanLine)) {
+          setActivity("Wait for page readiness", "The test waits for the requested page or locator state before checking the result.", byId("demo-page-title"));
+        } else if (/get_by_role|get_by_label|get_by_text|get_by_placeholder|locator\(/.test(cleanLine)) {
+          const target = targetFor(cleanLine, "locate");
+          if (!target) return showUnavailableTarget(cleanLine);
+          rememberLocator(cleanLine, target);
+          const name = target.getAttribute("aria-label") || target.labels?.[0]?.textContent || target.textContent.trim() || target.tagName.toLowerCase();
+          setActivity("Find the matching element", `Playwright locates “${name.trim()}”. The cursor marks the element selected by the locator.`, target);
+        } else if (/page\.title\(\)/.test(cleanLine)) {
+          setActivity("Read the page title", `The browser tab title is “${document.title}”.`, byId("demo-page-title"));
+        } else {
+          showUnavailableTarget(cleanLine);
+        }
+      }
+
+      window.addEventListener("message", (event) => {
+        if (event.source !== window.parent || event.origin !== window.location.origin) return;
+        const message = event.data;
+        if (message?.type === "playwright-demo-scroll-complete") {
+          positionCursor();
+          return;
+        }
+        if (message?.type !== "playwright-demo-execution-state" || !Array.isArray(message.lines)) return;
+        if (message.lines.length < processedLines) clearAnimations();
+        const startIndex = processedLines;
+        const freshLines = message.lines.slice(startIndex);
+        processedLines = message.lines.length;
+        freshLines.forEach((line, offset) => {
+          const total = Number.isInteger(message.totalLines) ? message.totalLines : message.lines.length;
+          const timer = window.setTimeout(() => playCodeLine(line, startIndex + offset, total), offset * 180);
+          animationTimers.push(timer);
+        });
+      });
+      window.addEventListener("resize", positionCursor);
+      window.playwrightDemoOperationLog = operationLog;
+    </script>
+  </body>
+</html>

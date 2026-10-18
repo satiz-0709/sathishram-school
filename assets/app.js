@@ -275,8 +275,7 @@ function renderCurriculum(filter = "") {
     if (!filteredLessons.length) return;
     matches += filteredLessons.length;
     const section = document.createElement("section");
-    const isActiveChapter = filteredLessons.some(({ lesson }) => lesson.title === allLessons[state.index].title);
-    const expanded = window.curriculumAccordionsExpanded === null ? isActiveChapter : window.curriculumAccordionsExpanded;
+    const expanded = window.curriculumAccordionsExpanded === null ? true : window.curriculumAccordionsExpanded;
     section.className = `chapter${expanded ? "" : " closed"}`;
     const toggle = document.createElement("button");
     toggle.className = "chapter-toggle";
@@ -299,7 +298,7 @@ function renderCurriculum(filter = "") {
     subgroups.forEach((groupLessons, name) => {
       const subgroup = document.createElement("section");
       const subgroupExpanded = window.curriculumAccordionsExpanded === true ||
-        (window.curriculumAccordionsExpanded === null && groupLessons.some(({ lesson }) => lesson.title === allLessons[state.index].title));
+        window.curriculumAccordionsExpanded === null;
       subgroup.className = `curriculum-subgroup${subgroupExpanded ? "" : " closed"}`;
       const subgroupToggle = document.createElement("button");
       subgroupToggle.className = "subgroup-toggle";
@@ -320,7 +319,7 @@ function renderCurriculum(filter = "") {
         item.className = `lesson-link${globalIndex === state.index ? " active" : ""}${state.completed.has(globalIndex) ? " completed" : ""}`;
         item.innerHTML = `<span class="lesson-check" aria-hidden="true"></span><span>${escapeHtml(lesson.title)}</span>`;
         item.setAttribute("aria-current", globalIndex === state.index ? "page" : "false");
-        item.addEventListener("click", () => window.schoolCourseAccess.requireLesson(globalIndex, () => { state.index = globalIndex; renderLesson(); byId("sidebar").classList.remove("open"); byId("mobile-scrim").classList.remove("show"); }));
+        item.addEventListener("click", () => window.schoolCourseAccess.requireLesson(globalIndex, () => { state.index = globalIndex; renderLesson(); window.closeCourseNavigation(); }));
         subgroupLessons.appendChild(item);
       });
       subgroup.append(subgroupToggle, subgroupLessons);
@@ -330,6 +329,7 @@ function renderCurriculum(filter = "") {
     root.appendChild(section);
   });
   byId("curriculum-count").textContent = filter ? String(matches) : String(allLessons.length);
+  byId("expand-curriculum").textContent = window.curriculumAccordionsExpanded === false ? "Expand all" : "Collapse all";
   if (!matches) root.innerHTML = '<div class="empty-state">No lessons match that search. Try another topic or keyword.</div>';
 }
 
@@ -548,8 +548,7 @@ function setView(view) {
   if (view === "interview") renderInterviewQuestions();
   if (view === "mock") window.startMockExam?.();
   if (view === "programs") renderInterviewPrograms();
-  byId("sidebar").classList.remove("open");
-  byId("mobile-scrim").classList.remove("show");
+  window.closeCourseNavigation();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -563,17 +562,26 @@ function renderLesson() {
   byId("lesson-title").textContent = lesson.title;
   byId("lesson-theory").textContent = lesson.summary;
   byId("lesson-detailed-theory").textContent = lesson.theory;
-  document.querySelector(".lesson-explanation").open = true;
-  byId("lesson-description-visual").replaceChildren(buildLessonDescriptionIllustration(lesson));
+  const explanation = document.querySelector(".lesson-explanation");
+  explanation.open = true;
+  explanation.querySelector("summary").textContent = "Key details";
+  document.querySelector(".concept-card .section-title h2").textContent = "At a glance";
+  const picture = byId("lesson-description-visual");
+  picture.replaceChildren(buildLessonDescriptionIllustration(lesson));
+  const pictureCaption = document.createElement("figcaption");
+  pictureCaption.textContent = "Follow the numbered steps from start to finish.";
+  picture.append(pictureCaption);
+  byId("lesson-theory").after(picture);
   byId("lesson-analogy").textContent = lesson.analogy;
   byId("lesson-goal").textContent = lesson.goal;
   byId("goal-duration").textContent = String(lesson.duration);
   byId("lesson-code").innerHTML = highlightCode(lesson.code);
   byId("lesson-output").textContent = lesson.output.replace(/\\n/g, "\n");
+  const codeToggle = document.querySelector('.code-card .section-collapse-button[aria-controls="code-content"]');
+  if (codeToggle) window.setLessonSectionExpanded(codeToggle, true);
   const complete = state.completed.has(state.index);
   byId("complete-button").classList.toggle("done", complete);
   byId("complete-button").querySelector(".complete-label").textContent = complete ? "Completed" : "Mark complete";
-  renderVisual(lesson.visual, lesson);
   renderQuiz(lesson.quiz);
   renderCurriculum(byId("search").value);
   const progress = Math.round((state.completed.size / allLessons.length) * 100);
@@ -683,8 +691,6 @@ byId("copy-button").addEventListener("click", async () => {
     showToast("Clipboard access isn't available in this browser");
   }
 });
-byId("menu-button").addEventListener("click", () => { byId("sidebar").classList.add("open"); byId("mobile-scrim").classList.add("show"); });
-byId("mobile-scrim").addEventListener("click", () => { byId("sidebar").classList.remove("open"); byId("mobile-scrim").classList.remove("show"); });
 document.querySelectorAll(".aside-link").forEach((link) => link.addEventListener("click", (event) => {
   event.preventDefault();
   document.querySelectorAll(".aside-link").forEach((item) => item.classList.remove("active"));

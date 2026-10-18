@@ -11,10 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../assets/styles.css" />
     <link rel="stylesheet" href="../assets/ai-paths.css" />
+    <link rel="stylesheet" href="../assets/qa-testing.css" />
   </head>
   <body class="path-body">
     <div class="path-app app-shell">
       <aside id="sidebar" class="sidebar path-sidebar" aria-label="Course navigation">
+        <button class="menu-button" id="menu-button" aria-label="Course navigation" aria-controls="sidebar" aria-expanded="true"><span class="sidebar-toggle-icon" aria-hidden="true"></span></button>
         <a class="brand" href="../index.html" aria-label="Sathishram School course selection">
           <img class="brand-mark-image" src="../assets/brand-icon.svg" alt="" />
           <span class="brand-name">Sathishram <span class="brand-accent">School</span><small>COURSE LEARNING</small></span>
@@ -52,7 +54,7 @@
             <span class="curriculum-chevron" aria-hidden="true"></span>
           </summary>
           <div class="path-curriculum-content">
-            <div class="curriculum-actions"><button id="path-expand-curriculum" type="button">Expand all</button></div>
+            <div class="curriculum-actions"><button id="path-expand-curriculum" type="button">Collapse all</button></div>
             <nav id="path-lesson-list" class="curriculum path-lesson-list" aria-label="Lessons"></nav>
           </div>
         </details>
@@ -61,7 +63,6 @@
 
       <main class="main-area path-main">
         <header class="topbar path-topbar">
-          <button class="menu-button" id="menu-button" aria-label="Open curriculum" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
           <div class="breadcrumb">
             <strong id="path-top-title">AI learning path</strong>
           </div>
@@ -153,6 +154,7 @@
     </div>
 
     <script src="../assets/ai-paths-data.js"></script>
+    <script src="../assets/software-testing-data.js"></script>
     <script src="../assets/ai-paths-complete-data.js"></script>
     <script src="../assets/framework-gaps-data.js"></script>
     <script src="../assets/langgraph-deep-data.js"></script>
@@ -164,6 +166,7 @@
     <script src="../assets/concept-visuals.js"></script>
     <script src="../assets/audio-teacher.js"></script>
     <script src="../assets/icons.js"></script>
+    <script src="../assets/sidebar-toggle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
     <script src="../assets/supabase-config.js"></script>
     <script src="../assets/access-control.js"></script>

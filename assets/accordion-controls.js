@@ -1,5 +1,5 @@
 window.allAccordionsExpanded = false;
-window.curriculumAccordionsExpanded = null;
+window.curriculumAccordionsExpanded = true;
 
 const lessonSectionNames = {
   "description-content": "Description",

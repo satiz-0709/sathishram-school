@@ -1,0 +1,10 @@
+{
+  "products": [
+    { "id": "meridian-headphones", "name": "Meridian studio headphones", "category": "audio", "price": 89 },
+    { "id": "trailhead-daypack", "name": "Trailhead daypack", "category": "packs", "price": 112 },
+    { "id": "ridgeline-bottle", "name": "Ridgeline steel bottle", "category": "accessories", "price": 34 },
+    { "id": "pace-trail-runners", "name": "Pace trail runners", "category": "packs", "price": 128 },
+    { "id": "field-notes-watch", "name": "Field notes watch", "category": "accessories", "price": 156 },
+    { "id": "alpine-travel-kit", "name": "Alpine travel kit", "category": "accessories", "price": 42 }
+  ]
+}
