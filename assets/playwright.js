@@ -299,7 +299,6 @@ function runCodeStep(index) {
     frame.contentWindow?.postMessage(demoMessage, "*");
     frame.dataset.pendingCodeLine = "";
   }
-  window.setTimeout(scrollDemoToAction, 100);
   if (executionPosition === executionLines.length - 1) {
     if (codeTimer) window.clearInterval(codeTimer);
     codeTimer = null;
@@ -385,8 +384,7 @@ function renderBrowserDemo(lesson, index, count, stepTitle, stepDetail) {
     }, "*");
     window.setTimeout(() => {
       resizeFrameToContent();
-      scrollDemoToAction();
-    }, 80);
+    }, 180);
     if (frame.dataset.pendingCodeLine) {
       frame.contentWindow.postMessage(JSON.parse(frame.dataset.pendingCodeLine), "*");
       frame.dataset.pendingCodeLine = "";
@@ -407,15 +405,24 @@ function renderBrowserDemo(lesson, index, count, stepTitle, stepDetail) {
   }
 }
 
-function scrollDemoToAction() {
+window.addEventListener("message", (event) => {
   const frame = byId("demo-frame");
+  if (event.source !== frame.contentWindow || event.data?.type !== "playwright-demo-scroll-target") return;
   const screen = frame.closest(".demo-screen");
-  const action = frame.contentDocument?.getElementById("demo-action");
-  if (!action || !screen || byId("playwright-browser-demo").hidden) return;
+  const target = frame.contentDocument?.querySelector(event.data.selector);
+  if (!target || !screen || byId("playwright-browser-demo").hidden) {
+    frame.contentWindow.postMessage({ type: "playwright-demo-scroll-complete" }, "*");
+    return;
+  }
+  target.classList.add("target-highlight");
   const frameTop = frame.getBoundingClientRect().top - screen.getBoundingClientRect().top + screen.scrollTop;
-  const top = frameTop + action.offsetTop - screen.clientHeight + action.offsetHeight + 24;
+  const targetTop = frameTop + target.getBoundingClientRect().top;
+  const top = targetTop - screen.clientHeight * 0.24;
   screen.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-}
+  window.setTimeout(() => {
+    frame.contentWindow.postMessage({ type: "playwright-demo-scroll-complete" }, "*");
+  }, 380);
+});
 
 function closeBrowserDemo() {
   const demo = byId("playwright-browser-demo");
@@ -625,8 +632,9 @@ function renderLesson() {
   byId("lesson-category").textContent = lesson.category;
   byId("lesson-duration").textContent = `${lesson.duration} MIN READ`;
   byId("lesson-title").textContent = lesson.title;
-  byId("lesson-summary").textContent = lesson.summary;
-  byId("lesson-theory").textContent = lesson.theory;
+  byId("lesson-theory").textContent = lesson.summary;
+  byId("lesson-detailed-theory").textContent = lesson.theory;
+  byId("lesson-description-visual").replaceChildren(buildLessonDescriptionIllustration(lesson));
   byId("lesson-analogy").textContent = lesson.analogy;
   byId("lesson-goal").textContent = lesson.goal;
   byId("goal-duration").textContent = String(lesson.duration);
@@ -758,7 +766,7 @@ document.querySelectorAll(".aside-link").forEach((link) => link.addEventListener
   event.preventDefault();
   document.querySelectorAll(".aside-link").forEach((item) => item.classList.remove("active"));
   link.classList.add("active");
-  const targets = { idea: ".concept-card", visual: ".visual-card", code: ".code-card", practice: ".practice-card" };
+  const targets = { description: ".concept-card", visual: ".visual-card", code: ".code-card", practice: ".practice-card" };
   document.querySelector(targets[link.getAttribute("href").slice(1)]).scrollIntoView({ behavior: "smooth", block: "start" });
 }));
 document.addEventListener("keydown", (event) => {

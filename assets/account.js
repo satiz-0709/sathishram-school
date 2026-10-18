@@ -60,7 +60,7 @@
         ? "Sign in to unlock this course. Account services are not configured yet; configure the Supabase project to continue."
         : "Account services are not configured yet. Add your Supabase project URL and public anon key in assets/supabase-config.js.";
     }
-    document.querySelectorAll("#sign-in-form button, #sign-up-form button, #password-reset").forEach((button) => {
+    document.querySelectorAll("#sign-in-form button, #sign-up-form button, #password-reset, #username-help").forEach((button) => {
       button.disabled = true;
     });
     showAccountView("sign-in");
@@ -124,11 +124,35 @@
   document.getElementById("sign-in-form")?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    const email = String(form.get("email") || "").trim();
+    const password = String(form.get("password") || "");
+    const emailInput = document.getElementById("sign-in-email");
+    const passwordInput = document.getElementById("sign-in-password");
+    if (!email) {
+      emailInput.focus();
+      return showMessage("Enter your email address (your username) to sign in.", true);
+    }
+    if (emailInput.validity.typeMismatch) {
+      emailInput.focus();
+      return showMessage("Enter a valid email address to sign in.", true);
+    }
+    if (!password) {
+      passwordInput.focus();
+      return showMessage("Enter your password to sign in.", true);
+    }
     const { error } = await client.auth.signInWithPassword({
-      email: form.get("email"),
-      password: form.get("password")
+      email,
+      password
     });
-    if (error) return reportError(error);
+    if (error) {
+      if (
+        error.code === "invalid_credentials" ||
+        error.message?.toLowerCase().includes("invalid login credentials")
+      ) {
+        return showMessage("Email or password is incorrect. Check your details and try again.", true);
+      }
+      return reportError(error);
+    }
     const { data: assurance, error: assuranceError } = await client.auth.mfa.getAuthenticatorAssuranceLevel();
     if (assuranceError) return reportError(assuranceError);
     if (assurance.nextLevel === "aal2" && assurance.currentLevel !== "aal2") {
@@ -184,12 +208,16 @@
 
   document.getElementById("password-reset")?.addEventListener("click", async () => {
     const email = document.getElementById("sign-in-email")?.value.trim();
-    if (!email) return showMessage("Enter your email address first.", true);
+    if (!email) return showMessage("Enter your account email address first so we can send a password reset link.", true);
     const { error } = await client.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}${window.location.pathname}`
     });
     if (error) return reportError(error);
     showMessage("Password reset instructions have been sent if that email has an account.");
+  });
+
+  document.getElementById("username-help")?.addEventListener("click", () => {
+    showMessage("Your username is the email address you used to create your account. Use “Forgot password?” to receive a reset link at that address.");
   });
 
   document.getElementById("profile-form")?.addEventListener("submit", async (event) => {

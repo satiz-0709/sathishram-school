@@ -240,6 +240,16 @@ h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk"
 .theory-icon { background: #f1efff; color: #7161e2; }.visual-icon { background: #eff9f8; color: #42a797; }.code-icon { background: #fff5e9; color: #db9c47; font: 700 10px var(--mono); }
 .section-title h2,.practice-card h2 { margin: 0; font: 700 13px "Space Grotesk",sans-serif; }.section-title p { margin: 3px 0 0; color: #9aa1b0; font-size: 11px; }
 .theory-copy { margin: 16px 0 13px; color: #677085; font-size: 14px; line-height: 1.75; }
+.lesson-explanation { margin: 0 0 13px; color: #677085; font-size: 12px; }
+.lesson-explanation summary { cursor: pointer; }
+.description-illustration { margin: 14px 0; }
+.description-illustration-flow { display: flex; align-items: stretch; justify-content: center; gap: 8px; }
+.description-illustration-node { display: flex; flex: 1; min-width: 0; flex-direction: column; justify-content: center; gap: 7px; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface-alt); }
+.description-illustration-icon { color: var(--accent); font: 700 10px var(--mono); }
+.description-illustration-node strong { color: var(--ink); font-size: 12px; overflow-wrap: anywhere; }
+.description-illustration-node small { color: var(--muted); font-size: 10px; line-height: 1.5; }
+.description-illustration-arrow { align-self: center; color: var(--accent); }
+@media(max-width:520px) { .description-illustration-flow { flex-wrap: wrap; } .description-illustration-node { flex: 1 1 38%; } .description-illustration-arrow { display: none; } }
 .callout { display: flex; align-items: flex-start; gap: 9px; padding: 10px 12px; border-left: 2px solid #9586ef; border-radius: 0 6px 6px 0; background: #f8f7ff; }
 .callout-icon { color: #8675e9; font-size: 14px; }.callout p { margin: 0; color: #77758f; font-size: 12px; line-height: 1.65; }
 .visual-card { margin-top: 14px; padding: 17px 20px 12px; overflow: hidden; }
@@ -1069,6 +1079,7 @@ html[data-theme] body .lesson-subtitle,
 html[data-theme] body .resource-heading > p,
 html[data-theme] body .section-title p,
 html[data-theme] body .theory-copy,
+html[data-theme] body .lesson-explanation,
 html[data-theme] body .aside-link span,
 html[data-theme] body .theme-panel > p { color:var(--muted); }
 html[data-theme="ocean"] body .sidebar { background:linear-gradient(180deg,#f6faff,#edf4f9); }
@@ -1144,6 +1155,7 @@ html[data-mode="dark"] body .lesson-subtitle,
 html[data-mode="dark"] body .resource-heading > p,
 html[data-mode="dark"] body .section-title p,
 html[data-mode="dark"] body .theory-copy,
+html[data-mode="dark"] body .lesson-explanation,
 html[data-mode="dark"] body .aside-link span,
 html[data-mode="dark"] body .theme-panel > p,
 html[data-mode="dark"] body .aside-note small { color:var(--muted); }

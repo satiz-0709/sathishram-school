@@ -2,7 +2,7 @@ window.allAccordionsExpanded = false;
 window.curriculumAccordionsExpanded = null;
 
 const lessonSectionNames = {
-  "description-content": "The idea",
+  "description-content": "Description",
   "visual-content": "Visual walkthrough",
   "code-content": "Example code",
   "practice-content": "Quick check"

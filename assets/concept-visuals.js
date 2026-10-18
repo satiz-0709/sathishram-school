@@ -1,4 +1,41 @@
-﻿function buildLessonSimulation(lesson, mode) {
+﻿function buildLessonDescriptionIllustration(lesson, fallbackStages = []) {
+  const figure = document.createElement("div");
+  figure.className = "description-illustration-flow";
+  figure.setAttribute("role", "img");
+  const visual = lesson.visual || {};
+  const nodes = Array.isArray(visual.nodes)
+    ? visual.nodes.map(([icon, title, detail]) => ({ icon, title, detail }))
+    : (Array.isArray(visual) ? visual : fallbackStages).map((title, index) => ({
+      icon: String(index + 1).padStart(2, "0"),
+      title: typeof title === "string" ? title : title.label || title.title || String(title),
+      detail: lesson.bullets?.[index] || lesson.tip || lesson.summary || lesson.intro || ""
+    }));
+  const visibleNodes = nodes.slice(0, 5);
+  figure.setAttribute("aria-label", `${lesson.title}: ${visibleNodes.map(({ title }) => title).join(" → ")}`);
+  visibleNodes.forEach((node, index) => {
+    const card = document.createElement("div");
+    card.className = "description-illustration-node";
+    const icon = document.createElement("span");
+    icon.className = "description-illustration-icon";
+    icon.textContent = node.icon || String(index + 1);
+    const title = document.createElement("strong");
+    title.textContent = node.title || "";
+    const detail = document.createElement("small");
+    detail.textContent = node.detail || "";
+    card.append(icon, title, detail);
+    figure.append(card);
+    if (index < visibleNodes.length - 1) {
+      const arrow = document.createElement("span");
+      arrow.className = "description-illustration-arrow";
+      arrow.setAttribute("aria-hidden", "true");
+      arrow.textContent = "→";
+      figure.append(arrow);
+    }
+  });
+  return figure;
+}
+
+function buildLessonSimulation(lesson, mode) {
   const title = lesson.title || "Lesson";
   const topic = `${title} ${lesson.chapter || ""} ${lesson.module || ""} ${lesson.summary || ""} ${lesson.intro || ""}`.toLowerCase();
   const codeLines = (lesson.code || "").split("\n").filter((line) => line.trim() && !line.trim().startsWith("#"));
@@ -14,7 +51,7 @@
     stages = labels.map((caption, index) => make(
       caption, icons[index % icons.length], index === 0 ? "LESSON INPUT" : `STEP ${index}`,
       index === 0 ? codeSample : labels[index - 1],
-      index === labels.length - 1 ? "KEY IDEA" : "NEXT STEP",
+      index === labels.length - 1 ? "KEY POINT" : "NEXT STEP",
       index === labels.length - 1 ? (lesson.tip || "Review the lesson result.") : labels[index + 1],
       bullets[index] || lesson.tip || lesson.intro || "Follow this stage to see how the lesson concept works."
     ));
@@ -99,8 +136,9 @@
     stages = [make("Start the operation", "\uD83D\uDCDD", "TRY", codeLines[0] || title, "RESOURCE", "opened or used", "The program begins an operation that could fail."), make("Watch for trouble", "\uD83D\uDC40", "OPERATION", "runs", "ERROR?", "check what happens", "Python watches for an error while the operation runs."), make("Handle the problem", "\u26A0\uFE0F", "ERROR", "caught safely", "HANDLER", "responds", "A handler catches the problem and gives the program a safe response."), make("Clean up", "\uD83E\uDDF9", "RESOURCE", "closed safely", "PROGRAM", "keeps going", "A context manager cleans up resources even when something goes wrong."), make("Finish clearly", "\u2705", "OUTCOME", outputText, "USER", "gets a clear result", "The program ends the operation with a useful outcome.")];
   } else {
     scene = mode === "playwright" ? "browser" : "runtime";
-    stages = [make("Read the code", "\uD83D\uDCDD", "SOURCE", codeSample, "", "", lesson.analogy || "The program starts with the instructions you wrote."), make("Prepare the operation", "\u2699\uFE0F", "INPUT", "lesson values", "PROCESS", "concept is applied", "Python reads the inputs and prepares the operation."), make("Carry out the steps", "\uD83D\uDCBB", "RUNTIME", title, "CURRENT STEP", "running", "The runtime applies this lesson's idea one step at a time."), make("Create a result", "\uD83D\uDCE6", "RESULT", outputText, "VALUE", "ready to use", "The operation creates a value or change that the program can use."), make("Show what happened", "\uD83D\uDCE4", "OUTPUT", outputText, "SCREEN", "result appears", "The final result is shown so a person can see what happened.")];
+    stages = [make("Read the code", "\uD83D\uDCDD", "SOURCE", codeSample, "", "", lesson.analogy || "The program starts with the instructions you wrote."), make("Prepare the operation", "\u2699\uFE0F", "INPUT", "lesson values", "PROCESS", "concept is applied", "Python reads the inputs and prepares the operation."), make("Carry out the steps", "\uD83D\uDCBB", "RUNTIME", title, "CURRENT STEP", "running", "The runtime applies this lesson's concept one step at a time."), make("Create a result", "\uD83D\uDCE6", "RESULT", outputText, "VALUE", "ready to use", "The operation creates a value or change that the program can use."), make("Show what happened", "\uD83D\uDCE4", "OUTPUT", outputText, "SCREEN", "result appears", "The final result is shown so a person can see what happened.")];
   }
+
   const root = document.createElement("section"); root.className = "lesson-simulation process-simulation"; root.dataset.scene = scene; root.setAttribute("aria-label", `${title} step-by-step visual explanation`);
   const heading = document.createElement("div"); heading.className = "process-heading";
   const headingLabel = document.createElement("strong"); headingLabel.textContent = mode === "playwright" ? "WATCH THE TEST WORK" : mode === "ai" ? "WATCH THE CONCEPT WORK" : "WATCH THE CODE WORK";
@@ -240,9 +278,6 @@ function curriculumSubgroup(title, isPlaywright) {
   };
   return (isPlaywright ? playwrightGroups : pythonGroups)[title] || "More concepts";
 }
-
-
-
 
 
 

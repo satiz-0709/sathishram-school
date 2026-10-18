@@ -34,10 +34,18 @@
     catch { return []; }
   }
   function readSectionProgress() {
-    try { return JSON.parse(localStorage.getItem(sectionProgressKey) || "{}"); }
-    catch { return {}; }
+    try {
+      const progress = JSON.parse(localStorage.getItem(sectionProgressKey) || "{}");
+      if (!progress || typeof progress !== "object" || Array.isArray(progress)) return {};
+      Object.values(progress).forEach((parts) => {
+        if (!parts || typeof parts !== "object" || Array.isArray(parts) || !Object.hasOwn(parts, "idea")) return;
+        if (!Object.hasOwn(parts, "description")) parts.description = parts.idea;
+        delete parts.idea;
+      });
+      return progress;
+    } catch { return {}; }
   }
-  const partIds = ["idea", "visual", "example", "check"];
+  const partIds = ["description", "visual", "example", "check"];
   function saveSectionProgress() { localStorage.setItem(sectionProgressKey, JSON.stringify(sectionProgress)); }
   function currentParts() { return sectionProgress[currentIndex] || {}; }
   function markPart(id, value) {
@@ -241,13 +249,20 @@
     $("path-category").textContent = lesson.module || course.category;
     $("path-lesson-number").textContent = `LESSON ${String(index + 1).padStart(2, "0")} / ${String(course.lessons.length).padStart(2, "0")}`;
     $("path-lesson-duration").textContent = lesson.duration; $("path-title").textContent = lesson.title;
-    $("path-summary").textContent = lesson.intro;
     $("path-lesson-goal").textContent = lesson.heading || lesson.intro;
     $("path-lesson-timer").textContent = lesson.duration;
     $("path-lesson-tip").textContent = lesson.tip || lesson.intro;
     const article = $("path-lesson-content"); article.replaceChildren($("path-lesson-progress"));
-    const intro = el("p", "", lesson.intro); const list = el("ul"); lesson.bullets.forEach((text) => list.append(el("li", "", text)));
-    const tip = el("div", "path-tip", `Keep in mind: ${lesson.tip}`); addSection(article, "idea", "The idea", [intro, list, tip]);
+    const intro = el("p", "", lesson.intro);
+    const descriptionDetails = el("details", "path-description-details"); const summary = el("summary", "", "More details");
+    const detailBody = el("div", "path-description-details-body");
+    const detailList = el("ul"); lesson.bullets.forEach((text) => detailList.append(el("li", "", text)));
+    const tip = el("div", "path-tip", `Keep in mind: ${lesson.tip}`);
+    const illustration = buildLessonDescriptionIllustration(lesson, stagesFor(lesson));
+    const figure = el("figure", "description-illustration"); figure.append(illustration);
+    detailBody.append(detailList, tip, figure);
+    descriptionDetails.append(summary, detailBody);
+    addSection(article, "description", "Description", [intro, descriptionDetails]);
     addSection(article, "visual", "Visual walkthrough", [buildVisual(lesson)]);
     const label = el("div", "path-code-label", "PRACTICAL EXAMPLE"); const pre = el("pre"); const code = el("code", "", lesson.code); pre.append(code);
     const copy = el("button", "path-copy-code", "Copy code"); copy.type = "button"; copy.addEventListener("click", () => copyText(lesson.code, copy));

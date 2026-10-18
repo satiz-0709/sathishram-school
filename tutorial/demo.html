@@ -76,17 +76,179 @@
       .step-strip span.done { background: #41ae91; }
       .step-label { display: block; margin-top: 6px; color: #8b9996; font: 10px "Segoe UI",Arial,sans-serif; }
       @media (max-width: 430px) { body { padding: 10px; } main { margin-top: 13px; } h1 { font-size: 17px; } }
+      :root { color:#263a3b; background:#f3f5f7; }
+      body { max-width:1240px; margin:0 auto; padding:18px 24px 36px; }
+      .site-header { gap:14px; padding:12px 16px; border:0; border-radius:12px; box-shadow:0 2px 10px #263a3b0d; }
+      .brand { flex:none; color:#183b35; font-size:17px; }
+      .brand-mark { width:32px; height:32px; padding:4px; }
+      .site-header small { display:none; }
+      .shop-header { display:flex; align-items:center; gap:18px; min-width:0; flex:1; }
+      .shop-search { display:flex; flex:1; min-width:120px; max-width:520px; }
+      .shop-search input { min-width:0; border-radius:7px 0 0 7px; }
+      .shop-search button,.shop-cart,.shop-link,.shop-tab,.add-to-cart,.add-all-button { border:0; cursor:pointer; font:600 13px "Segoe UI",Arial,sans-serif; }
+      .shop-search button { padding:0 15px; border-radius:0 7px 7px 0; background:#e8b45c; color:#30220c; }
+      .shop-cart { flex:none; padding:9px 11px; border-radius:8px; background:#eef5f2; color:#246f65; }
+      #cart-count { display:inline-grid; place-items:center; min-width:20px; height:20px; margin-left:5px; border-radius:50%; background:#246f65; color:#fff; font-size:11px; }
+      main { max-width:1120px; margin:20px auto 0; }
+      .eyebrow { color:#72817d; }
+      h1 { font-size:21px; }
+      .intro { margin-bottom:18px; color:#687773; }
+      .storefront { margin:0 0 24px; overflow:hidden; border:1px solid #e0e7e5; border-radius:14px; background:#fff; box-shadow:0 8px 24px #1d39310b; }
+      .shop-nav { display:flex; gap:8px; overflow:auto; padding:10px 16px; border-top:1px solid #edf1ef; border-bottom:1px solid #edf1ef; white-space:nowrap; }
+      .shop-link { padding:7px 10px; border-radius:6px; background:transparent; color:#52645f; }
+      .shop-link:hover,.shop-link.active { background:#eef6f2; color:#176a59; }
+      .shop-promo { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:18px; padding:20px 24px; border-radius:12px; background:linear-gradient(110deg,#e7f3ed,#f7f3e9); }
+      .shop-promo small { color:#267261; font-size:11px; font-weight:700; letter-spacing:.08em; }
+      .shop-promo h2 { margin:6px 0; color:#193d35; font-size:23px; }
+      .shop-promo p { margin:0; color:#657671; font-size:13px; }
+      .shop-promo-mark { display:grid; place-items:center; width:75px; height:75px; flex:none; border-radius:50%; background:#fff9; font-size:38px; }
+      .shop-section { padding:0 18px 18px; scroll-margin-top:14px; }
+      .shop-section-heading { display:flex; align-items:end; justify-content:space-between; gap:12px; margin-bottom:12px; }
+      .shop-section-heading h2 { margin:0; color:#263c36; font-size:18px; }
+      .shop-section-heading p { margin:4px 0 0; color:#71807b; font-size:12px; }
+      .locator-command { margin:0 0 12px;padding:9px 11px;border:1px solid #e7ecea;border-radius:7px;background:#f7f9f8;color:#54665f;font:11px/1.6 Consolas,monospace;overflow-wrap:anywhere; }
+      .product-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+      .product-card { display:grid; align-content:start; min-width:0; padding:12px; border:1px solid #e7ecea; border-radius:10px; background:#fff; transition:border-color .2s,box-shadow .2s,transform .2s; }
+      .product-card:hover { transform:translateY(-2px); border-color:#b8d9ca; box-shadow:0 8px 18px #1d39310c; }
+      .product-art { display:grid; place-items:center; min-height:110px; margin-bottom:10px; border-radius:8px; background:linear-gradient(145deg,#f2f6f4,#e8efeb); font-size:44px; }
+      .product-tag { color:#32806c; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+      .product-card h3 { margin:5px 0; color:#273e37; font-size:13px; line-height:1.35; }
+      .product-rating { color:#9a6b22; font-size:11px; }
+      .product-price { margin:7px 0 10px; color:#203d34; font-size:16px; font-weight:700; }
+      .add-to-cart { min-height:34px; padding:7px 9px; border:1px solid #c3dfd0; border-radius:7px; background:#eff8f2; color:#236b56; }
+      .add-to-cart:hover,.add-to-cart.is-added { border-color:#2a896f; background:#2a896f; color:#fff; }
+      .add-all-button { min-height:36px; padding:8px 12px; border-radius:7px; background:#183f36; color:#fff; }
+      .add-all-button:hover { background:#246f5e; }
+      .cart-feedback { min-height:18px; margin:10px 0 0; color:#267261; font-size:12px; }
+      .shop-tabs-section { margin:0 18px 18px; padding:13px; border:1px solid #dfe8e4; border-radius:10px; background:#f8faf9; scroll-margin-top:14px; }
+      .shop-tabs-section[hidden],.frame-section[hidden] { display:none; }
+      .browser-tab-list { display:flex; gap:6px; overflow:auto; padding-bottom:10px; }
+      .shop-tab { padding:8px 12px; border:1px solid #dce6e1; border-radius:7px 7px 4px 4px; background:#edf1ef; color:#53635e; white-space:nowrap; }
+      .shop-tab[aria-selected="true"] { border-color:#bfd8ca; background:#fff; color:#206a56; box-shadow:inset 0 -2px #2a896f; }
+      .shop-tab-panel { min-height:88px; padding:14px; border:1px solid #e3eae6; border-radius:8px; background:#fff; color:#50635d; }
+      .shop-tab-panel h3 { margin:0 0 5px; color:#263c36; font-size:16px; }
+      .shop-tab-panel p { margin:0; font-size:13px; line-height:1.6; }
+      .shop-page-actions { display:flex;gap:7px;margin-top:12px; }
+      .shop-tabs-hint { margin:0 0 10px; color:#657671; font-size:12px; }
+      .frame-section { margin:0 18px 18px; padding:14px; border:1px solid #dfe8e4; border-radius:10px; background:#f8faf9; scroll-margin-top:14px; }
+      .frame-section h2 { margin:0 0 5px; font-size:16px; }
+      .frame-section > p { margin:0 0 10px; color:#687773; font-size:12px; }
+      .frame-path { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:10px 0; padding:9px; border:1px solid #e0e9e4; border-radius:8px; background:#fff; color:#405750; font-size:11px; }
+      .frame-path span { padding:4px 7px; border-radius:5px; background:#edf5f0; font-weight:600; }
+      .frame-path b { color:#8a9a93; }
+      .frame-note { margin:0 0 10px; color:#64766f; font-size:11px; }
+      .tooltip-section { margin:0 18px 18px; padding:16px; border:1px solid #dfe8e4; border-radius:10px; background:#f8faf9; scroll-margin-top:14px; }
+      .tooltip-section[hidden] { display:none; }
+      .tooltip-section h2 { margin:0 0 5px; color:#263c36; font-size:16px; }
+      .tooltip-section > p { margin:0 0 14px; color:#687773; font-size:12px; }
+      .tooltip-samples { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+      .tooltip-sample { position:relative; min-height:98px; padding:14px; border:1px solid #e0e8e4; border-radius:9px; background:#fff; }
+      .tooltip-sample strong { display:block; margin-bottom:5px; color:#30483f; font-size:12px; }
+      .tooltip-sample small { display:block; margin-bottom:10px; color:#71807b; font-size:11px; }
+      .tooltip-help { padding:8px 12px; border:1px solid #c8ddd2; border-radius:7px; background:#eff7f2; color:#216b57; font:600 12px "Segoe UI",Arial,sans-serif; cursor:pointer; }
+      .tooltip-help:hover,.tooltip-help.is-hovered { border-color:#2a896f; background:#2a896f; color:#fff; }
+      .custom-tooltip { position:absolute; z-index:2; left:14px; bottom:calc(100% - 8px); max-width:260px; padding:9px 11px; border-radius:7px; background:#203d34; color:#fff; font-size:12px; line-height:1.45; box-shadow:0 6px 18px #1d393130; }
+      .custom-tooltip[hidden] { display:none; }
+      .tooltip-extraction { min-height:20px; margin:12px 0 0; color:#286b59; font-size:12px; font-weight:600; overflow-wrap:anywhere; }
+      .custom-select-wrap { position:relative; display:grid; gap:5px; }
+      .custom-select-label { color:#5e706a; font-size:12px; font-weight:600; }
+      .custom-select-button { display:flex; justify-content:space-between; align-items:center; width:100%; min-height:36px; padding:7px 10px; border:1px solid #cbdad3; border-radius:7px; background:#fff; color:#344a42; text-align:left; cursor:pointer; }
+      .custom-option-list { position:absolute; z-index:3; top:100%; right:0; left:0; margin:3px 0 0; padding:4px; border:1px solid #d5e2db; border-radius:8px; background:#fff; box-shadow:0 8px 20px #203d341c; }
+      .custom-option-list[hidden] { display:none; }
+      .custom-option { display:block; width:100%; padding:8px 9px; border:0; border-radius:5px; background:#fff; color:#344a42; text-align:left; cursor:pointer; }
+      .custom-option:hover,.custom-option[aria-selected="true"] { background:#edf6f0; color:#216b57; }
+      #outer { display:block; width:100%; height:210px; border:1px solid #cddbd4; border-radius:8px; background:#fff; }
+      .frame-section.target-highlight,.shop-section.target-highlight { outline:3px solid #e8b45c; outline-offset:2px; }
+      .demo-card { padding:14px; border-radius:10px; }
+      .visual-guide,.action-flow { display:none; }
+      .demo-card h2 { font-size:15px; }
+      .demo-card > p { font-size:12px; }
+      @media(max-width:680px) {
+        body { padding:10px 12px 24px; }
+        .site-header { flex-wrap:wrap; }
+        .shop-header { flex:1 1 100%; order:2; gap:8px; }
+        .shop-search { max-width:none; }
+        .shop-cart { padding:8px; }
+        main { margin-top:14px; }
+        .shop-promo { margin:12px; padding:16px; }
+        .shop-promo h2 { font-size:19px; }
+        .shop-promo-mark { width:56px;height:56px;font-size:29px; }
+        .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+        .product-card { padding:9px; }
+        .product-art { min-height:82px;font-size:34px; }
+        .shop-section { padding:0 11px 13px; }
+        .shop-section-heading { align-items:flex-start;flex-direction:column; }
+        .shop-tabs-section,.frame-section { margin-right:11px;margin-left:11px; }
+        .tooltip-section { margin-right:11px;margin-left:11px; }
+        .tooltip-samples { grid-template-columns:1fr; }
+      }
     </style>
   </head>
   <body>
     <header class="site-header">
-      <span class="brand"><img class="brand-mark" src="../assets/brand-icon.svg" alt="" /> Demo learning app</span>
-      <small>PLAYWRIGHT PRACTICE</small>
+      <span class="brand"><img class="brand-mark" src="../assets/brand-icon.svg" alt="" /> Northstar Market</span>
+      <div class="shop-header">
+        <form class="shop-search" id="shop-search"><input id="shop-search-input" aria-label="Search products" placeholder="Search products, brands and more" /><button type="submit">Search</button></form>
+        <button class="shop-cart" id="shop-cart" type="button" aria-label="Shopping cart, 0 items">Cart <span id="cart-count">0</span></button>
+      </div>
     </header>
+    <nav class="shop-nav" aria-label="Shopping categories">
+      <button class="shop-link active" type="button">All</button><button class="shop-link" type="button">Electronics</button><button class="shop-link" type="button">Home &amp; kitchen</button><button class="shop-link" type="button">Books</button><button class="shop-link" type="button">Fashion</button><button class="shop-link" type="button">Today's deals</button>
+    </nav>
     <main>
       <small class="eyebrow" id="demo-category">SAMPLE PAGE</small>
       <h1 id="demo-title">Interactive browser demo</h1>
       <p class="intro" id="demo-intro"></p>
+      <section class="storefront" aria-label="Northstar Market sample storefront">
+        <div class="shop-promo">
+          <div><small>WEEKEND PICKS · UP TO 40% OFF</small><h2>Small upgrades, brighter days.</h2><p>Explore customer favorites selected for your home and everyday routine.</p></div>
+          <div class="shop-promo-mark" aria-hidden="true">✦</div>
+        </div>
+        <section class="shop-section" id="store-products">
+          <div class="shop-section-heading"><div><h2>Popular right now</h2><p>Shop the items learners use to practise locators and click actions.</p></div><button class="add-all-button" id="add-all-to-cart" type="button" data-testid="add-all-to-cart">Add all to cart</button></div>
+          <p class="locator-command">for button in page.get_by_role("button", name="Add to cart").all():<br />&nbsp;&nbsp;&nbsp;&nbsp;button.click()</p>
+          <div class="product-grid">
+            <article class="product-card"><div class="product-art" aria-hidden="true">🎧</div><span class="product-tag">Bestseller</span><h3>Studio wireless headphones</h3><span class="product-rating">★★★★★ <span>4.8</span></span><p class="product-price">$79.00</p><button class="add-to-cart" type="button" aria-label="Add to cart">Add to cart</button></article>
+            <article class="product-card"><div class="product-art" aria-hidden="true">☕</div><span class="product-tag">Home favorite</span><h3>Everyday ceramic mug set</h3><span class="product-rating">★★★★★ <span>4.7</span></span><p class="product-price">$24.00</p><button class="add-to-cart" type="button" aria-label="Add to cart">Add to cart</button></article>
+            <article class="product-card"><div class="product-art" aria-hidden="true">📚</div><span class="product-tag">Staff pick</span><h3>Think clearly notebook</h3><span class="product-rating">★★★★☆ <span>4.6</span></span><p class="product-price">$12.00</p><button class="add-to-cart" type="button" aria-label="Add to cart">Add to cart</button></article>
+            <article class="product-card"><div class="product-art" aria-hidden="true">🔊</div><span class="product-tag">New arrival</span><h3>Portable mini speaker</h3><span class="product-rating">★★★★★ <span>4.9</span></span><p class="product-price">$46.00</p><button class="add-to-cart" type="button" aria-label="Add to cart">Add to cart</button></article>
+          </div>
+          <p class="cart-feedback" id="cart-feedback" role="status" aria-live="polite">Choose an item to see the cart update.</p>
+        </section>
+        <section class="shop-tabs-section" id="shop-tabs-section" hidden>
+          <p class="shop-tabs-hint">Three pages share this browser context. Selecting a page below brings that window to the front.</p>
+          <div class="browser-tab-list" role="tablist" aria-label="Open shop pages">
+            <button class="shop-tab" id="shop-tab-home" role="tab" aria-selected="true" type="button">Shop · Page 1</button>
+            <button class="shop-tab" id="shop-tab-report" role="tab" aria-selected="false" type="button">Order report · Page 2</button>
+            <button class="shop-tab" id="shop-tab-help" role="tab" aria-selected="false" type="button">Help center · Page 3</button>
+          </div>
+          <div class="shop-tab-panel" id="shop-tab-panel" role="tabpanel"><h3>Welcome to Northstar Market</h3><p>Browse today's picks, then switch between open pages to inspect the report or help center.</p></div>
+        </section>
+        <section class="frame-section" id="frame-section" hidden>
+          <h2>Checkout · delivery preferences</h2>
+          <p>Each frame is a separate document. Follow the path one iframe at a time to reach the button.</p>
+          <div class="frame-path" aria-label="Nested frame path"><span>Main page</span><b>→</b><span>Outer checkout</span><b>→</b><span>Address widget</span><b>→</b><span>Delivery form</span></div>
+          <p class="frame-note">The main page cannot locate the inner button directly. Each <code>frame_locator()</code> crosses one boundary.</p>
+          <iframe id="outer" title="Outer checkout frame"></iframe>
+        </section>
+        <section class="tooltip-section" id="tooltip-section" hidden>
+          <h2>Help · tooltip examples</h2>
+          <p>Hover the same Help button to compare a browser-native title hint with a custom tooltip rendered in the page.</p>
+          <div class="tooltip-samples">
+            <div class="tooltip-sample" id="custom-tooltip-sample">
+              <strong>Support control</strong>
+              <small>Both examples belong to this same button: a browser-native <code>title</code> and a custom page hint.</small>
+              <button class="tooltip-help" id="tooltip-help" type="button" title="Native hint: contact support for account help." aria-describedby="custom-tooltip">Help</button>
+              <div class="custom-tooltip" id="custom-tooltip" role="tooltip" hidden>Custom hint: support is available Monday to Friday.</div>
+            </div>
+            <div class="tooltip-sample">
+              <strong>What the test reads</strong>
+              <small><code>get_attribute("title")</code> reads the native hint. <code>inner_text()</code> reads the visible custom hint.</small>
+              <p class="tooltip-extraction" id="tooltip-extraction" role="status" aria-live="polite">Run the example to read each text source.</p>
+            </div>
+          </div>
+        </section>
+      </section>
       <section class="visual-guide" aria-label="Before and after browser comparison">
         <div class="guide-heading"><strong>PICTURE GUIDE · WHAT CHANGES?</strong><span id="compare-progress"></span></div>
         <div class="compare-panels">
@@ -111,7 +273,7 @@
         <span class="flow-arrow" aria-hidden="true">→</span>
         <article class="flow-card" id="flow-card-result"><small>3 · BROWSER RESULT</small><strong id="flow-result-title"></strong><p id="flow-result-copy"></p></article>
       </section>
-      <section class="demo-card" aria-live="polite">
+      <section class="demo-card" id="demo-card" aria-live="polite">
         <h2 id="card-title"></h2>
         <p id="card-description"></p>
         <div class="fields" id="demo-fields"></div>
@@ -143,8 +305,13 @@
         },
         "Mouse actions: hover, hold & drag-and-drop": {
           category: "MOUSE ACTIONS", pageTitle: "Move the report card", intro: "Hover over a draggable card, then press and hold to move it into the drop zone.",
-          cardTitle: "Drag the report card", description: ["Find the card and the named drop zone.", "Hover moves the pointer over the source item.", "Hold the mouse button while moving toward the tray.", "Release to drop, or use locator.drag_to(target)."],
+          cardTitle: "Drag the report card", description: ["Find the card and the named drop zone.", "Hover the source card to reveal its drag hint.", "Hold the mouse button while moving toward the tray.", "Release to drop, or use locator.drag_to(target)."],
           fields: [["Source", "Report card"], ["Destination", "Drop zone"]], action: "Run mouse gesture", result: "✓ Report card dropped in the tray"
+        },
+        "Tooltip & text extraction": {
+          category: "ACCESSIBLE LOCATORS", pageTitle: "Help & tooltips", intro: "Hover Help to reveal a custom hint, then compare its visible text with the native title attribute.",
+          cardTitle: "Read the help hint", description: ["The Help button has a native title and a custom page tooltip.", "Hover reveals the custom tooltip in the page.", "get_attribute(\"title\") reads native tooltip text.", "inner_text() reads visible custom-tooltip copy."],
+          fields: [], action: "Show help tooltip", result: "✓ Tooltip text captured"
         },
         "Network requests & API testing": {
           category: "SHOP API", pageTitle: "Explore the catalog", intro: "Follow a sample UI action through an HTTP response and rendered items.",
@@ -162,9 +329,9 @@
           fields: [["Heading", "Welcome back"], ["Button role", "Save profile"]], action: "Save profile", result: "✓ Profile saved"
         },
         "Checkboxes, radio buttons & dropdowns": {
-          category: "FORM CONTROLS", pageTitle: "Delivery preferences", intro: "Choose a checkbox, one radio option, and a dropdown value.",
-          cardTitle: "Your choices", description: ["The form starts with independent terms, a radio group, and a country select.", "check() turns the terms checkbox on.", "The radio group selects one delivery option.", "The native select chooses a country; custom menus use their visible option."],
-          controls: [["checkbox", "Accept terms", false], ["radio", "Standard delivery", false], ["radio", "Express delivery", false], ["select", "Country", ["Canada", "India", "Japan"], "Canada"]],
+          category: "FORM CONTROLS", pageTitle: "Delivery preferences · form controls", intro: "See a checkbox, a one-choice delivery radio group, a native country select, and a custom plan menu.",
+          cardTitle: "Choose delivery settings", description: ["Checkboxes are independent; a radio group allows one delivery choice.", "check() accepts the terms and selects Express delivery.", "select_option(label=\"Canada\") selects a native HTML option.", "Open Choose plan and select Pro from its custom menu."],
+          controls: [["checkbox", "Accept terms", false], ["radio", "Standard delivery", false], ["radio", "Express delivery", false], ["select", "Country", ["Canada", "India", "Japan"], "Canada"], ["custom-select", "Plan", ["Starter", "Pro", "Business"], "Starter"]],
           action: "Confirm choices", result: "✓ Preferences saved"
         },
         "Pagination & paged results": {
@@ -178,13 +345,13 @@
           fields: [["History", "/start → /details → back → forward"]], action: "Current: /details", result: "✓ Forward navigation complete"
         },
         "Multiple tabs, windows & popups": {
-          category: "BROWSER PAGES", pageTitle: "Workspace tabs", intro: "Capture new pages and switch among three open tabs.",
-          cardTitle: "Open browser pages", description: ["The context contains the original page.", "A click opens and captures the report popup.", "A second action creates a help page in the same context.", "The test selects the intended Page and brings it to the front."],
-          fields: [["Page 1", "Home"], ["Page 2", "Report popup"], ["Page 3", "Help · active"]], action: "Switch to Page 3", result: "✓ Help page is active"
+          category: "BROWSER PAGES", pageTitle: "Open pages · shop, report & help", intro: "Capture pages opened from the shop, then bring the intended page to the front.",
+          cardTitle: "Pages in this browser context", description: ["The Shop page is the original page in the context.", "Open report creates and captures a report popup.", "Open help creates a third page in the same context.", "bring_to_front() makes the Help page the active window."],
+          fields: [["Page 1", "Shop · original page"], ["Page 2", "Order report · popup"], ["Page 3", "Help center · active"]], action: "Switch to Page 3", result: "✓ Help page is active"
         },
         "Frames & nested iframes": {
-          category: "NESTED FRAMES", pageTitle: "Embedded survey", intro: "Each frame boundary contains another document to locate through.",
-          cardTitle: "Frame hierarchy", description: ["The top-level page contains the outer iframe.", "The outer document contains the middle iframe.", "The middle document contains a third nested iframe.", "The test locates Submit answer inside the deepest frame."],
+          category: "NESTED FRAMES", pageTitle: "Checkout · nested delivery form", intro: "Follow the checkout page into an address widget and then into its delivery form.",
+          cardTitle: "Switch through nested frames", description: ["Start in the main checkout page.", "Enter the Address widget with frame_locator(\"iframe#outer\").", "Enter the Delivery form with another frame_locator(\"iframe#middle\").", "Reach Save delivery preference inside the third frame."],
           fields: [["Frame path", "Main → #outer → #middle → #inner"], ["Target", "Submit answer · frame 3"]], action: "Submit answer", result: "✓ Answer received"
         },
         "Shadow DOM components": {
@@ -222,6 +389,7 @@
         "Locators & auto-waiting": "Save profile",
         "Click, fill & keyboard actions": "Send message",
         "Mouse actions: hover, hold & drag-and-drop": "Run mouse gesture",
+        "Tooltip & text extraction": "Show help tooltip",
         "Network requests & API testing": "Load items",
         "Authentication & storage state": "Sign in",
         "Role & text locators in practice": "Save profile",
@@ -236,6 +404,7 @@
         "Assertions & expect": "Run assertion"
       };
       const editableValues = new Map();
+      const codeLocators = new Map();
       let actionComplete = false;
       let currentPageNumber = 1;
       let historyPosition = 1;
@@ -244,6 +413,8 @@
       let mouseDropped = false;
       let mouseIsHolding = false;
       let mouseIsHovering = false;
+      let cartCount = 0;
+      let bulkClickPending = false;
       const lessonComparisons = {
         "What is Playwright?": ["A person repeats browser checks by hand.", "A Python test drives a browser and checks the result.", "Automation makes browser actions repeatable across supported engines."],
         "Install Playwright for Python": ["Python code has no installed browser engines to launch.", "The Python package and Chromium, Firefox, or WebKit are ready.", "Installing the package and installing browser binaries are separate setup steps."],
@@ -252,6 +423,7 @@
         "Sync & async APIs": ["Browser calls block in a synchronous script.", "The async API awaits browser operations inside the event loop.", "Choose sync or async to match the surrounding Python runtime."],
         "Locators & auto-waiting": ["The Save action has not completed.", "Playwright finds the Save control, waits until it is actionable, then clicks.", "A Locator re-finds the target and auto-waits; it is not a one-time element handle."],
         "Mouse actions: hover, hold & drag-and-drop": ["Report card is outside the tray; the pointer is idle.", "The pointer moves onto the card and the mouse button stays held during movement.", "The card is released inside the drop zone; drag_to(target) models the same transfer."],
+        "Tooltip & text extraction": ["The Help hint has not been opened or read.", "Hover reveals the custom page tooltip; the native title remains an attribute.", "Read the native title with get_attribute() and the custom hint with inner_text()."],
         "User-facing locators": ["A control is identified by fragile page structure.", "The test locates a control by role, label, or accessible name.", "User-facing locators describe what the learner can perceive."],
         "CSS, text & test-id locators": ["The target has not been scoped to a stable selector.", "CSS, text, or an agreed test ID identifies the target.", "Use semantic locators first; CSS/XPath are fallback choices."],
         "Advanced browser interactions": ["The browser is in its initial state.", "A focused browser action changes the visible page state.", "Use the Playwright action that matches the actual user interaction."],
@@ -301,8 +473,241 @@
       const updateStatus = (message) => {
         document.getElementById("demo-status").textContent = message;
       };
+      function setActiveShopTab(index, recordAction = false) {
+        activeTab = index;
+        const tabIds = ["shop-tab-home", "shop-tab-report", "shop-tab-help"];
+        tabIds.forEach((id, tabIndex) => {
+          document.getElementById(id).setAttribute("aria-selected", String(tabIndex === index));
+        });
+        const activePage = document.getElementById("fact-active-page");
+        const pageNames = ["Shop · Page 1", "Order report · Page 2", "Help center · Page 3"];
+        if (activePage) activePage.textContent = pageNames[index];
+        const panel = document.getElementById("shop-tab-panel");
+        panel.replaceChildren();
+        if (recordAction) {
+          const pageName = ["Shop", "Order report", "Help center"][index];
+          scenario.result = `✓ ${pageName} is now the active page`;
+          comparison[1] = scenario.result;
+          actionComplete = true;
+          document.getElementById("after-copy").textContent = scenario.result;
+          document.getElementById("flow-result-title").textContent = "Action demonstrated";
+          document.getElementById("flow-result-copy").textContent = scenario.result;
+          document.getElementById("demo-outcome").textContent = `Result: ${scenario.result}`;
+          document.getElementById("demo-outcome").hidden = false;
+          updateStatus(scenario.result);
+        }
+        const heading = document.createElement("h3");
+        const copy = document.createElement("p");
+        if (index === 1) {
+          heading.textContent = "Weekly order report · /reports/weekly";
+          copy.textContent = "Orders processed: 128 · Items shipped: 214 · Customer rating: 4.8 / 5. This is the report page opened from the Shop tab.";
+        } else if (index === 2) {
+          heading.textContent = "Northstar help center · /help";
+          copy.textContent = "Find delivery, returns and account support. This is the new Help page brought to the front.";
+        } else {
+          heading.textContent = "Northstar Market · /shop";
+          copy.textContent = "This is the original page. Open the weekly report or help center, then switch back to any page using the tab strip.";
+          const links = document.createElement("div");
+          links.className = "shop-page-actions";
+          [["Open report", 1], ["Open help", 2]].forEach(([label, pageIndex]) => {
+            const pageControl = document.createElement(label === "Open report" ? "a" : "button");
+            if (pageControl.tagName === "A") {
+              pageControl.href = "#report";
+              pageControl.addEventListener("click", (event) => event.preventDefault());
+            } else {
+              pageControl.type = "button";
+            }
+            pageControl.className = "shop-tab";
+            pageControl.textContent = label;
+            pageControl.addEventListener("click", () => setActiveShopTab(pageIndex, true));
+            links.appendChild(pageControl);
+          });
+          panel.append(heading, copy, links);
+          return;
+        }
+        panel.append(heading, copy);
+      }
+      function addProductToCart(button) {
+        if (button.classList.contains("is-added")) return;
+        cartCount += 1;
+        button.classList.add("is-added");
+        button.textContent = "Added";
+        button.setAttribute("aria-label", "Added to cart");
+        document.getElementById("cart-count").textContent = String(cartCount);
+        document.getElementById("shop-cart").setAttribute("aria-label", `Shopping cart, ${cartCount} items`);
+        const title = button.closest(".product-card").querySelector("h3").textContent;
+        document.getElementById("cart-feedback").textContent = `${title} added to your cart. Cart total: ${cartCount} item${cartCount === 1 ? "" : "s"}.`;
+        updateStatus(`${title} added to the cart.`);
+      }
+      function addAllProductsToCart() {
+        const buttons = [...document.querySelectorAll(".add-to-cart:not(.is-added)")];
+        if (!buttons.length) {
+          updateStatus("All featured products are already in the cart.");
+          return;
+        }
+        buttons.forEach(addProductToCart);
+        actionComplete = true;
+        scenario.result = `✓ ${buttons.length} products added · ${cartCount} items in cart`;
+        comparison[1] = scenario.result;
+        document.getElementById("after-copy").textContent = scenario.result;
+        document.getElementById("flow-result-title").textContent = "Action demonstrated";
+        document.getElementById("flow-result-copy").textContent = scenario.result;
+        document.getElementById("demo-outcome").textContent = `Result: ${scenario.result}`;
+        document.getElementById("demo-outcome").hidden = false;
+        updateStatus(scenario.result);
+      }
+      function initializeFrameDocument(frameDocument, level) {
+        frameDocument.documentElement.lang = "en";
+        frameDocument.head.replaceChildren();
+        const style = frameDocument.createElement("style");
+        style.textContent = "body{margin:0;padding:8px;font:12px/1.4 Segoe UI,Arial,sans-serif;color:#344a42;background:#fff}p{margin:0 0 6px;color:#667771;font-size:11px}.frame-label{display:block;margin-bottom:5px;color:#267261;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}.frame-content{padding:7px;border:1px solid #e0e9e4;border-radius:7px;background:#f8faf9}iframe{display:block;width:100%;height:105px;margin-top:7px;border:1px solid #cddbd4;border-radius:7px;background:#fff}button{padding:8px 12px;border:0;border-radius:6px;background:#26775f;color:#fff;font-weight:700;cursor:pointer}#answer-status{margin:7px 0 0;color:#26775f;font-weight:700}";
+        frameDocument.head.appendChild(style);
+        frameDocument.body.replaceChildren();
+        const content = frameDocument.createElement("div");
+        content.className = "frame-content";
+        const label = frameDocument.createElement("strong");
+        label.className = "frame-label";
+        label.textContent = `Frame ${level} of 3 · ${["Checkout", "Address widget", "Delivery form"][level - 1]}`;
+        content.appendChild(label);
+        const heading = frameDocument.createElement("p");
+        heading.textContent = ["Choose delivery preferences for your order.", "Confirm the delivery address before continuing.", "Save the preferred delivery window."][level - 1];
+        content.appendChild(heading);
+        frameDocument.body.appendChild(content);
+        if (level < 3) {
+          const child = frameDocument.createElement("iframe");
+          child.id = level === 1 ? "middle" : "inner";
+          child.title = `${["Address widget", "Delivery form"][level - 1]} · nested frame ${level + 1}`;
+          child.srcdoc = "<!doctype html><html lang='en'><head></head><body></body></html>";
+          child.addEventListener("load", () => initializeFrameDocument(child.contentDocument, level + 1), { once: true });
+          content.appendChild(child);
+          return;
+        }
+        const button = frameDocument.createElement("button");
+        button.type = "button";
+        button.id = "submit-answer";
+        button.textContent = "Save delivery preference";
+        button.setAttribute("aria-label", "Submit answer");
+        const status = frameDocument.createElement("p");
+        status.id = "answer-status";
+        status.setAttribute("role", "status");
+        button.addEventListener("click", () => {
+          status.textContent = "✓ Answer received · checkout preferences saved";
+          actionComplete = true;
+          scenario.result = "✓ Answer received";
+          comparison[1] = scenario.result;
+          document.getElementById("after-copy").textContent = scenario.result;
+          document.getElementById("flow-result-title").textContent = "Action demonstrated";
+          document.getElementById("flow-result-copy").textContent = scenario.result;
+          document.getElementById("demo-outcome").textContent = `Result: ${scenario.result}`;
+          document.getElementById("demo-outcome").hidden = false;
+          updateStatus(scenario.result);
+        });
+        content.append(button, status);
+      }
+      function findNestedFrameButton(frame, id) {
+        const frameDocument = frame.contentDocument;
+        if (!frameDocument) return null;
+        const target = frameDocument.getElementById(id);
+        if (target) return target;
+        for (const childFrame of frameDocument.querySelectorAll("iframe")) {
+          const nestedTarget = findNestedFrameButton(childFrame, id);
+          if (nestedTarget) return nestedTarget;
+        }
+        return null;
+      }
+      async function scrollBeforeAction(target, outerSelector) {
+        if (!target) return;
+        document.querySelectorAll(".target-highlight").forEach((element) => element.classList.remove("target-highlight"));
+        target.classList.add("target-highlight");
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (window.parent === window) {
+          await new Promise((resolve) => window.setTimeout(resolve, 350));
+          return;
+        }
+        await new Promise((resolve) => {
+          const finish = () => {
+            window.clearTimeout(timeout);
+            window.removeEventListener("message", onMessage);
+            resolve();
+          };
+          const onMessage = (event) => {
+            if (event.source === window.parent && event.data?.type === "playwright-demo-scroll-complete") finish();
+          };
+          const timeout = window.setTimeout(finish, 2000);
+          window.addEventListener("message", onMessage);
+          window.parent.postMessage({ type: "playwright-demo-scroll-target", selector: outerSelector }, "*");
+        });
+      }
+      function selectorForTarget(target, fallback) {
+        if (target.id) return `#${target.id}`;
+        target.id = `demo-target-${Math.random().toString(36).slice(2)}`;
+        return `#${target.id}` || fallback;
+      }
+      function getClickTarget(role, name) {
+        if (name === "Open report") return { element: document.getElementById("shop-tabs-section"), outerSelector: "#shop-tabs-section", action: () => setActiveShopTab(1, true) };
+        if (name === "Open help") return { element: document.getElementById("shop-tabs-section"), outerSelector: "#shop-tabs-section", action: () => setActiveShopTab(2, true) };
+        if (name === "Submit answer") return { element: document.getElementById("frame-section"), outerSelector: "#frame-section", action: () => {
+          const submit = findNestedFrameButton(document.getElementById("outer"), "submit-answer");
+          if (submit) {
+            submit.scrollIntoView({ behavior: "smooth", block: "center" });
+            submit.click();
+          }
+        } };
+        if (name === "Add to cart") {
+          const products = [...document.querySelectorAll(".add-to-cart:not(.is-added)")];
+          return { element: document.getElementById("store-products"), outerSelector: "#store-products", action: () => {
+            if (bulkClickPending) addAllProductsToCart();
+            else products[0]?.click();
+          } };
+        }
+        if (name === "Add all to cart") return { element: document.getElementById("store-products"), outerSelector: "#store-products", action: addAllProductsToCart };
+        const demoActionLabels = new Set(Object.values(actionLabels));
+        if (demoActionLabels.has(name)) return { element: document.getElementById("demo-card"), outerSelector: "#demo-card", action: () => document.getElementById("demo-action").click() };
+        const matches = [...document.querySelectorAll("button,a,[role=tab],[role=option]")].filter((element) =>
+          (element.getAttribute("aria-label") || element.textContent.trim()) === name
+        );
+        return matches.length ? { element: matches[0], outerSelector: selectorForTarget(matches[0]), action: () => matches[0].click() } : null;
+      }
+      document.querySelectorAll(".add-to-cart").forEach((button) => {
+        button.addEventListener("click", () => addProductToCart(button));
+      });
+      document.getElementById("add-all-to-cart").addEventListener("click", async (event) => {
+        await scrollBeforeAction(event.currentTarget, "#store-products");
+        addAllProductsToCart();
+      });
+      document.getElementById("shop-search").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const results = document.getElementById("store-products");
+        await scrollBeforeAction(results, "#store-products");
+        const query = document.getElementById("shop-search-input").value.trim();
+        document.getElementById("cart-feedback").textContent = query
+          ? `Showing featured matches for “${query}”.`
+          : "Enter a product name to search the featured selection.";
+      });
+      document.getElementById("shop-cart").addEventListener("click", async (event) => {
+        await scrollBeforeAction(document.getElementById("store-products"), "#store-products");
+        updateStatus(`Your cart contains ${cartCount} item${cartCount === 1 ? "" : "s"}.`);
+      });
+      document.getElementById("shop-tab-home").addEventListener("click", () => setActiveShopTab(0, true));
+      document.getElementById("shop-tab-report").addEventListener("click", () => setActiveShopTab(1, true));
+      document.getElementById("shop-tab-help").addEventListener("click", () => setActiveShopTab(2, true));
+      const tooltipHelp = document.getElementById("tooltip-help");
+      const customTooltip = document.getElementById("custom-tooltip");
+      const setTooltipVisible = (visible) => {
+        customTooltip.hidden = !visible;
+        tooltipHelp.classList.toggle("is-hovered", visible);
+      };
+      tooltipHelp.addEventListener("pointerenter", () => setTooltipVisible(true));
+      tooltipHelp.addEventListener("pointerleave", () => setTooltipVisible(false));
+      tooltipHelp.addEventListener("focus", () => setTooltipVisible(true));
+      tooltipHelp.addEventListener("blur", () => setTooltipVisible(false));
+      document.getElementById("outer").addEventListener("load", (event) => {
+        initializeFrameDocument(event.currentTarget.contentDocument, 1);
+      }, { once: true });
+      document.getElementById("outer").srcdoc = "<!doctype html><html lang='en'><head></head><body></body></html>";
       function resetCodeDemoState() {
         editableValues.clear();
+        codeLocators.clear();
         actionComplete = false;
         currentPageNumber = 1;
         historyPosition = 1;
@@ -311,6 +716,21 @@
         mouseDropped = false;
         mouseIsHolding = false;
         mouseIsHovering = false;
+        setTooltipVisible(false);
+        cartCount = 0;
+        bulkClickPending = false;
+        document.querySelectorAll(".add-to-cart").forEach((button) => {
+          button.classList.remove("is-added");
+          button.textContent = "Add to cart";
+          button.setAttribute("aria-label", "Add to cart");
+        });
+        document.getElementById("cart-count").textContent = "0";
+        document.getElementById("shop-cart").setAttribute("aria-label", "Shopping cart, 0 items");
+        document.getElementById("cart-feedback").textContent = "Choose an item to see the cart update.";
+        const nestedAnswer = findNestedFrameButton(document.getElementById("outer"), "answer-status");
+        if (nestedAnswer) nestedAnswer.textContent = "";
+        document.getElementById("tooltip-extraction").textContent = "Run the example to read each text source.";
+        setActiveShopTab(0);
         scenario.result = initialScenarioResult;
         comparison[1] = initialComparisonAfter;
         renderDemo();
@@ -407,13 +827,46 @@
         source.classList.remove("is-dragging");
         completeMouseAction("✓ Report card dropped in the tray");
       }
-      function runCodeLine(message) {
+      async function runCodeLine(message) {
         const line = message.line || "";
         if (lesson === "Mouse actions: hover, hold & drag-and-drop") {
+          await scrollBeforeAction(document.getElementById("demo-card"), "#demo-card");
           runMouseCodeLine(line);
           if (message.triggerAction && !/\.drag_to\s*\(|mouse\.up\s*\(/.test(line)) {
             runMouseCodeLine("source.drag_to(target)");
           }
+          return;
+        }
+        if (lesson === "Tooltip & text extraction") {
+          if (/\.hover\s*\(/.test(line)) {
+            await scrollBeforeAction(document.getElementById("tooltip-section"), "#tooltip-section");
+            setTooltipVisible(true);
+            updateStatus("Help is hovered · the custom tooltip is now visible in the page.");
+          }
+          if (/get_attribute\(["']title["']\)/.test(line)) {
+            const title = tooltipHelp.getAttribute("title");
+            document.getElementById("tooltip-extraction").textContent = `Native title attribute: ${title}`;
+            updateStatus("Read the native title attribute · it is separate from page text.");
+          }
+          if (/\.inner_text\s*\(\)/.test(line)) {
+            const messageText = customTooltip.innerText;
+            document.getElementById("tooltip-extraction").textContent += ` · Custom tooltip text: ${messageText}`;
+            actionComplete = true;
+            scenario.result = "✓ Native and custom tooltip text captured";
+            comparison[1] = scenario.result;
+            document.getElementById("after-copy").textContent = scenario.result;
+            document.getElementById("flow-result-title").textContent = "Text captured";
+            document.getElementById("flow-result-copy").textContent = scenario.result;
+            document.getElementById("demo-outcome").textContent = `Result: ${scenario.result}`;
+            document.getElementById("demo-outcome").hidden = false;
+            updateStatus(scenario.result);
+          }
+          return;
+        }
+        if (/\.all\(\)/.test(line)) {
+          bulkClickPending = true;
+          await scrollBeforeAction(document.getElementById("store-products"), "#store-products");
+          updateStatus("Located every matching Add to cart button with locator.all().");
           return;
         }
         const fieldMatch = line.match(/(?:get_by_label|get_by_placeholder)\(["']([^"']+)["']\)/);
@@ -422,6 +875,7 @@
           const control = [...document.querySelectorAll("#demo-fields input, #demo-fields select")]
             .find((item) => item.getAttribute("aria-label") === fieldMatch[1]);
           if (control) {
+            await scrollBeforeAction(control, selectorForTarget(control));
             control.value = fillMatch[1];
             control.dispatchEvent(new Event("input", { bubbles: true }));
             control.dispatchEvent(new Event("change", { bubbles: true }));
@@ -432,7 +886,21 @@
           const control = [...document.querySelectorAll(`#demo-fields input[type="${choiceMatch[1]}"]`)]
             .find((item) => item.getAttribute("aria-label") === choiceMatch[2]);
           if (control) {
+            await scrollBeforeAction(control, selectorForTarget(control));
             control.checked = /\.check\s*\(/.test(line) && !/\.uncheck\s*\(/.test(line);
+            control.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+        }
+        const choiceLocatorMatch = line.match(/^\s*([A-Za-z_]\w*)\s*=\s*page\.get_by_role\("(checkbox|radio)",\s*name=["']([^"']+)["']\)/);
+        if (choiceLocatorMatch) codeLocators.set(choiceLocatorMatch[1], { kind: choiceLocatorMatch[2], name: choiceLocatorMatch[3] });
+        const choiceVariableAction = line.match(/^\s*([A-Za-z_]\w*)\.(check|uncheck)\(\)/);
+        const choiceLocator = choiceVariableAction ? codeLocators.get(choiceVariableAction[1]) : null;
+        if (choiceVariableAction && choiceLocator) {
+          const control = [...document.querySelectorAll(`#demo-fields input[type="${choiceLocator.kind}"]`)]
+            .find((item) => item.getAttribute("aria-label") === choiceLocator.name);
+          if (control) {
+            await scrollBeforeAction(control, selectorForTarget(control));
+            control.checked = choiceVariableAction[2] === "check";
             control.dispatchEvent(new Event("change", { bubbles: true }));
           }
         }
@@ -441,6 +909,7 @@
           const control = [...document.querySelectorAll("#demo-fields select")]
             .find((item) => item.getAttribute("aria-label") === selectMatch[1]);
           if (control) {
+            await scrollBeforeAction(control, selectorForTarget(control));
             control.value = selectMatch[2];
             control.dispatchEvent(new Event("change", { bubbles: true }));
           }
@@ -450,12 +919,39 @@
           const control = [...document.querySelectorAll("#demo-fields input, #demo-fields select")]
             .find((item) => item.getAttribute("aria-label") === pressMatch[1]);
           if (control) {
+            await scrollBeforeAction(control, selectorForTarget(control));
             control.dispatchEvent(new KeyboardEvent("keydown", { key: pressMatch[2], bubbles: true }));
             control.dispatchEvent(new KeyboardEvent("keyup", { key: pressMatch[2], bubbles: true }));
             if (pressMatch[2] === "Tab") document.getElementById("demo-action").focus();
           }
         }
-        if (message.triggerAction) document.getElementById("demo-action").click();
+        const clickMatch = line.match(/get_by_role\(["'](button|link|tab|option)["'],\s*name=["']([^"']+)["']\)\.click\(\)/);
+        if (clickMatch) {
+          const plan = getClickTarget(clickMatch[1], clickMatch[2]);
+          if (plan) {
+            await scrollBeforeAction(plan.element, plan.outerSelector || selectorForTarget(plan.element));
+            plan.action();
+            bulkClickPending = false;
+            return;
+          }
+        }
+        if (bulkClickPending && /\.click\(\)/.test(line)) {
+          await scrollBeforeAction(document.getElementById("store-products"), "#store-products");
+          addAllProductsToCart();
+          bulkClickPending = false;
+          return;
+        }
+        if (/\.bring_to_front\(\)/.test(line)) {
+          await scrollBeforeAction(document.getElementById("shop-tabs-section"), "#shop-tabs-section");
+          setActiveShopTab(2);
+          updateStatus("Page 3 · Help is now in front.");
+          return;
+        }
+        if (message.triggerAction) {
+          const action = document.getElementById("demo-action");
+          await scrollBeforeAction(action, "#demo-card");
+          action.click();
+        }
       }
       function renderDemo() {
         const currentStep = steps <= 1
@@ -465,6 +961,13 @@
         document.getElementById("demo-category").textContent = scenario.category;
         document.getElementById("demo-title").textContent = scenario.pageTitle;
         document.getElementById("demo-intro").textContent = scenario.intro;
+        const isTabLesson = lesson === "Multiple tabs, windows & popups";
+        const isFrameLesson = lesson === "Frames & nested iframes";
+        const isTooltipLesson = lesson === "Tooltip & text extraction";
+        document.getElementById("shop-tabs-section").hidden = !isTabLesson;
+        document.getElementById("frame-section").hidden = !isFrameLesson;
+        document.getElementById("tooltip-section").hidden = !isTooltipLesson;
+        if (isTabLesson) setActiveShopTab(activeTab);
         document.getElementById("compare-progress").textContent = `STEP ${currentStep + 1} / ${scenario.description.length}`;
         document.getElementById("before-copy").textContent = comparison[0];
         document.getElementById("after-copy").textContent = actionComplete ? scenario.result : comparison[1];
@@ -503,6 +1006,7 @@
             label.replaceChildren();
             const input = document.createElement("input");
             input.type = kind;
+            input.id = `demo-control-${labelText.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
             const key = `${kind}:${labelText}`;
             if (!editableValues.has(key)) editableValues.set(key, Boolean(values[0]));
             input.checked = editableValues.get(key);
@@ -523,6 +1027,7 @@
             label.append(input, text);
           } else if (kind === "select") {
             const select = document.createElement("select");
+            select.id = `demo-control-${labelText.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
             values[0].forEach((optionText) => {
               const option = document.createElement("option");
               option.textContent = optionText;
@@ -538,9 +1043,63 @@
               updateStatus(`${labelText} set to ${select.value}. Click “${actionLabels[lesson] || scenario.action}” to apply.`);
             });
             label.appendChild(select);
+          } else if (kind === "custom-select") {
+            label.replaceChildren();
+            label.className = "custom-select-wrap";
+            const title = document.createElement("span");
+            title.className = "custom-select-label";
+            title.textContent = labelText;
+            const key = `custom-select:${labelText}`;
+            if (!editableValues.has(key)) editableValues.set(key, values[1]);
+            const chooser = document.createElement("button");
+            chooser.type = "button";
+            chooser.className = "custom-select-button";
+            chooser.id = "choose-plan";
+            chooser.setAttribute("aria-haspopup", "listbox");
+            chooser.setAttribute("aria-expanded", "false");
+            chooser.setAttribute("aria-label", `Choose ${labelText.toLowerCase()}`);
+            const selected = document.createElement("span");
+            selected.textContent = editableValues.get(key);
+            const chevron = document.createElement("span");
+            chevron.setAttribute("aria-hidden", "true");
+            chevron.textContent = "▾";
+            chooser.append(selected, chevron);
+            const options = document.createElement("div");
+            options.className = "custom-option-list";
+            options.id = "plan-options";
+            options.setAttribute("role", "listbox");
+            options.setAttribute("aria-label", `${labelText} options`);
+            options.hidden = true;
+            chooser.addEventListener("click", () => {
+              const open = options.hidden;
+              options.hidden = !open;
+              chooser.setAttribute("aria-expanded", String(open));
+              updateStatus(open ? "Plan menu opened · choose a visible option." : "Plan menu closed.");
+            });
+            values[0].forEach((optionText) => {
+              const option = document.createElement("button");
+              option.type = "button";
+              option.className = "custom-option";
+              option.setAttribute("role", "option");
+              option.setAttribute("aria-selected", String(editableValues.get(key) === optionText));
+              option.textContent = optionText;
+              option.addEventListener("click", () => {
+                editableValues.set(key, optionText);
+                selected.textContent = optionText;
+                options.querySelectorAll('[role="option"]').forEach((item) => {
+                  item.setAttribute("aria-selected", String(item === option));
+                });
+                options.hidden = true;
+                chooser.setAttribute("aria-expanded", "false");
+                updateStatus(`${labelText} set to ${optionText}.`);
+              });
+              options.appendChild(option);
+            });
+            label.append(title, chooser, options);
           } else {
             const input = document.createElement("input");
             input.type = /password/i.test(labelText) ? "password" : /email/i.test(labelText) ? "email" : "text";
+            input.id = `demo-control-${labelText.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
             const key = `text:${labelText}`;
             if (!editableValues.has(key)) editableValues.set(key, values[0]);
             input.value = editableValues.get(key);
@@ -560,6 +1119,7 @@
             const label = document.createElement("strong");
             label.textContent = labelText;
             const content = document.createElement("span");
+            content.id = `fact-${labelText.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
             content.textContent = value;
             fact.append(label, content);
             fields.appendChild(fact);
@@ -577,6 +1137,7 @@
           source.className = "mouse-source";
           source.draggable = false;
           source.textContent = "Report card";
+          source.title = "Hover, then drag this report card into the tray.";
           source.classList.toggle("is-hovered", mouseIsHovering);
           source.classList.toggle("is-dragging", mouseIsHolding);
           source.addEventListener("pointerdown", (event) => {
@@ -650,6 +1211,17 @@
           hold.addEventListener("pointercancel", releaseHold);
           fields.append(instructions, source, zone, hold);
         }
+        if (lesson === "Tooltip & text extraction") {
+          fields.className = "fact-list";
+          fields.replaceChildren();
+          const native = document.createElement("div");
+          native.className = "fact-item";
+          native.innerHTML = "<strong>Native tooltip</strong><span>Button title attribute</span>";
+          const custom = document.createElement("div");
+          custom.className = "fact-item";
+          custom.innerHTML = "<strong>Custom tooltip</strong><span>Visible page text · role=tooltip</span>";
+          fields.append(native, custom);
+        }
         if (lesson === "Pagination & paged results") {
           const pageLabel = document.createElement("div");
           pageLabel.className = "fact-item";
@@ -660,24 +1232,15 @@
           fields.replaceChildren(pageLabel, itemsLabel);
         }
         if (lesson === "Multiple tabs, windows & popups") {
-          const tabs = document.createElement("div");
-          tabs.className = "demo-tabs";
-          ["Home", "Report popup", "Help"].forEach((name, index) => {
-            const tab = document.createElement("button");
-            tab.type = "button";
-            tab.className = `demo-tab${activeTab === index ? " active" : ""}`;
-            tab.textContent = `Page ${index + 1} · ${name}`;
-            tab.addEventListener("click", () => {
-              activeTab = index;
-              scenario.result = `✓ ${name} page is active`;
-              comparison[1] = scenario.result;
-              actionComplete = true;
-              renderDemo();
-              updateStatus(`${name} is now the selected demo tab.`);
-            });
-            tabs.appendChild(tab);
-          });
-          fields.replaceChildren(tabs);
+          const activePage = document.createElement("div");
+          activePage.className = "fact-item";
+          const pageLabel = document.createElement("strong");
+          pageLabel.textContent = "Active Page";
+          const pageValue = document.createElement("span");
+          pageValue.id = "fact-active-page";
+          pageValue.textContent = ["Shop · Page 1", "Order report · Page 2", "Help center · Page 3"][activeTab];
+          activePage.append(pageLabel, pageValue);
+          fields.replaceChildren(activePage);
         }
         if (lesson === "Navigate backward & forward") {
           const history = document.createElement("div");
@@ -727,6 +1290,20 @@
           runMouseCodeLine("source.drag_to(target)");
           return;
         }
+        if (lesson === "Tooltip & text extraction") {
+          setTooltipVisible(true);
+          const nativeText = tooltipHelp.getAttribute("title");
+          const customText = customTooltip.innerText;
+          document.getElementById("tooltip-extraction").textContent = `Native title attribute: ${nativeText} · Custom tooltip text: ${customText}`;
+          actionComplete = true;
+          scenario.result = "✓ Native and custom tooltip text captured";
+          comparison[1] = scenario.result;
+          renderDemo();
+          setTooltipVisible(true);
+          document.getElementById("tooltip-extraction").textContent = `Native title attribute: ${nativeText} · Custom tooltip text: ${customText}`;
+          updateStatus(scenario.result);
+          return;
+        }
         actionComplete = true;
         if (lesson === "Pagination & paged results") {
           currentPageNumber = currentPageNumber === 1 ? 2 : 1;
@@ -741,7 +1318,12 @@
           comparison[1] = scenario.result;
         }
         if (lesson === "Checkboxes, radio buttons & dropdowns") {
-          const selected = [...editableValues.entries()].filter(([, value]) => value).map(([key, value]) => key.startsWith("select:") ? value : key.slice(key.indexOf(":") + 1));
+          const selected = [...editableValues.entries()]
+            .filter(([, value]) => value)
+            .map(([key, value]) => {
+              const [kind, name] = key.split(":");
+              return kind === "select" || kind === "custom-select" ? `${name}: ${value}` : name;
+            });
           scenario.result = selected.length ? `Preferences saved: ${selected.join(", ")}` : "Preferences saved with no optional choices.";
           comparison[1] = scenario.result;
         }
@@ -774,12 +1356,16 @@
         if (event.data?.type === "playwright-demo-execution-state") {
           if (!Array.isArray(event.data.lines)) return;
           resetCodeDemoState();
-          event.data.lines.forEach((line, index) => {
-            if (typeof line === "string") runCodeLine({
-              line,
-              triggerAction: index === event.data.actionIndex
-            });
-          });
+          (async () => {
+            for (const [index, line] of event.data.lines.entries()) {
+              if (typeof line === "string") {
+                await runCodeLine({
+                  line,
+                  triggerAction: index === event.data.actionIndex
+                });
+              }
+            }
+          })();
           return;
         }
       });

@@ -1,10 +1,20 @@
 (() => {
-  const ids = ["idea", "visual", "code", "check"];
-  const names = { idea: "The idea", visual: "Visual walkthrough", code: "Code example", check: "Quick check" };
+  const ids = ["description", "visual", "code", "check"];
+  const names = { description: "Description", visual: "Visual walkthrough", code: "Code example", check: "Quick check" };
   window.createLessonSectionProgress = ({ course, getIndex, getCompleted, setCompleted, saveCompleted, onChange }) => {
     const key = `sathishram-${course}-section-progress`;
     let saved = {};
-    try { const value = JSON.parse(localStorage.getItem(key) || "{}"); if (value && typeof value === "object" && !Array.isArray(value)) saved = value; } catch { saved = {}; }
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "{}");
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        saved = value;
+        Object.values(saved).forEach((parts) => {
+          if (!parts || typeof parts !== "object" || Array.isArray(parts) || !Object.hasOwn(parts, "idea")) return;
+          if (!Object.hasOwn(parts, "description")) parts.description = parts.idea;
+          delete parts.idea;
+        });
+      }
+    } catch { saved = {}; }
     const save = () => localStorage.setItem(key, JSON.stringify(saved));
     const setPart = (index, id, done) => {
       saved[index] = { ...(saved[index] || {}), [id]: done }; save();
@@ -17,7 +27,7 @@
       const main = document.querySelector(".lesson-main"); if (!main) return;
       const sections = [...main.querySelectorAll(":scope > section")];
       sections.forEach((section) => {
-        if (section.classList.contains("concept-card")) section.dataset.progressPart = "idea";
+        if (section.classList.contains("concept-card")) section.dataset.progressPart = "description";
         else if (section.classList.contains("visual-card")) section.dataset.progressPart = "visual";
         else if (section.classList.contains("code-card")) section.dataset.progressPart = "code";
         else if (section.classList.contains("practice-card")) section.dataset.progressPart = "check";

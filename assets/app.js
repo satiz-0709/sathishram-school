@@ -561,8 +561,9 @@ function renderLesson() {
   byId("lesson-category").textContent = lesson.category;
   byId("lesson-duration").textContent = `${lesson.duration} MIN READ`;
   byId("lesson-title").textContent = lesson.title;
-  byId("lesson-summary").textContent = lesson.summary;
-  byId("lesson-theory").textContent = lesson.theory;
+  byId("lesson-theory").textContent = lesson.summary;
+  byId("lesson-detailed-theory").textContent = lesson.theory;
+  byId("lesson-description-visual").replaceChildren(buildLessonDescriptionIllustration(lesson));
   byId("lesson-analogy").textContent = lesson.analogy;
   byId("lesson-goal").textContent = lesson.goal;
   byId("goal-duration").textContent = String(lesson.duration);
@@ -687,7 +688,7 @@ document.querySelectorAll(".aside-link").forEach((link) => link.addEventListener
   event.preventDefault();
   document.querySelectorAll(".aside-link").forEach((item) => item.classList.remove("active"));
   link.classList.add("active");
-  const sections = ["idea", "visual", "code", "practice"];
+  const sections = ["description", "visual", "code", "practice"];
   const target = [".concept-card", ".visual-card", ".code-card", ".practice-card"][sections.indexOf(link.getAttribute("href").slice(1))];
   document.querySelector(target).scrollIntoView({ behavior: "smooth", block: "start" });
 }));
