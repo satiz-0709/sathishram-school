@@ -302,10 +302,13 @@
         <div class="support-grid">
           <label class="field" for="support-name">Your name<input id="support-name" aria-label="Your name" autocomplete="off" /></label>
           <label class="field" for="support-message">Message<textarea id="support-message" aria-label="Message" autocomplete="off"></textarea></label>
-          <label class="field" for="receipt">Add a receipt or product photo (optional)<input id="receipt" type="file" accept="image/*,application/pdf" autocomplete="off" /></label>
-          <div class="attachment-preview" id="attachment-preview" role="status" aria-live="polite" hidden>
-            <span class="attachment-preview-icon" id="attachment-file-type" aria-hidden="true">FILE</span>
-            <span><strong id="attachment-file-name"></strong><small>Selected locally · this demo does not upload files</small></span>
+          <div class="field">
+            <label for="receipt">Add a receipt or product photo (optional)</label>
+            <input id="receipt" type="file" accept="image/*,application/pdf" autocomplete="off" />
+            <div class="attachment-preview" id="attachment-preview" role="status" aria-live="polite" hidden>
+              <span class="attachment-preview-icon" id="attachment-file-type" aria-hidden="true">FILE</span>
+              <span><strong id="attachment-file-name"></strong><small>Selected locally · this demo does not upload files</small></span>
+            </div>
           </div>
         </div>
         <button class="form-submit" type="button" id="send-message">Send message</button>
@@ -425,6 +428,7 @@
       function clearAnimations() {
         animationTimers.forEach(window.clearTimeout);
         animationTimers = [];
+        hideNativeTooltip();
         cursor.classList.add("hidden");
         focusedElement?.classList.remove("demo-focused-target");
         focusedSection?.classList.remove("demo-section-active");
@@ -775,6 +779,7 @@
       }
 
       function showUnavailableTarget(line) {
+        hideNativeTooltip();
         focusedElement?.classList.remove("demo-focused-target");
         focusedSection?.classList.remove("demo-section-active");
         if (focusTarget && !focusTargetHadTabindex) focusTarget.removeAttribute("tabindex");
