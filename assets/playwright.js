@@ -634,6 +634,7 @@ function renderLesson() {
   byId("lesson-title").textContent = lesson.title;
   byId("lesson-theory").textContent = lesson.summary;
   byId("lesson-detailed-theory").textContent = lesson.theory;
+  document.querySelector(".lesson-explanation").open = true;
   byId("lesson-description-visual").replaceChildren(buildLessonDescriptionIllustration(lesson));
   byId("lesson-analogy").textContent = lesson.analogy;
   byId("lesson-goal").textContent = lesson.goal;
@@ -643,9 +644,6 @@ function renderLesson() {
   renderVariableNameControls(baseLesson);
   byId("code-execution-status").textContent = "Ready · walkthrough is simulated; Python is not executed.";
   byId("lesson-output").textContent = lesson.output;
-  byId("footer-position").textContent = `${String(state.index + 1).padStart(2, "0")} / ${allLessons.length}`;
-  byId("prev-button").disabled = state.index === 0;
-  byId("next-button").disabled = state.index === allLessons.length - 1;
   const complete = state.completed.has(state.index);
   byId("complete-button").classList.toggle("done", complete);
   byId("complete-button").querySelector(".complete-label").textContent = complete ? "Completed" : "Mark complete";
@@ -657,15 +655,18 @@ function renderLesson() {
   byId("course-progress").parentElement.setAttribute("aria-valuenow", String(progress));
   byId("progress-label").textContent = `${progress}%`;
   byId("lesson-count").textContent = `${state.completed.size} of ${allLessons.length} lessons`;
+  byId("previous-lesson-button").disabled = state.index === 0;
+  byId("next-lesson-button").disabled = state.index === allLessons.length - 1;
   window.lessonSectionProgress?.render();
 }
 
 function moveLesson(offset) {
   const nextIndex = Math.max(0, Math.min(allLessons.length - 1, state.index + offset));
+  const scrollPosition = window.scrollY;
   return window.schoolCourseAccess.requireLesson(nextIndex, () => {
     state.index = nextIndex;
     renderLesson();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: scrollPosition, behavior: "instant" });
   });
 }
 
@@ -687,6 +688,8 @@ byId("complete-button").addEventListener("click", () => {
   saveCourseProgress();
   renderLesson();
 });
+byId("previous-lesson-button").addEventListener("click", () => moveLesson(-1));
+byId("next-lesson-button").addEventListener("click", () => moveLesson(1));
 byId("clear-progress-button").addEventListener("click", () => {
   if (!window.confirm("Clear your Playwright course progress? This will remove completed lessons and restart at the first lesson.")) return;
   state.completed.clear();
@@ -699,8 +702,6 @@ byId("clear-progress-button").addEventListener("click", () => {
   renderLesson();
   showToast("Playwright progress cleared");
 });
-byId("prev-button").addEventListener("click", () => moveLesson(-1));
-byId("next-button").addEventListener("click", () => moveLesson(1));
 byId("flow-play-button").addEventListener("click", playFlow);
 document.querySelectorAll(".section-collapse-button").forEach((button) => {
   button.addEventListener("click", () => {

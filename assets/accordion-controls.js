@@ -21,4 +21,5 @@ window.setLessonSectionExpanded = (button, expanded) => {
   const label = `${expanded ? "Collapse" : "Expand"} ${name}`;
   button.setAttribute("aria-label", label);
   button.title = label;
+  button.querySelector(".section-toggle-label")?.replaceChildren(name);
 };

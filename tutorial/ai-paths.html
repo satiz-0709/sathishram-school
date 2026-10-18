@@ -24,7 +24,7 @@
         <div class="course-label">YOUR LEARNING PATH</div>
         <div id="path-course-card" class="course-card path-course-card">
           <div class="course-card-top">
-            <span class="course-mark" data-icon="spark"></span>
+            <span class="course-mark" data-icon="spark" aria-hidden="true"></span>
             <span class="course-level">BEGINNER → PRO</span>
           </div>
           <strong>AI learning path</strong>
@@ -93,18 +93,28 @@
 
             <div class="path-lesson-meta"><span id="path-lesson-number"></span><span id="path-lesson-duration"></span></div>
 
-            <div id="path-lesson-progress" class="path-lesson-progress" aria-live="polite">
-              <div class="path-lesson-progress-heading">
-                <span>LESSON PROGRESS</span>
-                <strong id="path-lesson-progress-count">0 / 4 sections complete</strong>
-              </div>
-              <div class="path-lesson-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
-                <span id="path-lesson-progress-fill"></span>
-              </div>
-            </div>
-
             <div class="lesson-layout">
-              <article id="path-lesson-content" class="lesson-main path-lesson-content"></article>
+              <article id="path-lesson-content" class="lesson-main path-lesson-content">
+                <div id="path-lesson-progress" class="path-lesson-progress" aria-live="polite">
+                  <div class="path-lesson-progress-heading">
+                    <span>LESSON PROGRESS</span>
+                    <strong id="path-lesson-progress-count">0 / 4 sections complete</strong>
+                  </div>
+                  <div class="path-lesson-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0">
+                    <span id="path-lesson-progress-fill"></span>
+                  </div>
+                </div>
+                <section id="path-check" class="path-check" aria-labelledby="path-check-heading">
+                  <span class="path-check-icon" data-icon="question" aria-hidden="true"></span>
+                  <div class="path-check-body">
+                    <div class="path-check-title"><span class="path-eyebrow">QUICK CHECK</span><h2 id="path-check-heading">Check your understanding</h2></div>
+                    <p id="path-question"></p>
+                    <div id="path-options" class="path-options"></div>
+                    <p id="path-feedback" class="path-feedback" aria-live="polite"></p>
+                    <button id="path-check-complete" class="path-part-complete" type="button" aria-pressed="false"><span class="complete-check" aria-hidden="true"></span><span class="complete-label">Mark section complete</span></button>
+                  </div>
+                </section>
+              </article>
               <aside class="lesson-aside path-lesson-aside" aria-label="Lesson summary">
                 <div class="aside-card">
                   <div class="aside-heading">IN THIS LESSON</div>
@@ -129,16 +139,11 @@
               <div id="path-rag-explorer" class="rag-explorer" hidden></div>
             </details>
 
-            <section class="path-check" id="path-check" aria-labelledby="path-check-heading">
-              <div class="path-check-title"><span class="path-check-icon">?</span><div><span class="path-eyebrow">QUICK CHECK</span><h2 id="path-check-heading">Check your understanding</h2></div></div>
-              <p id="path-question"></p>
-              <div id="path-options" class="path-options"></div>
-              <p id="path-feedback" class="path-feedback" aria-live="polite"></p>
-              <button id="path-check-complete" class="path-part-complete" type="button" aria-pressed="false"><span class="complete-check" aria-hidden="true"></span><span class="complete-label">Mark complete</span></button>
-            </section>
-
-            <footer class="path-footer"><button id="path-prev" class="path-nav-button" type="button">&#8592; Previous</button><button id="path-next" class="path-nav-button path-next" type="button">Next lesson &#8594;</button></footer>
             <p class="path-reference" id="path-reference"></p>
+            <nav class="lesson-navigation" aria-label="Lesson navigation">
+              <button class="lesson-nav-button path-nav-button" id="path-previous-lesson" type="button" disabled><span data-icon="arrow-left"></span><span>Previous lesson</span></button>
+              <button class="lesson-nav-button path-nav-button" id="path-next-lesson" type="button"><span>Next lesson</span><span data-icon="arrow-right"></span></button>
+            </nav>
           </div>
 
           <section id="path-resource-view" class="path-resource-view" hidden></section>

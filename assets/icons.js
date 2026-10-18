@@ -25,6 +25,8 @@ const schoolIconPaths = {
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',
   arrow: '<path d="M5 12h14m-6-6 6 6-6 6"/>',
+  "arrow-left": '<path d="M19 12H5m6 6-6-6 6-6"/>',
+  "arrow-right": '<path d="M5 12h14m-6-6 6 6-6 6"/>',
   volume: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7m2.5-10a9 9 0 0 1 0 13"/>',
   stop: '<rect x="5" y="5" width="14" height="14" rx="2"/>'
 };

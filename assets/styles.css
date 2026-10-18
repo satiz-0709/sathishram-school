@@ -215,6 +215,7 @@ button { cursor: pointer; }
 .audio-button:hover { border-color: #9dcfc1; background: #e7f5ef; }
 .audio-button .ui-icon { width: 14px; height: 14px; }
 .audio-status { flex-basis: 100%; min-height: 0; color: #63827d; font-size: 8px; line-height: 1.4; text-align: right; }
+.audio-status:not(:empty) { padding: 8px 10px; border: 1px solid #dcebe5; border-radius: 8px; background: #f5faf7; text-align: left; overflow-wrap: anywhere; }
 .audio-status:empty { display: none; }
 .audio-install-link,.audio-retry-button { color: #266e64; font: inherit; text-decoration: underline; }
 .audio-retry-button { padding: 0; border: 0; background: transparent; cursor: pointer; }
@@ -323,8 +324,6 @@ h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk"
 .quiz-option { padding: 7px 9px; border: 1px solid #e9eaf0; border-radius: 5px; background: #fff; color: #777f91; font-size: 10px; text-align: left; }
 .quiz-option:hover { border-color: #c9c2f8; color: var(--purple-dark); }.quiz-option.correct { border-color: #9fddc3; background: #f2fbf7; color: #31896b; }.quiz-option.incorrect { border-color: #f0b7b7; background: #fff7f7; color: #b45f5f; }
 .quiz-feedback { min-height: 14px; margin: 7px 0 0; color: #43a181; font-size: 10px; }.quiz-feedback.wrong { color: #b45f5f; }
-.lesson-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 17px; color: #abb0be; font: 9px var(--mono); }
-.prev-button,.next-button { display: flex; align-items: center; gap: 7px; padding: 8px 0; border: 0; background: transparent; color: #777f91; font-size: 10px; }.prev-button:disabled { opacity: .35; cursor: default; }.next-button { color: var(--purple-dark); font-weight: 700; }
 .lesson-aside { position: sticky; top: 82px; }
 .aside-card { padding: 15px 13px; }.aside-heading { margin-bottom: 12px; font-size: 9px; }
 .on-this-page { margin-bottom: 12px; }
@@ -453,10 +452,11 @@ h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk"
 
 /* Browser mock and code fold control. */
 .code-header-actions { display:flex; align-items:center; gap:7px; }
-.section-collapse-button { display:grid; flex:none; place-items:center; width:28px; height:28px; padding:0; border:1px solid #dfe9e5; border-radius:7px; background:#fff; color:#52736a; cursor:pointer; }
+.section-collapse-button { display:inline-flex; flex:none; align-items:center; justify-content:center; gap:8px; min-height:32px; padding:0 10px; border:1px solid #d5e4dc; border-radius:999px; background:linear-gradient(180deg,#fff,#f7faf8); color:#42675b; cursor:pointer; font:600 10px "DM Sans",sans-serif; }
 .section-collapse-button:hover,.section-collapse-button:focus-visible { outline:none; border-color:#91c4b3; background:#f4faf7; }
-.section-chevron { width:8px; height:8px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(-45deg); transition:transform .18s ease; }
-.section-collapse-button[aria-expanded="true"] .section-chevron { transform:rotate(45deg); }
+.section-chevron { width:8px; height:8px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); transition:transform .18s ease; }
+.section-collapse-button[aria-expanded="true"] .section-chevron { transform:rotate(225deg); }
+.section-toggle-label { white-space:nowrap; }
 .section-content[hidden] { display:none!important; }
 .process-rail { position:relative; gap:7px; padding:17px 14px 13px; background:radial-gradient(ellipse at center,#f2f8f5 0,#fbfdfb 75%); }
 .process-rail:before { position:absolute; top:37px; left:8%; right:8%; height:2px; background:linear-gradient(90deg,#b7d8ca,#cbded6 75%,#d9e6e0); content:""; }
@@ -531,7 +531,10 @@ h1 { margin: 0; color: #20263a; font: 700 clamp(25px, 3vw, 33px) "Space Grotesk"
 .visual-actions .visual-badge { white-space:nowrap; }
 .practice-body { flex:1; min-width:0; }
 .practice-header { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-.practice-header .section-collapse-button { width:25px; height:25px; }
+.practice-header .section-collapse-button { min-height:30px; }
+.practice-heading { display:grid;gap:3px;min-width:0; }
+.practice-heading p { margin:0;color:#9aa1b0;font-size:10px;line-height:1.4; }
+.practice-body .quiz-options,.practice-body .quiz-feedback { min-width:0; overflow-wrap:anywhere; }
 .practice-card h2 { margin:4px 0 9px; }
 .cheat-card h2 { justify-content:flex-start; }
 .cheat-card h2 > span { flex:1; }
@@ -1184,6 +1187,29 @@ html[data-theme] body .audio-language-picker select { border-color:var(--line);b
 .lesson-section-progress{margin:0 0 13px;padding:13px 15px;border:1px solid var(--line);border-radius:11px;background:var(--surface)}.lesson-section-progress-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font:500 9px var(--mono);letter-spacing:.4px}.lesson-section-progress-heading strong{color:var(--purple);font-weight:600}.lesson-section-progress-track{height:6px;margin-top:9px;border-radius:9px;background:var(--line);overflow:hidden}.lesson-section-progress-track span{display:block;width:0;height:100%;border-radius:inherit;background:var(--purple);transition:width .25s ease}.lesson-part-complete{display:inline-flex;align-items:center;margin:13px 0 0;padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:var(--surface-alt);color:var(--muted);font:600 10px "DM Sans",sans-serif;cursor:pointer}.lesson-part-complete:hover{border-color:var(--purple);color:var(--purple)}.lesson-part-complete.is-complete{border-color:var(--purple);background:var(--purple-pale);color:var(--purple-dark)}.practice-body>.lesson-part-complete{margin-top:12px}
 @media(max-width:600px){.lesson-section-progress{padding:11px 12px}.lesson-section-progress-heading{font-size:8px}.lesson-part-complete{font-size:9px}}
 @media(max-width:600px){.heading-row{align-items:flex-start;flex-direction:column;gap:13px}.lesson-actions{width:100%;max-width:none;justify-content:flex-start}.audio-status{text-align:left}}
+@media(max-width:600px){.practice-card{align-items:flex-start;gap:10px;padding:14px}.practice-body{width:calc(100% - 40px)}.practice-header{min-width:0}.practice-label{overflow-wrap:anywhere}.practice-icon{margin-top:1px}.practice-body>.lesson-part-complete{max-width:100%;white-space:normal;text-align:left;line-height:1.35}}
+/* Raised, tactile controls shared by every lesson experience. */
+:is(body.course-python,body.course-playwright,body.path-body) :is(.theme-toggle,.audio-button,.complete-button,.flow-play-button,.copy-button,.section-collapse-button,.lesson-part-complete,.quiz-options button,.resource-action,.path-complete-button,.path-part-complete,.path-copy-code,.path-run-button,.path-secondary-button,.path-option) {
+  border-color:color-mix(in srgb,currentColor 22%,transparent);
+  box-shadow:0 3px 0 color-mix(in srgb,currentColor 22%,transparent),0 7px 14px #173c3512,inset 0 1px #ffffffad,inset 0 -1px #173c3508;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease,background-color .16s ease,color .16s ease;
+}
+:is(body.course-python,body.course-playwright,body.path-body) :is(.theme-toggle,.audio-button,.complete-button,.flow-play-button,.copy-button,.section-collapse-button,.lesson-part-complete,.quiz-options button,.resource-action,.path-complete-button,.path-part-complete,.path-copy-code,.path-run-button,.path-secondary-button,.path-option):not(:disabled):hover {
+  transform:translateY(-2px);
+  box-shadow:0 5px 0 color-mix(in srgb,currentColor 24%,transparent),0 11px 19px #173c351c,inset 0 1px #ffffffc7,inset 0 -1px #173c3508;
+}
+:is(body.course-python,body.course-playwright,body.path-body) :is(.theme-toggle,.audio-button,.complete-button,.flow-play-button,.copy-button,.section-collapse-button,.lesson-part-complete,.quiz-options button,.resource-action,.path-complete-button,.path-part-complete,.path-copy-code,.path-run-button,.path-secondary-button,.path-option):not(:disabled):active {
+  transform:translateY(2px);
+  box-shadow:0 1px 0 color-mix(in srgb,currentColor 18%,transparent),inset 0 2px 4px #173c351a;
+}
+:is(body.course-python,body.course-playwright,body.path-body) :is(.theme-toggle,.settings-theme-toggle) .ui-icon {
+  filter:drop-shadow(0 1px 0 #ffffffb8) drop-shadow(0 2px 1px #173c3545) drop-shadow(0 4px 2px #173c3524);
+}
+@media(prefers-reduced-motion:reduce) {
+  :is(body.course-python,body.course-playwright,body.path-body) :is(.theme-toggle,.audio-button,.complete-button,.flow-play-button,.copy-button,.section-collapse-button,.lesson-part-complete,.quiz-options button,.resource-action,.path-complete-button,.path-part-complete,.path-copy-code,.path-run-button,.path-secondary-button,.path-option) { transition:none; }
+  :is(body.course-python,body.course-playwright,body.path-body) :is(.theme-toggle,.audio-button,.complete-button,.flow-play-button,.copy-button,.section-collapse-button,.lesson-part-complete,.quiz-options button,.resource-action,.path-complete-button,.path-part-complete,.path-copy-code,.path-run-button,.path-secondary-button,.path-option):not(:disabled):hover,
+  :is(body.course-python,body.course-playwright,body.path-body) :is(.theme-toggle,.audio-button,.complete-button,.flow-play-button,.copy-button,.section-collapse-button,.lesson-part-complete,.quiz-options button,.resource-action,.path-complete-button,.path-part-complete,.path-copy-code,.path-run-button,.path-secondary-button,.path-option):not(:disabled):active { transform:none; }
+}
 @media print{
   body[data-print-view="cheatsheet"] .page-content{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:#fff!important}
   body[data-print-view="cheatsheet"] #cheatsheet-view{min-height:0!important;padding:0!important}
@@ -1460,3 +1486,76 @@ html[data-theme] body :is(.primary-action,.flow-play-button,.execution-controls 
 .process-simulation .pw-api-request { font-size:9px; }
 .process-simulation .pw-api-request small { font-size:8px; }
 .process-simulation .pw-api-result { font-size:9px; }
+
+/* Keep lesson navigation aligned and tactile in every course layout. */
+.lesson-navigation {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:20px;
+}
+.lesson-navigation .lesson-nav-button {
+  max-width:min(48%,280px);
+  white-space:nowrap;
+}
+:is(.course-python,.course-playwright,.path-body) .lesson-navigation .lesson-nav-button {
+  color:var(--purple-dark,var(--path-accent));
+  font-weight:700;
+}
+:is(.course-python,.course-playwright) .lesson-navigation .lesson-nav-button {
+  color:var(--purple-dark);
+}
+.path-body .lesson-navigation .lesson-nav-button {
+  --surface:var(--path-panel);
+  --line:var(--path-line);
+  --muted:var(--path-muted);
+  color:var(--path-accent);
+}
+:is(.course-python,.course-playwright,.path-body) .lesson-navigation .lesson-nav-button:disabled {
+  color:var(--muted,var(--path-muted));
+}
+.path-body .lesson-navigation .lesson-nav-button:disabled { color:var(--path-muted); }
+
+/* Keep remaining back and step-navigation controls dimensional across courses. */
+:is(.back-link,.path-back,.path-nav-button,.lesson-nav-button,#code-previous-button,#code-next-button) {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:34px;
+  padding:7px 11px;
+  border:1px solid color-mix(in srgb,currentColor 24%,var(--line));
+  border-radius:9px;
+  background:linear-gradient(150deg,var(--surface,#fff),color-mix(in srgb,var(--surface,#fff) 88%,currentColor));
+  color:var(--muted,currentColor);
+  box-shadow:0 3px 0 color-mix(in srgb,currentColor 20%,var(--line)),
+    0 7px 14px color-mix(in srgb,currentColor 12%,transparent),
+    inset 0 1px color-mix(in srgb,var(--surface,#fff) 78%,transparent),
+    inset 0 -1px color-mix(in srgb,currentColor 7%,transparent);
+  text-decoration:none;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease,color .16s ease;
+}
+:is(.back-link,.path-back,.path-nav-button,.lesson-nav-button,#code-previous-button,#code-next-button):not(:disabled):hover {
+  transform:translateY(-2px);
+  border-color:color-mix(in srgb,currentColor 42%,var(--line));
+  box-shadow:0 5px 0 color-mix(in srgb,currentColor 23%,var(--line)),
+    0 12px 20px color-mix(in srgb,currentColor 17%,transparent),
+    inset 0 1px color-mix(in srgb,var(--surface,#fff) 86%,transparent);
+}
+:is(.back-link,.path-back,.path-nav-button,.lesson-nav-button,#code-previous-button,#code-next-button):not(:disabled):active {
+  transform:translateY(1px);
+  box-shadow:0 1px 0 color-mix(in srgb,currentColor 20%,var(--line)),
+    0 2px 5px color-mix(in srgb,currentColor 12%,transparent),
+    inset 0 1px color-mix(in srgb,var(--surface,#fff) 70%,transparent);
+}
+:is(.back-link,.path-back,.path-nav-button,.lesson-nav-button,#code-previous-button,#code-next-button):focus-visible {
+  outline:3px solid color-mix(in srgb,var(--purple) 58%,transparent);
+  outline-offset:3px;
+}
+:is(#code-previous-button,#code-next-button):disabled {
+  box-shadow:0 2px 0 color-mix(in srgb,currentColor 12%,var(--line)),
+    inset 0 1px color-mix(in srgb,var(--surface,#fff) 60%,transparent);
+}
+@media(prefers-reduced-motion:reduce) {
+  :is(.back-link,.path-back,.path-nav-button,.lesson-nav-button,#code-previous-button,#code-next-button) { transition:none; }
+}

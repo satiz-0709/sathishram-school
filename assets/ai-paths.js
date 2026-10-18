@@ -76,7 +76,7 @@
       const done = !!parts[button.dataset.part || "check"];
       button.classList.toggle("is-complete", done); button.setAttribute("aria-pressed", String(done));
       const label = button.querySelector(".complete-label");
-      if (label) label.textContent = done ? "Completed · Undo" : "Mark complete";
+      if (label) label.textContent = done ? "✓ Section complete · Undo" : "Mark section complete";
     });
   }
   function setTheme(theme) {
@@ -107,7 +107,9 @@
     $("path-top-title").textContent = course.title;
     const courseCard = $("path-course-card");
     const cardTop = el("div", "course-card-top");
-    const courseMark = el("span", "course-mark", course.mark);
+    const courseMark = el("span", "course-mark");
+    courseMark.innerHTML = schoolIcon("spark");
+    courseMark.setAttribute("aria-hidden", "true");
     const level = el("span", "course-level", "BEGINNER → PRO");
     cardTop.append(courseMark, level);
     const progressRow = el("div", "progress-row");
@@ -124,7 +126,7 @@
     $("path-title").textContent = course.title;
     $("path-summary").textContent = course.summary;
     $("path-category").textContent = course.category;
-    $("path-course-mark").textContent = course.mark;
+    $("path-course-mark").innerHTML = schoolIcon("spark");
     const references = course.references || (course.reference ? [{ label: course.reference[0], url: course.reference[1] }] : []);
     const referenceLine = $("path-reference");
     referenceLine.replaceChildren(document.createTextNode("Further reading: "));
@@ -202,10 +204,30 @@
     renderLessonProgress();
   }
   function addSection(parent, id, title, content, className = "") {
-    const details = el("details", `path-section ${className}`); details.id = `path-section-${id}`; details.open = allSectionsExpanded; details.dataset.part = id;
-    details.append(el("summary", "", title)); const panel = el("div", "path-section-body"); panel.append(...content);
-    const complete = el("button", "path-part-complete"); complete.type = "button"; complete.dataset.part = id;
-    complete.append(el("span", "complete-check"), el("span", "complete-label", "Mark complete"));
+    const details = el("details", `path-section ${className}`);
+    details.id = `path-section-${id}`;
+    details.open = allSectionsExpanded;
+    details.dataset.part = id;
+    const summary = el("summary");
+    const icon = el("span", "path-section-icon");
+    icon.innerHTML = schoolIcon(({ description: "file", visual: "visual", example: "code" })[id] || "file");
+    icon.setAttribute("aria-hidden", "true");
+    const heading = el("span", "path-section-heading");
+    heading.append(el("span", "path-section-title", title));
+    const subtitles = {
+      description: "A brief, lesson-specific overview.",
+      visual: "Watch the lesson concept unfold step by step.",
+      example: "Read the Python example and copy it to try."
+    };
+    heading.append(el("span", "path-section-subtitle", subtitles[id] || ""));
+    summary.append(icon, heading);
+    details.append(summary);
+    const panel = el("div", "path-section-body");
+    panel.append(...content);
+    const complete = el("button", "path-part-complete");
+    complete.type = "button";
+    complete.dataset.part = id;
+    complete.append(el("span", "complete-check"), el("span", "complete-label", "Mark section complete"));
     complete.addEventListener("click", (event) => { event.preventDefault(); event.stopPropagation(); markPart(id, !currentParts()[id]); });
     panel.append(complete); details.append(panel); parent.append(details); return details;
   }
@@ -252,9 +274,11 @@
     $("path-lesson-goal").textContent = lesson.heading || lesson.intro;
     $("path-lesson-timer").textContent = lesson.duration;
     $("path-lesson-tip").textContent = lesson.tip || lesson.intro;
-    const article = $("path-lesson-content"); article.replaceChildren($("path-lesson-progress"));
+    const article = $("path-lesson-content");
+    const quickCheck = $("path-check");
+    article.replaceChildren($("path-lesson-progress"));
     const intro = el("p", "", lesson.intro);
-    const descriptionDetails = el("details", "path-description-details"); const summary = el("summary", "", "More details");
+    const descriptionDetails = el("details", "path-description-details"); descriptionDetails.open = true; const summary = el("summary", "", "More details");
     const detailBody = el("div", "path-description-details-body");
     const detailList = el("ul"); lesson.bullets.forEach((text) => detailList.append(el("li", "", text)));
     const tip = el("div", "path-tip", `Keep in mind: ${lesson.tip}`);
@@ -267,6 +291,8 @@
     const label = el("div", "path-code-label", "PRACTICAL EXAMPLE"); const pre = el("pre"); const code = el("code", "", lesson.code); pre.append(code);
     const copy = el("button", "path-copy-code", "Copy code"); copy.type = "button"; copy.addEventListener("click", () => copyText(lesson.code, copy));
     addSection(article, "example", "Example code", [label, pre, copy]);
+    quickCheck.querySelector(".path-check-icon").innerHTML = schoolIcon("question");
+    article.append(quickCheck);
     const showExplorer = courseId === "rag" && lesson.title === "Types of RAG: architecture patterns";
     const ragDisclosure = $("path-rag-explorer-disclosure");
     ragDisclosure.hidden = !showExplorer;
@@ -298,10 +324,20 @@
       return link;
     }));
     if (completed.includes(index) && !sectionProgress[index]) { sectionProgress[index] = Object.fromEntries(partIds.map((part) => [part, true])); saveSectionProgress(); }
-    $("path-prev").disabled = index === 0; $("path-next").disabled = index === course.lessons.length - 1; renderProgress();
+    $("path-previous-lesson").disabled = index === 0;
+    $("path-next-lesson").disabled = index === course.lessons.length - 1;
+    renderProgress();
   }
   function showLesson(index) {
     void window.schoolCourseAccess.requireLesson(index, () => renderLesson(index));
+  }
+  function moveLesson(offset) {
+    const nextIndex = Math.max(0, Math.min(course.lessons.length - 1, currentIndex + offset));
+    const scrollPosition = window.scrollY;
+    void window.schoolCourseAccess.requireLesson(nextIndex, () => {
+      renderLesson(nextIndex);
+      window.scrollTo({ top: scrollPosition, behavior: "instant" });
+    });
   }
   async function copyText(value, button) {
     try { await navigator.clipboard.writeText(value); button.textContent = "Copied ✓"; }
@@ -329,6 +365,8 @@
     });
     $("path-expand-curriculum").textContent = expand ? "Collapse all" : "Expand all";
   });
+  $("path-previous-lesson").addEventListener("click", () => moveLesson(-1));
+  $("path-next-lesson").addEventListener("click", () => moveLesson(1));
   function resourceHeader(title, description, searchable = false) {
     const root = $("path-resource-view"); root.replaceChildren(); const header = el("header", "path-resource-header"); header.append(el("span", "path-eyebrow", `${course.title.toUpperCase()} · STUDY RESOURCES`), el("h1", "", title), el("p", "", description));
     const tools = el("div", "path-resource-tools");
@@ -603,8 +641,6 @@
     panel.append(answer, actions, status, feedback);
   }
   $("path-complete")?.addEventListener("click", markLessonComplete);
-  $("path-prev").addEventListener("click", () => { if (currentIndex > 0) showLesson(currentIndex - 1); });
-  $("path-next").addEventListener("click", () => { if (currentIndex < course.lessons.length - 1) showLesson(currentIndex + 1); });
   function closeMobileNav() {
     $("sidebar").classList.remove("open");
     $("mobile-scrim").classList.remove("show");
