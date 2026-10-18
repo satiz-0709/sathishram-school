@@ -50,6 +50,32 @@
       .course-choice:hover .choice-link { transform:translateX(3px); border-color:color-mix(in srgb,var(--purple) 42%,var(--line)); background:var(--purple-pale); box-shadow:0 3px 0 color-mix(in srgb,var(--purple) 16%,var(--line)); }
       .course-choice:focus-visible { outline:3px solid color-mix(in srgb,var(--purple) 62%,transparent); outline-offset:5px; }
       @media(prefers-reduced-motion:reduce) { .course-choice,.course-choice:after,.course-choice .choice-link { transition:none; }.course-choice:hover,.course-choice:hover .choice-link { transform:none; } }
+      .course-picker { grid-template-columns:repeat(3,minmax(0,1fr)); width:min(900px,calc(100% - 36px)); gap:13px; margin:5vh auto; }
+      .picker-heading { padding:14px 0 18px; }
+      .course-choice {
+        display:flex; align-items:center; gap:12px; min-height:64px; padding:10px 15px;
+        border:1px solid color-mix(in srgb,var(--purple) 16%,var(--line)); border-radius:12px;
+        background:linear-gradient(180deg,var(--surface,#fff),var(--surface-alt,#f7faf9));
+        box-shadow:0 3px 0 color-mix(in srgb,var(--line) 90%,#83978f),0 6px 12px #173c350d,inset 0 1px #ffffffd9;
+        transition:transform .14s ease,border-color .14s ease,box-shadow .14s ease,background .14s ease;
+      }
+      .course-choice:after { display:none; }
+      .course-choice:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--purple) 46%,var(--line)); background:linear-gradient(180deg,var(--surface,#fff),var(--purple-pale)); box-shadow:0 4px 0 color-mix(in srgb,var(--purple) 30%,var(--line)),0 9px 16px color-mix(in srgb,var(--purple) 14%,transparent),inset 0 1px #ffffffeb; }
+      .course-choice:active { transform:translateY(2px); box-shadow:0 1px 0 color-mix(in srgb,var(--line) 90%,#83978f),inset 0 2px 4px #173c351a; }
+      .choice-icon { flex:none; width:38px; height:38px; margin:0; border-radius:11px; }
+      .course-choice h1 { min-width:0; margin:0; font-size:15px; line-height:1.3; }
+      .course-choice p,.course-choice .choice-link { display:none; }
+      html[data-mode="dark"] body .course-choice { background:linear-gradient(180deg,var(--surface),var(--surface-alt)); box-shadow:0 3px 0 #0005,0 6px 12px #0003,inset 0 1px #ffffff0a; }
+      html[data-mode="dark"] body .course-choice:hover { background:linear-gradient(180deg,var(--surface),color-mix(in srgb,var(--purple) 15%,var(--surface))); box-shadow:0 4px 0 color-mix(in srgb,var(--purple) 44%,#000),0 9px 16px #0004; }
+      html[data-mode="dark"] body .course-choice:active { box-shadow:0 1px 0 #0005,inset 0 2px 4px #0005; }
+      @media(max-width:780px) { .course-picker { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+      @media(max-width:520px) {
+        .course-picker { grid-template-columns:1fr; width:calc(100% - 28px); gap:9px; margin:3vh auto; }
+        .course-choice { min-height:58px; padding:9px 12px; }
+        .choice-icon { width:36px; height:36px; }
+        .course-choice h1 { font-size:14px; }
+      }
+      @media(prefers-reduced-motion:reduce) { .course-choice { transition:none; }.course-choice:hover,.course-choice:active { transform:none; } }
     </style>
   </head>
   <body>
@@ -70,23 +96,19 @@
       </header>
       <a class="course-choice choice-python" data-module="python" href="tutorial/python.html">
         <span class="choice-icon" data-icon="python"></span>
-        <h1>Learn Python</h1>
-        <p>Start from the fundamentals, explore OOP, and prepare with a Python cheat sheet and 100 interview questions.</p>
-        <span class="choice-link">Open Python course →</span>
+        <h1>Python</h1>
       </a>
       <a class="course-choice choice-playwright" data-module="playwright" href="tutorial/playwright.html">
         <span class="choice-icon" data-icon="browser"></span>
-        <h1>Learn Playwright</h1>
-        <p>Learn browser automation with Python, from your first test to reliable end-to-end workflows and interview prep.</p>
-        <span class="choice-link">Open Playwright course →</span>
+        <h1>Playwright</h1>
       </a>
-      <a class="course-choice choice-django" data-module="django" href="tutorial/ai-paths.html?course=django"><span class="choice-icon">Dj</span><h1>Django</h1><p>Build full stack web applications with URLs, views, templates, models, forms, and tests.</p><span class="choice-link">Explore Django →</span></a>
-      <a class="course-choice choice-fastapi" data-module="fastapi" href="tutorial/ai-paths.html?course=fastapi"><span class="choice-icon">Fa</span><h1>FastAPI</h1><p>Design typed APIs with validation, dependencies, authentication, async patterns, and tests.</p><span class="choice-link">Explore FastAPI →</span></a>
-      <a class="course-choice choice-langchain" data-module="langchain" href="tutorial/ai-paths.html?course=langchain"><span class="choice-icon">LC</span><h1>LangChain</h1><p>Connect language models to prompts, structured output, tools, retrieval, and production workflows.</p><span class="choice-link">Explore LangChain →</span></a>
-      <a class="course-choice choice-langgraph" data-module="langgraph" href="tutorial/ai-paths.html?course=langgraph"><span class="choice-icon">LG</span><h1>LangGraph</h1><p>Build stateful agent workflows with graphs, branching, checkpoints, and human review.</p><span class="choice-link">Explore LangGraph →</span></a>
-      <a class="course-choice choice-rag" data-module="rag" href="tutorial/ai-paths.html?course=rag"><span class="choice-icon">RAG</span><h1>Retrieval Augmented Generation</h1><p>Build grounded answers from your own data and improve retrieval quality systematically.</p><span class="choice-link">Explore RAG →</span></a>
-      <a class="course-choice choice-mcp" data-module="mcp" href="tutorial/ai-paths.html?course=mcp"><span class="choice-icon">MCP</span><h1>Model Context Protocol</h1><p>Connect AI applications to tools and data with interoperable MCP clients and servers.</p><span class="choice-link">Explore MCP →</span></a>
-      <a class="course-choice choice-evals" data-module="ai-evaluation" href="tutorial/ai-paths.html?course=ai-evaluation"><span class="choice-icon">AI</span><h1>AI &amp; Agent Engineering</h1><p>Learn LLMs, Claude, agent APIs, model selection, token budgets, fine-tuning, and evaluation.</p><span class="choice-link">Explore AI &amp; Agent Engineering →</span></a>
+      <a class="course-choice choice-django" data-module="django" href="tutorial/ai-paths.html?course=django"><span class="choice-icon">Dj</span><h1>Django</h1></a>
+      <a class="course-choice choice-fastapi" data-module="fastapi" href="tutorial/ai-paths.html?course=fastapi"><span class="choice-icon">Fa</span><h1>FastAPI</h1></a>
+      <a class="course-choice choice-langchain" data-module="langchain" href="tutorial/ai-paths.html?course=langchain"><span class="choice-icon">LC</span><h1>LangChain</h1></a>
+      <a class="course-choice choice-langgraph" data-module="langgraph" href="tutorial/ai-paths.html?course=langgraph"><span class="choice-icon">LG</span><h1>LangGraph</h1></a>
+      <a class="course-choice choice-rag" data-module="rag" href="tutorial/ai-paths.html?course=rag"><span class="choice-icon">RAG</span><h1>Retrieval Augmented Generation</h1></a>
+      <a class="course-choice choice-mcp" data-module="mcp" href="tutorial/ai-paths.html?course=mcp"><span class="choice-icon">MCP</span><h1>Model Context Protocol</h1></a>
+      <a class="course-choice choice-evals" data-module="ai-evaluation" href="tutorial/ai-paths.html?course=ai-evaluation"><span class="choice-icon">AI</span><h1>AI &amp; Agent Engineering</h1></a>
     </main>
     <script src="assets/icons.js"></script>
     <script src="assets/theme-settings.js"></script>
