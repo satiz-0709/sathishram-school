@@ -12,10 +12,10 @@ The account screen is intentionally disabled until the project URL and public ke
 
 The sign-in username is the registered email address. “Forgot username?” explains this; “Forgot password?” sends Supabase's password-reset email. Personal profile details are stored in the protected `profiles` table and account email/password are managed by Supabase Auth. Never write raw passwords to a project file or send them by email; Supabase stores password hashes. Email confirmations and password-change notifications require the project email/notification settings above.
 
-The client-side course gate permits signed-out visitors to read the first four lessons in every course. Selecting lesson five or later, or opening course study resources, sends them to the account screen. Signing in returns them to the requested lesson. This is a navigation/UX gate only, not secure content protection.
+All lessons and study resources are currently available without signing in. The client-side access checks do not restrict lesson navigation or study-resource tabs.
 
-When lesson data is migrated into `lesson_content`, set `is_sample` to `true` only for the first four lessons of each course. The anonymous RLS policy permits those marked rows; authenticated users can read all course rows.
+The `lesson_content` read policy allows both anonymous and authenticated visitors to read every row. If you already ran an earlier version of `schema.sql`, rerun the updated SQL in the Supabase SQL Editor to replace the former sample-only policy. This makes content in that table public by design.
 
 ## Important content-protection status
 
-Signed-in users can read all rows. Existing lesson pages and data scripts are still shipped as public GitHub Pages assets, and the current lesson renderers still read those local files. Therefore, the schema and sign-in screen do **not** yet make existing full-course content private. Do not treat the current deployment as an access-control boundary. A separate content migration and renderer change must move member-only lesson data out of the public `tutorial/` and `assets/` files and load it from the RLS-protected table before protected access can be enabled.
+Existing lesson pages and data scripts are shipped as public GitHub Pages assets, and current lesson renderers read those local files. The `lesson_content` table is also publicly readable under the current policy. Therefore, neither the schema nor the sign-in screen provides private course content. Do not treat the current deployment as an access-control boundary.
